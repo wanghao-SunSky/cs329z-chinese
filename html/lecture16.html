@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>专题研讨：复合 Agent 系统架构复盘 | CS329Z 中文教程</title>
+<meta name="description" content="在原课程安排中，本讲为面向业界前沿实践的机动客座讲座（Guest Lecture）。借此承上启下的节点，我们将前十五讲所建立的系统架构（System）、数据飞轮（Data）与评测与安全（Evals Safety）三大支柱串联起来，进行一次全局性的工程复盘，梳理在从零设计、调试与交付一个复合">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture16.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CS329Z 中文教程">
+  <meta property="og:title" content="专题研讨：复合 Agent 系统架构复盘 | CS329Z 中文教程">
+  <meta property="og:description" content="在原课程安排中，本讲为面向业界前沿实践的机动客座讲座（Guest Lecture）。借此承上启下的节点，我们将前十五讲所建立的系统架构（System）、数据飞轮（Data）与评测与安全（Evals Safety）三大支柱串联起来，进行一次全局性的工程复盘，梳理在从零设计、调试与交付一个复合">
+  <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture16.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="专题研讨：复合 Agent 系统架构复盘 | CS329Z 中文教程">
+  <meta name="twitter:description" content="在原课程安排中，本讲为面向业界前沿实践的机动客座讲座（Guest Lecture）。借此承上启下的节点，我们将前十五讲所建立的系统架构（System）、数据飞轮（Data）与评测与安全（Evals Safety）三大支柱串联起来，进行一次全局性的工程复盘，梳理在从零设计、调试与交付一个复合">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"专题研讨：复合 Agent 系统架构复盘 | CS329Z 中文教程","description":"在原课程安排中，本讲为面向业界前沿实践的机动客座讲座（Guest Lecture）。借此承上启下的节点，我们将前十五讲所建立的系统架构（System）、数据飞轮（Data）与评测与安全（Evals Safety）三大支柱串联起来，进行一次全局性的工程复盘，梳理在从零设计、调试与交付一个复合","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture16.html","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture16.html","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","大语言模型","专题研讨：复合 Agent 系统架构复盘"]}</script>
+  <link rel="stylesheet" href="./assets/reader.css">
+</head>
+<body data-static="true" data-initial-doc="lecture16" data-doc="lecture16">
+  <a class="skip" href="#main">跳到正文</a>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-code">CS329Z<span class="brand-dot">.</span></span>
+        <span class="brand-sub">ENGINEERING AI AGENTS</span>
+      </a>
+      <p class="edition">AI Agent 系统工程教程 <span>中文学习资料</span></p>
+      <button type="button" class="search-trigger" id="open-search">
+        <span class="search-trigger-text">搜索课程、概念与算法…</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item active" data-doc="lecture16" href="./lecture16.html" aria-current="page"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item" data-doc="lab26" href="./lab26.html"><span>编写说明与待修订问题</span></a></div></nav>
+    <div class="sidebar-foot">
+      <span>CS329Z · Engineering AI Agents</span>
+      <span>System · Data · Evals</span>
+    </div>
+  </aside>
+
+  <div class="shade" id="shade"></div>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" id="menu" class="mobile-only" aria-label="打开课程目录" aria-expanded="false" aria-controls="sidebar">目录</button>
+        <div id="breadcrumb" class="breadcrumb">专题研讨：复合 Agent 系统架构复盘</div>
+      </div>
+      <div class="reading-tools">
+        <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
+        <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
+        <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
+        <button type="button" id="print" aria-label="打印或导出 PDF">打印 / PDF</button>
+      </div>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <div class="chapter-meta" id="chapter-meta"></div>
+
+        <section class="home-intro" id="home-intro" hidden>
+          <p class="eyebrow">CS329Z 中文教程 · ENGINEERING AI AGENTS</p>
+          <h1>从理解语言模型，<br>到构建可靠的 <em>AI Agent</em> 系统。</h1>
+          <p class="hero-lead">面向 Python 开发者的中文自学教程，包含 19 讲、4 项实践和配套代码导读。从 RAG、工具调用开始，逐步学习记忆、协作、评测与安全。</p>
+          <div class="hero-bottom">
+            <div class="hero-stats">
+              <span><strong>19</strong> 讲核心课程</span>
+              <span><strong>4</strong> 项工程实践</span>
+              <span><strong>2</strong> 套配套源码解析</span>
+            </div>
+            <div class="hero-actions">
+              <a class="start-link" href="./lecture01.html">开始第 01 讲 <span>→</span></a>
+              <a class="secondary-link" href="./lab20.html">进入 HW1 实战</a>
+            </div>
+          </div>
+        </section>
+
+        <article id="article"><h1 id="第-16-讲专题研讨复合-agent-系统架构复盘">第 16 讲｜专题研讨：复合 Agent 系统架构复盘</h1>
+<p>在原课程安排中，本讲为面向业界前沿实践的机动客座讲座（Guest Lecture）。借此承上启下的节点，我们将前十五讲所建立的<strong>系统架构（System）</strong>、<strong>数据飞轮（Data）</strong>与<strong>评测与安全（Evals &amp; Safety）</strong>三大支柱串联起来，进行一次全局性的工程复盘，梳理在从零设计、调试与交付一个复合 Agent 系统时的核心决策清单与故障排查框架，为接下来最后三讲（编程 Agent、主动式 Agent 与前沿开放问题）以及期末系统交付做好准备。</p>
+<h2 id="学习目标">学习目标</h2>
+<ul><li>将前十五讲的核心组件（模型底座、RAG 检索、工具协议、编排框架、上下文与记忆、多 Agent 协作、提示与权重优化、基准评测与安全护栏）整合为统一的工程全景图。</li><li>掌握从零启动一个 Agent 工程项目时的五步架构选型决策矩阵，避免过度设计与盲目堆砌复杂组件。</li><li>建立跨层级的端到端系统故障诊断方法论，能够快速定位并修复线上复杂轨迹中的瓶颈。</li></ul>
+<h2 id="知识讲解">知识讲解</h2>
+<h3 id="1-已知范围与占位">1. 已知范围与占位</h3>
+<h4 id="主题-tba">主题 TBA</h4>
+<p>在课程大纲中，本课时预留为客座专题研讨（Guest Lecture, TBA）。为了使学习路径完整连贯，下面我们围绕全课程的三大工程支柱，系统提炼一套可直接用于课程项目（Course Project）与生产系统设计的<strong>复合 Agent 架构师检查清单（Architect's Checklist）</strong>。</p>
+<h3 id="2-三大支柱的工程闭环与选型矩阵">2. 三大支柱的工程闭环与选型矩阵</h3>
+<p>当我们面对一个真实的业务或研究问题时，切忌一上来就拉起三四个多智能体群聊或盲目微调模型权重。一个成熟的 Agent 工程师会按照以下五个递进层级做出架构选型：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>决策阶段</th><th>核心工程问题</th><th>默认首选方案（Keep It Simple）</th><th>何时升级到更复杂方案（Upgrade Trigger）</th></tr></thead><tbody><tr><td><strong>1. 控制流选型</strong></td><td>谁来决定下一步？（Workflow vs. Agent）</td><td>步骤固定、分类明确的任务，优先采用 <strong>Prompt Chaining / Routing / Parallelization</strong> 等确定性工作流</td><td>任务需要根据环境反馈做多轮未知探索（如排查未知代码故障、多跳动态检索）时，才引入 <strong>ReAct / CodeAct</strong> 循环</td></tr><tr><td><strong>2. 知识与工具接入</strong></td><td>如何补充外部信息与行动能力？</td><td>优先使用 <strong>BM25 + 稠密向量混合检索（RRF）</strong>；工具集保持极简正交（如遵循 MCP 标准协议）</td><td>单次检索召回不足时升级为带跳数限制的 <strong>Agentic RAG</strong> 或引入 <strong>ColBERT / Cross-Encoder 重排</strong></td></tr><tr><td><strong>3. 上下文与记忆治理</strong></td><td>如何应对长周期与跨会话状态？</td><td>维护不可变的 <strong>Event Log</strong>，结合低成本的 <strong>Observation Masking</strong> 截断陈旧巨型输出，保持前缀稳定以复用 KV Cache</td><td>超出窗口预算时触发结构化 <strong>Compaction</strong>；需要跨会话延续偏好或技能时引入 <strong>Mem0 / MemGPT / Skill Files</strong></td></tr><tr><td><strong>4. 单智能体 vs. 多智能体</strong></td><td>是否需要拆分多个角色？</td><td>永远先构建并压榨 <strong>强单 Agent 基线（Strong Single-Agent Baseline）</strong></td><td>仅当子任务天然可解耦并行、或需要严格的上下文隔离（Sub-agents）且实测收益大于协调成本时，才引入 <strong>Orchestrator-Workers + Task Ledger + Worktree 隔离</strong></td></tr><tr><td><strong>5. 系统优化路径</strong></td><td>如何提升最后一公里准确率与性价比？</td><td>先冻结评测指标，使用 <strong>DSPy Bootstrapping / MIPROv2 / GEPA</strong> 优化少样本示范与提示词</td><td>当提示优化触及天花板、或需将大模型能力蒸馏至低延迟小模型时，才开展轨迹 <strong>SFT / GRPO / 在线策略蒸馏</strong></td></tr></tbody></table></div>
+<h3 id="3-端到端系统故障诊断树">3. 端到端系统故障诊断树</h3>
+<p>当你的 Agent 在评测集或线上运行中出现失败时，可按照以下五步诊断树由外向内快速定位根因：</p>
+<ol><li><strong>检查评测器与环境（Is the Eval Broken?）</strong>：打开完整 Transcript，确认是不是因为测试环境未重置、外部依赖波动，或者 Verifier 正则断言过于死板（False Negative）冤枉了合理的解法。</li><li><strong>检查感知与检索层（Did it Find the Right Context?）</strong>：如果答案错误，先看所需的正确文档或邮件是否出现在了 <code>search</code> 工具的返回结果中（排查检索端 Recall Ceiling），还是虽然检索出来了却因上下文太长被模型忽略（排查阅读端 Lost in the Middle）。</li><li><strong>检查工具契约与执行层（Did the Tool Call Succeed?）</strong>：检查是否存在 JSON 协议截断、参数类型不匹配、或是工具返回了不透明的错误码导致模型在同一条失败命令上死循环重试。</li><li><strong>检查长程状态与记忆层（Did Context Drift or Conflict Occur?）</strong>：在 10 轮以上的长任务中，检查是不是 Compaction 摘要丢掉了第 1 轮的用户硬约束，或者是跨会话记忆同时返回了相互矛盾的新旧数据。</li><li><strong>检查安全与人机边界（Did it Violate Policy or Act Without Clarifying?）</strong>：检查 Agent 是否在信息模糊时盲目猜测而非调用 <code>ask_user</code>，或者是否被外部文档中的间接提示注入带偏了执行方向。</li></ol>
+<h2 id="原课程阅读清单与导读">原课程阅读清单与导读</h2>
+<p>本讲无新增必读论文。建议结合前十五讲的核心阅读材料，重点复盘以下三篇贯穿全课程方法论的基石文献：</p>
+<ul><li><a href="https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/" target="_blank" rel="noopener noreferrer">Zaharia et al. &quot;The Shift from Models to Compound AI Systems.&quot; BAIR Blog (2024).</a></li><li><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Schluntz &amp; Zhang. &quot;Building Effective AI Agents.&quot; Anthropic (2024).</a></li><li><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" target="_blank" rel="noopener noreferrer">Grace et al. &quot;Demystifying Evals for AI Agents.&quot; Anthropic (2026).</a></li></ul>
+<h2 id="动手练习">动手练习</h2>
+<ol><li><strong>课程项目架构全链路自检</strong>：对照本讲的“五步架构选型矩阵”与“端到端故障诊断树”，审查你正在构建的课程项目或 HW1/HW2 系统：（a）列出你系统中每一个组件的选型理由及对应的强基线；（b）从最近的运行日志中抽取出 3 条真实失败轨迹，按五步诊断树定位根因并写出对应的修复实验方案。</li></ol></article>
+        <nav id="chapter-footer" aria-label="章节翻页"><a href="./lecture15.html"><small>← 上一节</small>Agent 安全与防护</a><a href="./lecture17.html"><small>下一节 →</small>编程与软件 Agent</a></nav>
+      </main>
+
+      <aside class="toc" aria-label="本节大纲">
+        <div class="toc-card">
+          <div class="toc-label">本讲目录</div>
+          <nav id="toc-links"><a class="depth-2" href="./lecture16.html#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87" data-anchor="学习目标">学习目标</a><a class="depth-2" href="./lecture16.html#%E7%9F%A5%E8%AF%86%E8%AE%B2%E8%A7%A3" data-anchor="知识讲解">知识讲解</a><a class="depth-3" href="./lecture16.html#1-%E5%B7%B2%E7%9F%A5%E8%8C%83%E5%9B%B4%E4%B8%8E%E5%8D%A0%E4%BD%8D" data-anchor="1-已知范围与占位">1. 已知范围与占位</a><a class="depth-3" href="./lecture16.html#2-%E4%B8%89%E5%A4%A7%E6%94%AF%E6%9F%B1%E7%9A%84%E5%B7%A5%E7%A8%8B%E9%97%AD%E7%8E%AF%E4%B8%8E%E9%80%89%E5%9E%8B%E7%9F%A9%E9%98%B5" data-anchor="2-三大支柱的工程闭环与选型矩阵">2. 三大支柱的工程闭环与选型矩阵</a><a class="depth-3" href="./lecture16.html#3-%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%B3%BB%E7%BB%9F%E6%95%85%E9%9A%9C%E8%AF%8A%E6%96%AD%E6%A0%91" data-anchor="3-端到端系统故障诊断树">3. 端到端系统故障诊断树</a><a class="depth-2" href="./lecture16.html#%E5%8E%9F%E8%AF%BE%E7%A8%8B%E9%98%85%E8%AF%BB%E6%B8%85%E5%8D%95%E4%B8%8E%E5%AF%BC%E8%AF%BB" data-anchor="原课程阅读清单与导读">原课程阅读清单与导读</a><a class="depth-2" href="./lecture16.html#%E5%8A%A8%E6%89%8B%E7%BB%83%E4%B9%A0" data-anchor="动手练习">动手练习</a></nav>
+          <a class="source-link" id="source-link" href="https://github.com/wanghao-SunSky/cs329z-chinese/blob/main/16-%E5%AE%A2%E5%BA%A7%E8%AE%B2%E5%BA%A7TBA.md">查看 Markdown 源文件 ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="page-footer">
+      <span>CS329Z · AI Agent 系统工程（Engineering AI Agents）</span>
+      <a href="https://github.com/wanghao-SunSky/cs329z-chinese">GitHub · Markdown 与 HTML</a>
+    </footer>
+  </div>
+
+  <dialog id="search-dialog">
+    <form method="dialog" class="search-head">
+      <label for="search-input">搜索</label>
+      <input id="search-input" type="search" placeholder="输入概念、算法、论文或练习关键词（如 ReAct, BM25, GRPO, MCP）…" autocomplete="off">
+      <button type="submit" aria-label="关闭搜索">ESC</button>
+    </form>
+    <p class="search-hint" id="search-hint">支持跨全部 19 讲课程、4 项实践与代码架构导读实时检索</p>
+    <div id="search-results" aria-live="polite"></div>
+  </dialog>
+
+  <noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/reader.js"></script>
+</body>
+</html>

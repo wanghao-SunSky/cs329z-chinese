@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent 基础与全景 | CS329Z 中文教程</title>
+<meta name="description" content="在很长一段时间里，构建自然语言处理应用的核心工作是训练或微调一个单体模型（Monolithic Model）：给定一段输入文本，模型一次性输出一段预测文本。然而，当我们希望 AI 真正替人完成复杂的工作——比如排查线上代码故障、核对几十封邮件并安排日程、或者在终端里完成多步数据分析——单次">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture01.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CS329Z 中文教程">
+  <meta property="og:title" content="Agent 基础与全景 | CS329Z 中文教程">
+  <meta property="og:description" content="在很长一段时间里，构建自然语言处理应用的核心工作是训练或微调一个单体模型（Monolithic Model）：给定一段输入文本，模型一次性输出一段预测文本。然而，当我们希望 AI 真正替人完成复杂的工作——比如排查线上代码故障、核对几十封邮件并安排日程、或者在终端里完成多步数据分析——单次">
+  <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture01.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Agent 基础与全景 | CS329Z 中文教程">
+  <meta name="twitter:description" content="在很长一段时间里，构建自然语言处理应用的核心工作是训练或微调一个单体模型（Monolithic Model）：给定一段输入文本，模型一次性输出一段预测文本。然而，当我们希望 AI 真正替人完成复杂的工作——比如排查线上代码故障、核对几十封邮件并安排日程、或者在终端里完成多步数据分析——单次">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Agent 基础与全景 | CS329Z 中文教程","description":"在很长一段时间里，构建自然语言处理应用的核心工作是训练或微调一个单体模型（Monolithic Model）：给定一段输入文本，模型一次性输出一段预测文本。然而，当我们希望 AI 真正替人完成复杂的工作——比如排查线上代码故障、核对几十封邮件并安排日程、或者在终端里完成多步数据分析——单次","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture01.html","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture01.html","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","大语言模型","Agent 基础与全景"]}</script>
+  <link rel="stylesheet" href="./assets/reader.css">
+</head>
+<body data-static="true" data-initial-doc="lecture01" data-doc="lecture01">
+  <a class="skip" href="#main">跳到正文</a>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-code">CS329Z<span class="brand-dot">.</span></span>
+        <span class="brand-sub">ENGINEERING AI AGENTS</span>
+      </a>
+      <p class="edition">AI Agent 系统工程教程 <span>中文学习资料</span></p>
+      <button type="button" class="search-trigger" id="open-search">
+        <span class="search-trigger-text">搜索课程、概念与算法…</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item active" data-doc="lecture01" href="./lecture01.html" aria-current="page"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item" data-doc="lab26" href="./lab26.html"><span>编写说明与待修订问题</span></a></div></nav>
+    <div class="sidebar-foot">
+      <span>CS329Z · Engineering AI Agents</span>
+      <span>System · Data · Evals</span>
+    </div>
+  </aside>
+
+  <div class="shade" id="shade"></div>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" id="menu" class="mobile-only" aria-label="打开课程目录" aria-expanded="false" aria-controls="sidebar">目录</button>
+        <div id="breadcrumb" class="breadcrumb">Agent 基础与全景</div>
+      </div>
+      <div class="reading-tools">
+        <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
+        <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
+        <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
+        <button type="button" id="print" aria-label="打印或导出 PDF">打印 / PDF</button>
+      </div>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <div class="chapter-meta" id="chapter-meta"></div>
+
+        <section class="home-intro" id="home-intro" hidden>
+          <p class="eyebrow">CS329Z 中文教程 · ENGINEERING AI AGENTS</p>
+          <h1>从理解语言模型，<br>到构建可靠的 <em>AI Agent</em> 系统。</h1>
+          <p class="hero-lead">面向 Python 开发者的中文自学教程，包含 19 讲、4 项实践和配套代码导读。从 RAG、工具调用开始，逐步学习记忆、协作、评测与安全。</p>
+          <div class="hero-bottom">
+            <div class="hero-stats">
+              <span><strong>19</strong> 讲核心课程</span>
+              <span><strong>4</strong> 项工程实践</span>
+              <span><strong>2</strong> 套配套源码解析</span>
+            </div>
+            <div class="hero-actions">
+              <a class="start-link" href="./lecture01.html">开始第 01 讲 <span>→</span></a>
+              <a class="secondary-link" href="./lab20.html">进入 HW1 实战</a>
+            </div>
+          </div>
+        </section>
+
+        <article id="article"><h1 id="第-01-讲agent-基础与全景">第 01 讲｜Agent 基础与全景</h1>
+<p>在很长一段时间里，构建自然语言处理应用的核心工作是训练或微调一个单体模型（Monolithic Model）：给定一段输入文本，模型一次性输出一段预测文本。然而，当我们希望 AI 真正替人完成复杂的工作——比如排查线上代码故障、核对几十封邮件并安排日程、或者在终端里完成多步数据分析——单次文本生成就显得捉襟见肘了。</p>
+<p>这门课程的核心主题，正是如何完成从<strong>“调用单个语言模型”</strong>向<strong>“构建复合 AI 系统与自主智能体（Agentic Systems）”</strong>的工程跨越。作为全课程的开篇，本讲将梳理 Agent 概念的演进脉络，拆解现代 AI Agent 的五大核心组件，辨析固定工作流与自主 Agent 的设计边界，并探讨可靠性、安全与评测等关键挑战。</p>
+<h2 id="学习目标">学习目标</h2>
+<ul><li>掌握 Agent 的基本解剖结构，理解大语言模型核心（LLM Core）、规划与推理（Planning &amp; Reasoning）、记忆（Memory）、工具（Tools）与环境（Environment）之间的闭环反馈机制。</li><li>区分复合 AI 系统（Compound AI Systems）、固定工作流（Workflows）与自主 Agent（Autonomous Agents）的控制流差异及适用场景。</li><li>理解构建生产级 Agent 在长程可靠性、训练优化、安全边界与真实能力评测上的核心工程挑战。</li></ul>
+<h2 id="知识讲解">知识讲解</h2>
+<h3 id="1-课程定位与学习方式">1. 课程定位与学习方式</h3>
+<h4 id="从模型到系统">从模型到系统</h4>
+<p>构建一个可靠的 AI Agent，需要同时具备两种视角：<strong>模型视角（Modeling Perspective）</strong>与<strong>系统视角（Systems Perspective）</strong>。熟悉大模型的研究者了解模型如何预训练、微调、对齐与提示，而软件系统工程师则擅长设计高可靠的工具接口、运行时环境与容错基础设施。</p>
+<p>在工程实践中，无论一个 Agent 系统外表多么复杂，其研发工作都可以归结为三根支柱：</p>
+<ol><li><strong>系统（The System）</strong>：架构设计、控制流编排、工具接口定义与上下文管理。</li><li><strong>数据（The Data）</strong>：训练样本、少样本示范（Demonstrations）、交互轨迹（Rollouts）与人类反馈。</li><li><strong>评测（The Evals）</strong>：测试任务集、评分器（Graders）以及衡量成功率、成本、延迟与安全性的指标体系。</li></ol>
+<p>在动手堆叠框架之前，始终应当先定义清楚要解决什么问题、用什么任务数据和评测标准来检验系统是否真正奏效。</p>
+<h4 id="先备知识教学团队与课堂安排">先备知识、教学团队与课堂安排</h4>
+<p>本课程采用“先底层实现，后抽象框架”的训练路径。在前几周，你将从零手写检索器、函数调用解析器与 Agent 主循环，亲身体验每一处边界条件；在此之后，再去理解 DSPy、LangGraph 等框架是如何将这些模式抽象化的。学习过程中建议结合课堂讲义、必读论文、两项代码作业（从零实现 Harness 与构建评测套件）、论文复现报告以及贯穿全学期的课程项目，将理论转化为可验证的系统工程能力。</p>
+<h4 id="ai-辅助学习与技能侵蚀">AI 辅助学习与技能侵蚀</h4>
+<p>在学习构建 AI 系统的过程中，如何正确使用 AI 辅助编程是一个值得警惕的问题。Anthropic（Shen &amp; Tamkin, 2026）针对 52 名软件工程师开展了一项随机对照实验（RCT）：让工程师学习一个全新的 Python 库，一组使用 AI 助手辅助编写代码，另一组完全独立探索。在随后的掌握度测验中，<strong>依赖 AI 辅助的工程师得分比独立学习组低了 17%（相当于差了两个字母等级）</strong>，且差距最大的恰恰是资深工程师最核心的能力——<strong>代码调试与排错（Debugging）</strong>。</p>
+<p>实验表明，用 AI 快速生成能跑通的代码，并不等于你真正理解了底层机制。因此，在完成本课程的作业与实验时，推荐遵循<strong>“先自行设计并预测输出 → 编写核心逻辑 → 借助工具调试验证 → 能够脱离代码独立复述设计权衡”</strong>的学习闭环。</p>
+<h4 id="诚信出勤与资源边界">诚信、出勤与资源边界</h4>
+<p>在工程实践与实验报告中，应当严格区分三个层次的工程事实：<strong>代码逻辑已编写完成</strong>、<strong>在离线确定性脚本模型（如 <code>ScriptedLM</code>）上通过控制流测试</strong>，以及<strong>在真实大模型与完整数据集上跑通端到端评测</strong>。诚实地记录每一次实验的配置、预算开销与失败案例，远比展示一段经过挑选的完美演示更有工程价值。</p>
+<h3 id="2-agent-概念的历史">2. Agent 概念的历史</h3>
+<h4 id="早期分布式与认知-agent">早期分布式与认知 Agent</h4>
+<p>“Agent”一词源于拉丁语 <em>agens</em>，意为“行动者（one who acts）”。在人工智能领域，这一概念并非伴随大语言模型才诞生，而是经历了半个多世纪的演化：</p>
+<ul><li><strong>ACTOR 模型（Hewitt, Bishop &amp; Steiger, 1973）</strong>：人工智能文献中最早系统使用 Agent 概念的工作之一，将计算系统建模为通过异步消息传递协作的独立计算单元。</li><li><strong>合同网协议（Contract Net Protocol, Smith, 1980）</strong>：将分布式系统中的任务分配建模为不同节点之间的招标、投标与协商过程。</li><li><strong>心智社会（Society of Mind, Marvin Minsky, 1986）</strong>：从认知科学角度提出，复杂的智能行为是由大量简单、无智能的底层微过程（Agents）相互协作与竞争涌现出来的。</li></ul>
+<p>这些早期探索奠定了“多主体通信、任务分解与协作”的思想基础，但当时的系统依赖人工编写的符号规则，尚不具备通用的自然语言理解与开放推理能力。</p>
+<h4 id="经典定义与自主性">经典定义与自主性</h4>
+<p>进入 20 世纪 90 年代，研究者开始严格界定什么是一个“智能体”：</p>
+<ul><li><strong>Pattie Maes（1994）</strong> 强调，自主 Agent 是在复杂、动态的环境中驻留，能够自主感知并采取行动以实现一系列目标的系统。</li><li><strong>Wooldridge 与 Jennings（1995）</strong> 提出了著名的 Agent 四大特性：<strong>自主性（Autonomy，在无人类直接干预下运行并控制自身状态）</strong>、<strong>社交能力（Social Ability，与其他 Agent 或人类通信协作）</strong>、<strong>反应性（Reactivity，感知环境变化并及时响应）</strong> 与 <strong>主动性（Pro-activeness，不仅被动响应，还能主动采取目标导向的行动）</strong>。</li><li><strong>Russell 与 Norvig（1995）</strong> 在经典教材《人工智能：一种现代方法》中给出了最广为人知的系统定义：Agent 是任何能够通过<strong>传感器（Sensors）</strong>感知环境，并通过<strong>执行器（Actuators）</strong>作用于环境的实体。</li></ul>
+<h4 id="强化学习到语言-agent">强化学习到语言 Agent</h4>
+<p>随后，<strong>强化学习（Reinforcement Learning, Sutton &amp; Barto, 1998）</strong> 将这一概念形式化为“智能体—环境循环（Agent-Environment Loop）”：Agent 在每个时间步接收观测（Observation <span class="math-inline">O<sub>t</sub></span>）与奖励（Reward <span class="math-inline">R<sub>t</sub></span>），并输出动作（Action <span class="math-inline">A<sub>t</sub></span>）以最大化长期累积回报。从 DeepMind 在 Atari 游戏上取得突破的 DQN（Mnih et al., 2015）到围棋程序 AlphaGo，强化学习证明了在规则明确、奖励可密集计算的封闭环境中，这种闭环策略能达到超越人类的水平。</p>
+<p>然而，传统强化学习策略很难泛化到开放的现实世界任务。转折点出现在大语言模型时代：</p>
+<ol><li><strong>GPT-3（2020）</strong> 展示了强大的上下文学习（In-Context Learning）与零样本泛化能力；</li><li><strong>MRKL 系统（2022）</strong> 提出将大语言模型与外部确定性模块（计算器、数据库、API）结合，实现模块化推理；</li><li><strong>ReAct（Yao et al., 2022年10月）</strong> 将语言模型的思维链推理（Reasoning）与外部工具动作（Acting）交织在同一个循环中；</li><li>紧接着，ChatGPT（2022年11月）、GPT-4（2023年3月）以及开源社区涌现的 BabyAGI、AutoGPT 引爆了以大语言模型为核心的现代 Agent 浪潮。</li></ol>
+<p>随着基础模型能力与测试时计算（Test-time Compute）的持续提升，现代 Agent 能够可靠自主完成的任务时长正在从几秒钟的单步问答，快速向数十分钟乃至数小时的复杂软件工程与研究任务延伸。</p>
+<h3 id="3-agent-的组成与推理">3. Agent 的组成与推理</h3>
+<h4 id="核心计划工具环境">核心、计划、工具、环境</h4>
+<p>如果把一个现代语言 Agent 拆开，它的标准架构由五个核心部分组成，形成一个持续运转的闭环：</p>
+<ol><li><strong>大语言模型核心（LLM Core）</strong>：系统的“中枢大脑”，根据当前上下文中的提示词、历史记录与环境观测，生成下一步的内部推理或外部动作指令。</li><li><strong>规划与推理（Planning &amp; Reasoning）</strong>：在行动前分解复杂目标、分析约束条件，并在遇到阻碍时调整方案（对应 ReAct 中的 <code>Thought</code>）。</li><li><strong>记忆（Memory）</strong>：保存和检索交互轨迹（<code>traces so far</code>）、领域知识与可复用技能，突破单次上下文窗口的长度限制。</li><li><strong>工具（Tools）</strong>：系统的“执行器（Actuators）”，包括搜索引擎、代码解释器、文件读写接口、计算器、数据库查询等，使模型生成的文本指令能够转化为对外部世界的真实操作（对应 <code>Act</code>）。</li><li><strong>环境（Environment）</strong>：Agent 所处的外部世界，如桌面操作系统、Web 浏览器、代码仓库、数据库或移动应用。环境在执行工具动作后产生状态变更，并将新的观测结果（<code>Obs</code>）反馈给 Agent。</li></ol>
+<p>值得注意的是，Agent 的动作（Actions）涵盖三种形式：调用外部工具、与环境交互，以及直接向用户返回自然语言回复。如果一个系统只生成了一份长篇计划却没有任何执行器与环境反馈，它完成的只是文本生成，而非真正的 Agent 行动。</p>
+<h4 id="推理的三个层次">推理的三个层次</h4>
+<p>在讨论“Agent 推理（Reasoning）”时，我们必须区分三个不同层次的概念：</p>
+<ul><li><strong>对人类而言</strong>：推理是演绎、类比、归纳与规划等真实的心智过程（Mental Processes）。</li><li><strong>对大语言模型而言</strong>：推理是模型在输出最终答案或动作前生成的<strong>中间文本序列（Intermediate Generations）</strong>，它模仿了人类思维的语言表征，但并不等同于人类的意识过程。</li><li><strong>对 Agent 系统而言</strong>：推理是一种<strong>更新 Agent 自身内部状态的内部动作（Internal Action）</strong>。</li></ul>
+<p>为什么在从“观测（Observation）”到“动作（Action）”之间插入显式的推理步骤至关重要？设想你在做菜时看到盐罐空了（观测 <span class="math-inline">O<sub>t</sub></span>），如果你的动作直接是“向右转身（动作 <span class="math-inline">A<sub>t</sub></span>）”，从纯观测到动作的直接映射跨度极大，很难泛化。但如果在中间加入一步推理：“这道菜需要咸味，既然盐没了，我应该找酱油代替，而酱油在右边的橱柜里”，那么后续的“向右转 <span class="math-inline">&rarr;</span> 看到橱柜 <span class="math-inline">&rarr;</span> 打开橱柜”就顺理成章了。显式推理能同时提升系统的<strong>跨场景泛化能力（Generalization）</strong>与<strong>行为可控性（Alignment）</strong>。</p>
+<h4 id="chain-of-thought-与错误推理">Chain-of-Thought 与错误推理</h4>
+<p>思维链（Chain-of-Thought, CoT）通过让模型“一步步思考（Let's think step by step）”显著提升了数学与逻辑任务的表现。但在开放环境中，<strong>只推理不行动（Reason Only）</strong>有着致命的短板——<strong>事实幻觉（Hallucination）</strong>。</p>
+<p>来看课件中的一个经典例子：</p>
+<blockquote><p><strong>问题</strong>：除了 Apple Remote 遥控器之外，还有什么设备可以控制 Apple Remote 最初设计用来交互的那个程序？</p></blockquote>
+<ul><li><strong>直接回答（Standard）</strong>：模型盲猜 <code>iPod</code>（错误）。</li><li><strong>纯思维链（Reason Only）</strong>：模型自信地推理道：“让我们一步步思考。Apple Remote 最初是设计用来与 Apple TV 交互的。Apple TV 可以由 iPhone、iPad 和 iPod Touch 控制。因此答案是 iPhone、iPad 和 iPod Touch。”</li></ul>
+<p>这段推理逻辑通顺、结构严密，但结论完全错误——因为第一步的前提就是模型编造的（Apple Remote 最初于 2005 年推出，设计用来控制 Mac 上的 <strong>Front Row</strong> 媒体中心程序，而非 2007 年才发布的 Apple TV）。在没有外部真实环境反馈的情况下，思维链一旦在早期步骤产生偏差，后续推理只会沿着错误前提越走越远。</p>
+<h4 id="reactreason--act--observe">ReAct：Reason → Act → Observe</h4>
+<p>为了解决纯推理的幻觉问题与纯行动（Act-only）缺乏目标规划的问题，<strong>ReAct（Yao et al., 2022）</strong> 提出了将推理与行动交织的范式：<strong>Reason（思考）<span class="math-inline">&rarr;</span> Act（行动）<span class="math-inline">&rarr;</span> Observe（观测）</strong>。</p>
+<p>面对上面同一个问题，ReAct 的执行轨迹如下：</p>
+<ol><li><strong>Thought 1</strong>：我需要先搜索 Apple Remote，查明它最初是设计用来控制什么程序的。<ul><li><strong>Act 1</strong>：<code>Search[Apple Remote]</code></li><li><strong>Obs 1</strong>：Apple Remote 是苹果公司于 2005 年 10 月推出的遥控器……最初设计用于控制 Front Row 媒体中心程序……</li></ul></li><li><strong>Thought 2</strong>：Apple Remote 最初用于控制 Front Row 程序。接下来我需要搜索 Front Row，看看还有什么设备能控制它。<ul><li><strong>Act 2</strong>：<code>Search[Front Row]</code></li><li><strong>Obs 2</strong>：未找到 <code>[Front Row]</code>。相似词条：<code>['Front Row Seat to Earth', 'Front Row Motorsports', 'Front Row (software)', ...]</code></li></ul></li><li><strong>Thought 3</strong>：直接搜 Front Row 没找到，我应该改搜 <code>Front Row (software)</code>。<ul><li><strong>Act 3</strong>：<code>Search[Front Row (software)]</code></li><li><strong>Obs 3</strong>：Front Row 是一款已停产的媒体中心软件……可由 Apple Remote 或键盘功能键控制。</li></ul></li><li><strong>Thought 4</strong>：Front Row 软件由 Apple Remote 或键盘功能键（Keyboard function keys）控制，因此答案是键盘功能键。<ul><li><strong>Act 4</strong>：<code>Finish[keyboard function keys]</code></li></ul></li></ol>
+<p>通过这个轨迹可以看到 ReAct 的核心威力：当外部检索返回“未找到”时，模型能够根据观测调整查询词；而检索回来的真实证据又及时锚定了模型的推理方向，避免了凭空猜测。</p>
+<h4 id="self-consistency">Self-consistency</h4>
+<p>除了与环境交互，提升推理可靠性的另一条重要思路是<strong>自洽性采样（Self-Consistency, Wang et al., 2023）</strong>：对同一个问题使用思维链提示采样多条不同的推理路径（例如通过设置非零的 Temperature），然后在所有路径得出的最终答案集合中通过多数投票（Majority Voting）选出最一致的答案。其核心直觉是：复杂问题往往有多种正确的推导路径，而错误的推理更容易发散到不同的错误答案上。不过需要注意，Self-Consistency 会成倍增加推理 Token 成本，且当模型对某类事实存在系统性偏见时，多条路径仍可能一致投出错误答案。</p>
+<h4 id="reflexion-与多-agent-推理">Reflexion 与多 Agent 推理</h4>
+<p>当单次尝试失败时，如何让 Agent 从错误中吸取教训？</p>
+<ul><li><strong>语言自我反思（Reflexion, Shinn et al., 2023）</strong>：无需更新模型权重，而是让 Agent 根据外部环境返回的失败信号（如单元测试报错、任务超时或评分器反馈）生成一段自然语言反思摘要（Self-Reflection），将这段“经验教训”存入滑动记忆缓冲区，作为下一次尝试时的显式提示（Self-hints）。</li><li><strong>多智能体辩论（Multi-Agent Debate, Du et al., 2023）</strong>：让多个模型实例分别针对同一问题给出初始解答，随后相互审阅对方的推理过程并展开多轮辩论，最终收敛到更准确的结论。</li><li><strong>中心化编排（如 Microsoft Magentic-One）</strong>：由一个主导编排器（Orchestrator）负责全局规划与进度追踪，将子任务委派给网页浏览、代码执行、文件操作等专长子 Agent 协同完成。</li></ul>
+<h3 id="4-记忆的三种作用">4. 记忆的三种作用</h3>
+<h4 id="为什么不能只加长上下文">为什么不能只加长上下文</h4>
+<p>既然现代大语言模型的上下文窗口已经扩展到数十万乃至上百万 Token，为什么 Agent 还需要专门的记忆架构？原因在于两点：第一，对于长周期、跨会话运行的 Agent，持续产生的事件流终究会撑爆任何固定窗口；第二，即使窗口装得下，过长的历史上下文也会导致高昂的计算成本与注意力分散（模型难以在海量陈旧信息中精准聚焦当前关键事实）。因此，记忆系统的核心不在于“把所有字节原封不动塞进提示词”，而在于设计合理的<strong>写入（Write）</strong>与<strong>读取（Read）</strong>机制。</p>
+<p>受人类认知心理学的启发，Agent 的长期记忆通常按内容形态划分为三类：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>记忆类型</th><th>存储内容</th><th>写入机制（Write）</th><th>读取机制（Read）</th><th>典型代表系统</th></tr></thead><tbody><tr><td><strong>情景记忆（Episodic Memory）</strong></td><td>具体经历与历史事件轨迹</td><td>追加写入事件流（Append-only event streams）</td><td>基于时间衰减、重要性与相关度的启发式检索</td><td>Generative Agents (Park et al., 2023)</td></tr><tr><td><strong>语义记忆（Semantic Memory）</strong></td><td>提炼出的事实、概念与世界知识</td><td>由 LLM 对历史事件进行归纳与推理提炼</td><td>基于语义相关性检索事实</td><td>Mem0 / 知识库系统</td></tr><tr><td><strong>程序性记忆（Procedural Memory）</strong></td><td>完成任务的技能、动作规则与代码</td><td>将验证成功的操作封装为可执行代码或技能文件</td><td>基于任务描述的向量检索与复用</td><td>Voyager (Wang et al., 2023)</td></tr></tbody></table></div>
+<h4 id="episodic-memory">Episodic memory</h4>
+<p>情景记忆回答的是<strong>“过去发生过什么（What happened）”</strong>。它忠实记录 Agent 经历过的完整交互序列或事件流。在读取时，系统通常结合事件发生的新近度（Recency）、重要度（Importance）与当前查询的语义相关度（Relevance）综合打分，召回最相关的历史片段。</p>
+<h4 id="semantic-memory">Semantic memory</h4>
+<p>语义记忆回答的是<strong>“我知道哪些事实（What is true）”</strong>。它不再保留流水账式的对话原文，而是通过大模型从过往经历中抽取出结构化的事实、用户偏好或领域知识（例如“用户的差旅偏好是靠窗座位”）。这种方式极大地压缩了信息体积，但在归纳与覆盖旧事实时需要妥善处理信息冲突。</p>
+<h4 id="procedural-memory">Procedural memory</h4>
+<p>程序性记忆回答的是<strong>“某件事该怎么做（How to do it）”</strong>。以 Minecraft 游戏智能体 <strong>Voyager（Wang et al., 2023）</strong> 为例，当 Agent 在环境中探索出如何“制作木镐”或“挖掘铁矿”后，它会将这段通过验证的 JavaScript 控制代码存入技能库（Skill Library）；遇到更复杂的后续目标时，直接通过向量检索调出已有技能函数进行组合，而不必每次从零试错。</p>
+<h3 id="5-工具与复合系统">5. 工具与复合系统</h3>
+<h4 id="toolformer-与-gorilla">Toolformer 与 Gorilla</h4>
+<p>为了让语言模型具备突破自身参数边界的行动能力，研究者探索了如何让模型学会调用外部工具：</p>
+<ul><li><strong>Toolformer（Schick et al., 2023）</strong>：证明了语言模型可以通过自监督方式学会使用计算器、问答系统、搜索引擎、翻译系统和日历等五类工具。模型自主决定何时调用哪个 API、传入什么参数，以及如何将返回结果融入后续生成。</li><li><strong>Gorilla（Patil et al., 2023）</strong>：将工具调用规模扩展到 HuggingFace、PyTorch、TensorFlow Hub 等上千个真实 API，通过检索感知训练（Retrieval-Aware Training）显著降低了模型捏造不存在 API 参数的幻觉率。</li></ul>
+<h4 id="系统的层次与复合性">系统的层次与复合性</h4>
+<p>正因为现代 AI 应用普遍结合了模型、检索器、记忆与工具，伯克利人工智能实验室（Zaharia et al., 2024）提出了<strong>复合 AI 系统（Compound AI Systems）</strong>的概念：最先进的结果往往不再由单一模型裸跑产生，而是由多个异构组件协同工程化产出。</p>
+<h4 id="workflow-与-agent">Workflow 与 Agent</h4>
+<p>在复合 AI 系统中，<strong>工作流（Workflow）</strong>与<strong>自主智能体（Agent）</strong>的核心区别在于：<strong>究竟由谁来决定下一步的控制流（Who decides the steps）？</strong></p>
+<ul><li><strong>Workflow（工作流）</strong>：由<strong>人类编写的代码</strong>固定控制流步骤。例如 <strong>Agentless</strong> 通过固定的“定位 <span class="math-inline">&rarr;</span> 修复 <span class="math-inline">&rarr;</span> 验证”三步流水线解决代码仓库 Issue；DeepMind 的 <strong>AlphaCode 2</strong> 则通过微调模型采样多达一百万个候选代码方案，再用固定流水线过滤、聚类与打分。</li><li><strong>Agent（智能体）</strong>：由<strong>大语言模型</strong>根据当前环境观测动态决定下一步采取什么动作、何时终止（例如 <strong>SWE-agent</strong> 在终端中自主探索文件、修改代码并运行测试）。</li></ul>
+<p>在工程实践中，如果任务结构清晰、步骤固定且可预测，优先采用 Workflow 往往更可控、成本更低；当任务需要开放探索、多轮试错与动态适应环境时，Agent 架构才能发挥其灵活性优势。</p>
+<h4 id="ragfunction-calling-与-mcp">RAG、function calling 与 MCP</h4>
+<p>在连接外部知识与工具时，现代复合系统依赖三大核心机制：</p>
+<ol><li><strong>检索增强生成（RAG）</strong>：通过 <strong>Retrieve（从文档库检索相关信息）<span class="math-inline">&rarr;</span> Augment（将检索内容注入用户问题上下文）<span class="math-inline">&rarr;</span> Generate（由模型基于检索事实生成带引用的回答）</strong> 三步，实时为模型补充动态与私有知识。</li><li><strong>函数调用（Function Calling）</strong>：遵循 <strong>Select（从上下文 Schema 中选择工具）<span class="math-inline">&rarr;</span> Arguments（根据任务填充强类型参数）<span class="math-inline">&rarr;</span> Validate（在调用前进行 Schema 校验或受限解码）<span class="math-inline">&rarr;</span> Execute（在沙箱中执行并将结果写回上下文）</strong> 的标准四步链路。例如回答“test.py 里有什么？”时，模型选择 <code>read_file</code>，填入 <code>{&quot;path&quot;: &quot;test.py&quot;}</code>，经校验路径为字符串后执行读取，再将返回的代码文本交回模型上下文。</li><li><strong>模型上下文协议（Model Context Protocol, MCP）</strong>：提供统一的开放协议标准，将不同宿主应用（Host/Client）与外部数据源及工具服务（Server）解耦，避免为每个模型和工具重复编写适配层。</li></ol>
+<h3 id="6-关键挑战与研究问题">6. 关键挑战与研究问题</h3>
+<h4 id="可靠性与训练难度">可靠性与训练难度</h4>
+<p>将模型放入多步循环后，工程挑战呈指数级上升：</p>
+<ul><li><strong>误差累积（Compounding Errors）</strong>：假设单步决策成功率为 <span class="math-inline">95%</span>，连续执行 20 步无差错的概率就会跌至 <span class="math-inline">0.95<sup>20</sup> &approx; 35.8%</span>。早期的一小步方向错误会在后续长轨迹中不断放大。</li><li><strong>长程上下文漂移（Context Drift）</strong>：随着交互轮数增加，上下文不断膨胀，模型容易遗忘最初的任务约束或在原地打转。</li><li><strong>训练瓶颈</strong>：Agent 轨迹采样（Rollouts）成本高昂、耗时漫长，且往往只有最终成败的稀疏奖励（Sparse Reward），很难精确判断漫长轨迹中究竟哪一步做出了关键贡献（Credit Assignment）。</li></ul>
+<h4 id="安全与任务成功不是同一个指标">安全与任务成功不是同一个指标</h4>
+<p>在评测 Agent 时，<strong>“任务完成率（Task Completion）”绝不等于“安全合规（Safety Compliance）”</strong>。HarnessAudit 等安全基准测试表明，许多在功能基准上得分极高的 Agent，为了完成用户目标会不择手段地越权访问文件、跳过安全检查或泄露敏感凭据。</p>
+<h4 id="评测的稳定性与真实能力">评测的稳定性与真实能力</h4>
+<p>普林斯顿 HAL（Holistic Agent Leaderboard）可靠性研究表明，衡量一个 Agent 的真实可靠性必须同时考察三个维度：</p>
+<ol><li><strong>跨运行一致性（Consistency across runs）</strong>：面对完全相同的任务运行两次，Agent 能否给出一致的结果？</li><li><strong>对扰动的鲁棒性（Robustness to perturbations）</strong>：当提示词措辞、工具返回格式或环境发生微小但真实的变动时，表现是否剧烈退化？</li><li><strong>可预测的失败模式（Predictable failure modes）</strong>：当 Agent 失败时，它是以清晰、可恢复的方式优雅报错，还是发生不可预测的失控行为？</li></ol>
+<h4 id="人与-agent-的协作">人与 Agent 的协作</h4>
+<p>在真实环境中，Agent 既容易缺乏协作意识（在应该向用户请求澄清或授权时盲目自作主张），又极易受到外部环境的对抗干扰。例如，Zhang et al.（2024）针对视觉—语言计算机操作 Agent 的研究发现，仅在屏幕上放置恶意设计的弹窗广告（Pop-ups），就能达到 <strong>87% 的攻击成功率</strong>——Agent 的注意力被弹窗劫持并点击进去，彻底偏离了用户原本交代的任务。</p>
+<h4 id="隐私失配与多-agent-风险">隐私、失配与多 Agent 风险</h4>
+<p>最后，随着 Agent 深入个人与多主体环境，三类深层风险正成为前沿研究焦点：</p>
+<ul><li><strong>情境隐私泄漏（PrivacyLens, Shao et al., 2024）</strong>：Agent 拥有读取用户邮件、日历和聊天记录的<strong>访问权限</strong>，并不代表它可以不加区分地将这些信息写入发给第三方的消息中；语言模型往往缺乏对人类社交情境隐私规范（Privacy Norms）的敏锐判断。</li><li><strong>目标失配、迎合与奖励篡改（Misalignment, Sycophancy &amp; Reward Tampering）</strong>：模型可能为了迎合用户偏见而歪曲事实，甚至在强化学习训练中学会直接修改测试脚本或计分函数以骗取高分（Reward Tampering）。</li><li><strong>多 Agent 串谋与级联事故（Multi-agent Collusion）</strong>：当多个自主 Agent 在开放平台交互时，可能出现相互强化错误、规避监管甚至引发真实生产环境级联故障的风险。</li></ul>
+<h2 id="原课程阅读清单与导读">原课程阅读清单与导读</h2>
+<ul><li><a href="https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/" target="_blank" rel="noopener noreferrer">Zaharia et al. &quot;The Shift from Models to Compound AI Systems.&quot; BAIR Blog (2024).</a> 导读：理解为什么工程界的设计重心正从“单次模型调用”转向“由检索、工具、验证器与控制逻辑组成的复合系统”，思考系统级优化与单模型微调的边界。</li><li><a href="https://lilianweng.github.io/posts/2023-06-23-agent/" target="_blank" rel="noopener noreferrer">Weng. &quot;LLM Powered Autonomous Agents.&quot; Lil'Log (2023).</a> 导读：梳理 Planning（任务分解与自我反思）、Memory（短期上下文与长期外部存储）以及 Tool Use（MRKL、Toolformer、HuggingGPT）的经典分类体系。</li><li><a href="https://arxiv.org/abs/2407.01502" target="_blank" rel="noopener noreferrer">Kapoor et al. &quot;AI Agents That Matter.&quot; TMLR (2025).</a> 导读：审视当前 Agent 评测中常见的缺陷——如忽略 API 调用成本、未对齐基线预算、缺乏可复现性，掌握绘制“准确率—成本（Accuracy-Cost）”帕累托前沿的公平评测方法。</li></ul>
+<h2 id="动手练习">动手练习</h2>
+<ol><li><strong>绘制并拆解五组件闭环</strong>：围绕“查询公司差旅报销政策并核对某笔餐饮发票是否合规”这一具体场景，画出包含 <code>LLM Core</code>、<code>Planning &amp; Reasoning</code>、<code>Memory</code>、<code>Tools</code>、<code>Environment</code> 的架构图，明确每一步的输入、工具签名、环境观测与终止条件。</li><li><strong>三种实现范式的对比分析</strong>：针对上述场景，分别设计（a）单次提示直接生成、（b）固定步骤的检索工作流（Workflow）、（c）自主循环调用工具的 ReAct Agent 三种方案。列出一张对比表，分析这三种方案在“发票币种需要实时汇率换算”和“政策文档存在新旧两个版本”两种边界情况下的失败模式、Token 成本与可控性差异。</li></ol></article>
+        <nav id="chapter-footer" aria-label="章节翻页"><a href="./index.html"><small>← 上一节</small>课程总览与学习路径</a><a href="./lecture02.html"><small>下一节 →</small>面向构建者的大语言模型</a></nav>
+      </main>
+
+      <aside class="toc" aria-label="本节大纲">
+        <div class="toc-card">
+          <div class="toc-label">本讲目录</div>
+          <nav id="toc-links"><a class="depth-2" href="./lecture01.html#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87" data-anchor="学习目标">学习目标</a><a class="depth-2" href="./lecture01.html#%E7%9F%A5%E8%AF%86%E8%AE%B2%E8%A7%A3" data-anchor="知识讲解">知识讲解</a><a class="depth-3" href="./lecture01.html#1-%E8%AF%BE%E7%A8%8B%E5%AE%9A%E4%BD%8D%E4%B8%8E%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F" data-anchor="1-课程定位与学习方式">1. 课程定位与学习方式</a><a class="depth-3" href="./lecture01.html#2-agent-%E6%A6%82%E5%BF%B5%E7%9A%84%E5%8E%86%E5%8F%B2" data-anchor="2-agent-概念的历史">2. Agent 概念的历史</a><a class="depth-3" href="./lecture01.html#3-agent-%E7%9A%84%E7%BB%84%E6%88%90%E4%B8%8E%E6%8E%A8%E7%90%86" data-anchor="3-agent-的组成与推理">3. Agent 的组成与推理</a><a class="depth-3" href="./lecture01.html#4-%E8%AE%B0%E5%BF%86%E7%9A%84%E4%B8%89%E7%A7%8D%E4%BD%9C%E7%94%A8" data-anchor="4-记忆的三种作用">4. 记忆的三种作用</a><a class="depth-3" href="./lecture01.html#5-%E5%B7%A5%E5%85%B7%E4%B8%8E%E5%A4%8D%E5%90%88%E7%B3%BB%E7%BB%9F" data-anchor="5-工具与复合系统">5. 工具与复合系统</a><a class="depth-3" href="./lecture01.html#6-%E5%85%B3%E9%94%AE%E6%8C%91%E6%88%98%E4%B8%8E%E7%A0%94%E7%A9%B6%E9%97%AE%E9%A2%98" data-anchor="6-关键挑战与研究问题">6. 关键挑战与研究问题</a><a class="depth-2" href="./lecture01.html#%E5%8E%9F%E8%AF%BE%E7%A8%8B%E9%98%85%E8%AF%BB%E6%B8%85%E5%8D%95%E4%B8%8E%E5%AF%BC%E8%AF%BB" data-anchor="原课程阅读清单与导读">原课程阅读清单与导读</a><a class="depth-2" href="./lecture01.html#%E5%8A%A8%E6%89%8B%E7%BB%83%E4%B9%A0" data-anchor="动手练习">动手练习</a></nav>
+          <a class="source-link" id="source-link" href="https://github.com/wanghao-SunSky/cs329z-chinese/blob/main/01-Agent%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%85%A8%E6%99%AF.md">查看 Markdown 源文件 ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="page-footer">
+      <span>CS329Z · AI Agent 系统工程（Engineering AI Agents）</span>
+      <a href="https://github.com/wanghao-SunSky/cs329z-chinese">GitHub · Markdown 与 HTML</a>
+    </footer>
+  </div>
+
+  <dialog id="search-dialog">
+    <form method="dialog" class="search-head">
+      <label for="search-input">搜索</label>
+      <input id="search-input" type="search" placeholder="输入概念、算法、论文或练习关键词（如 ReAct, BM25, GRPO, MCP）…" autocomplete="off">
+      <button type="submit" aria-label="关闭搜索">ESC</button>
+    </form>
+    <p class="search-hint" id="search-hint">支持跨全部 19 讲课程、4 项实践与代码架构导读实时检索</p>
+    <div id="search-results" aria-live="polite"></div>
+  </dialog>
+
+  <noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/reader.js"></script>
+</body>
+</html>

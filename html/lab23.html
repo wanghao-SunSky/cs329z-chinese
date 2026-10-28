@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>论文精读与复现扩展 | CS329Z 中文教程</title>
+<meta name="description" content="阅读 AI Agent 领域的学术论文，如果只停留在“看懂摘要和结论”，很容易被论文中精心挑选的成功案例和光鲜的排行榜分数带着走。真正具备研究与工程洞察力的构建者，在读完一篇论文后总会追问三个问题：">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lab23.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CS329Z 中文教程">
+  <meta property="og:title" content="论文精读与复现扩展 | CS329Z 中文教程">
+  <meta property="og:description" content="阅读 AI Agent 领域的学术论文，如果只停留在“看懂摘要和结论”，很容易被论文中精心挑选的成功案例和光鲜的排行榜分数带着走。真正具备研究与工程洞察力的构建者，在读完一篇论文后总会追问三个问题：">
+  <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lab23.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="论文精读与复现扩展 | CS329Z 中文教程">
+  <meta name="twitter:description" content="阅读 AI Agent 领域的学术论文，如果只停留在“看懂摘要和结论”，很容易被论文中精心挑选的成功案例和光鲜的排行榜分数带着走。真正具备研究与工程洞察力的构建者，在读完一篇论文后总会追问三个问题：">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"论文精读与复现扩展 | CS329Z 中文教程","description":"阅读 AI Agent 领域的学术论文，如果只停留在“看懂摘要和结论”，很容易被论文中精心挑选的成功案例和光鲜的排行榜分数带着走。真正具备研究与工程洞察力的构建者，在读完一篇论文后总会追问三个问题：","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lab23.html","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lab23.html","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","大语言模型","论文精读与复现扩展"]}</script>
+  <link rel="stylesheet" href="./assets/reader.css">
+</head>
+<body data-static="true" data-initial-doc="lab23" data-doc="lab23">
+  <a class="skip" href="#main">跳到正文</a>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-code">CS329Z<span class="brand-dot">.</span></span>
+        <span class="brand-sub">ENGINEERING AI AGENTS</span>
+      </a>
+      <p class="edition">AI Agent 系统工程教程 <span>中文学习资料</span></p>
+      <button type="button" class="search-trigger" id="open-search">
+        <span class="search-trigger-text">搜索课程、概念与算法…</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item active" data-doc="lab23" href="./lab23.html" aria-current="page"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item" data-doc="lab26" href="./lab26.html"><span>编写说明与待修订问题</span></a></div></nav>
+    <div class="sidebar-foot">
+      <span>CS329Z · Engineering AI Agents</span>
+      <span>System · Data · Evals</span>
+    </div>
+  </aside>
+
+  <div class="shade" id="shade"></div>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" id="menu" class="mobile-only" aria-label="打开课程目录" aria-expanded="false" aria-controls="sidebar">目录</button>
+        <div id="breadcrumb" class="breadcrumb">论文精读与复现扩展</div>
+      </div>
+      <div class="reading-tools">
+        <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
+        <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
+        <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
+        <button type="button" id="print" aria-label="打印或导出 PDF">打印 / PDF</button>
+      </div>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <div class="chapter-meta" id="chapter-meta"></div>
+
+        <section class="home-intro" id="home-intro" hidden>
+          <p class="eyebrow">CS329Z 中文教程 · ENGINEERING AI AGENTS</p>
+          <h1>从理解语言模型，<br>到构建可靠的 <em>AI Agent</em> 系统。</h1>
+          <p class="hero-lead">面向 Python 开发者的中文自学教程，包含 19 讲、4 项实践和配套代码导读。从 RAG、工具调用开始，逐步学习记忆、协作、评测与安全。</p>
+          <div class="hero-bottom">
+            <div class="hero-stats">
+              <span><strong>19</strong> 讲核心课程</span>
+              <span><strong>4</strong> 项工程实践</span>
+              <span><strong>2</strong> 套配套源码解析</span>
+            </div>
+            <div class="hero-actions">
+              <a class="start-link" href="./lecture01.html">开始第 01 讲 <span>→</span></a>
+              <a class="secondary-link" href="./lab20.html">进入 HW1 实战</a>
+            </div>
+          </div>
+        </section>
+
+        <article id="article"><h1 id="paper-video前沿论文精读批判分析与动手扩展">Paper Video｜前沿论文精读、批判分析与动手扩展</h1>
+<p>阅读 AI Agent 领域的学术论文，如果只停留在“看懂摘要和结论”，很容易被论文中精心挑选的成功案例和光鲜的排行榜分数带着走。真正具备研究与工程洞察力的构建者，在读完一篇论文后总会追问三个问题：</p>
+<ol><li><strong>它的底层系统机制究竟是怎么转起来的（如果让我重画它的架构图并写出伪代码，我能写出来吗）？</strong></li><li><strong>它的实验设置有哪些隐含假设、未披露的成本或潜在的失效边界？</strong></li><li><strong>如果我亲手跑一跑它的代码，或者在一个新例子上改一改它的组件，它的核心主张还成立吗？</strong></li></ol>
+<p>本项实践（对应原课程 <a href="https://web.stanford.edu/class/cs329z/assignments/paper_video.pdf" target="_blank" rel="noopener noreferrer">Paper Video Assignment</a>）要求你挑选一篇近年发表的 AI Agent 前沿研究论文，录制一段 <strong>10–15 分钟</strong> 的技术精读与实验报告视频（或撰写完整的复现研究报告）：用清晰的语言讲透论文机制，提出具有深度的批判性洞见（Critique &amp; Insight），并<strong>亲手完成一项超出原论文阅读范畴的动手扩展实验（Added Value）</strong>。</p>
+<h2 id="1-论文选题范围与资格标准">1. 论文选题范围与资格标准</h2>
+<p>所选论文必须以 <strong>AI Agents</strong> 为核心主题，涵盖但不限于：Agent 架构与运行底座（Harnesses）、工具使用与函数调用、Agentic RAG、记忆架构、多智能体协作、提示与强化学习优化、基准构建与评测方法、安全与隐私护栏，或面向编程、网页浏览、桌面操作、主动式交互与科学发现的领域智能体。</p>
+<p>在选择论文时，请严格遵循以下三条准入规则：</p>
+<ol><li><strong>必须是具备完整方法与实证评估的学术研究论文</strong>：优先选择近年发表在顶级会议或期刊（如 NeurIPS、ICLR、ICML、ACL、EMNLP、NAACL、UIST、SIGIR、COLM、TMLR）的论文，或已被社区广泛讨论与跟进的高质量 arXiv 预印本；<strong>纯工程博客、产品发布公告、没有实验验证的观点文章或纯综述（Survey）不在选题范围内</strong>。</li><li><strong>避开课程前八讲已精讲过的论文</strong>：第 01–08 讲课表中已列为必读/拓展阅读、或在课堂上已专门展开剖析的经典论文（例如 ReAct、Reflexion、Toolformer、Gorilla、ToolkenGPT、DSPy、MemGPT、Generative Agents、Voyager、AWM、AutoGen、DyLAN 等）不可重复作为选题；但<strong>第 09–19 讲阅读清单中的论文，或课表之外的新近 Agent 论文均可选用</strong>。</li></ol>
+<h2 id="2-报告结构与评分标准满分-70-分">2. 报告结构与评分标准（满分 70 分）</h2>
+<p>整个技术报告分为四个紧密衔接的部分，其中<strong>批判性分析与动手扩展实验合计占总分的近 60%（40 / 70 分）</strong>——切忌把 15 分钟全花在照本宣科地念论文摘要和表格上：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>模块名称</th><th>核心任务与深度要求</th><th style="text-align:right">建议时长</th><th style="text-align:right">分值</th></tr></thead><tbody><tr><td><strong>1. 论文背景与机制拆解（Paper Selection &amp; Explanation）</strong></td><td>• 开篇完整给出论文标题、作者、发表会议/年份及链接。<br>• 讲清研究动机：前人方法卡在什么瓶颈？本文的核心切入点是什么？<br>• <strong>系统级机制拆解</strong>：清晰画出其模型、工具、记忆/上下文、环境与控制循环的数据流，让听众听完就能复述系统每一步是怎么运作的。<br>• <strong>核心实验证据</strong>：交代测试任务、评价指标、对比基线（Baselines）与最关键的定量结论。</td><td style="text-align:right"><span class="math-inline">\sim 4<span class="m-text"> min</span></span></td><td style="text-align:right">20</td></tr><tr><td><strong>2. 批判性分析与课程联结（Critique &amp; Insight）</strong></td><td>• <strong>超越作者自述 Limitations 的独立批评</strong>：审视其评测是否公平（是否对齐了 Token 预算与脚手架？指标是否存在被钻空子的漏洞？）、在什么边界场景下会彻底失效、延迟与成本开销如何、是否存在安全或隐私隐患。<br>• <strong>与 CS329Z 核心概念建立深度联结</strong>：将该论文置于本课程的坐标系中，对比它与我们在课堂中学到的相关架构或优化模式的异同。<br>• <strong>提炼给构建者的实战启示（Builder's Takeaways）</strong>：总结 1–2 条可直接指导日常 Agent 开发的工程原则，并提出一个值得深入探索的后续开放问题。</td><td style="text-align:right"><span class="math-inline">\sim 4<span class="m-text"> min</span></span></td><td style="text-align:right">20</td></tr><tr><td><strong>3. 动手扩展与实证验证（Added Value）</strong></td><td>• <strong>亲手开展一项超出阅读原文的实证工作</strong>（详见第 3 节清单）。<br>• 清晰展示你的实验设计、输入数据、运行过程与真实输出结果（并提供配套代码/脚本与原始输出日志）。<br>• 分析你的实验结果是如何<strong>证实、细化、补充甚至反驳</strong>原论文主张的。</td><td style="text-align:right"><span class="math-inline">\sim 5<span class="m-text"> min</span></span></td><td style="text-align:right">20</td></tr><tr><td><strong>4. 表达清晰度与制作规范（Clear &amp; Engaging Presentation）</strong></td><td>• 逻辑连贯、节奏紧凑（严格控制在 <strong>10–15 分钟</strong> 内）、概念解释通俗准确。<br>• 幻灯片（Slides）图文并茂、字号清晰可读，自己独立制作幻灯片与完成讲解。</td><td style="text-align:right"><span class="math-inline">\sim 1<span class="m-text"> min</span></span></td><td style="text-align:right">10</td></tr></tbody></table></div>
+<h2 id="3-如何设计高质量的动手扩展added-value">3. 如何设计高质量的“动手扩展（Added Value）”？</h2>
+<p>“Added Value”是整项实践最精彩的部分。你不需要动用昂贵的算力去重训一个百亿参数大模型，而是要像一位敏锐的系统研究者那样，<strong>用小巧、扎实的实证实验去戳一戳论文的核心机制</strong>。你可以从以下六种方式中任选一种（或组合）开展：</p>
+<ol><li><strong>跑通开源代码并深入解剖一条完整轨迹（Run &amp; Trace Deep Dive）</strong>： 拉取论文的官方开源仓库，在一个具体的评估样本或你自己构造的新测试样本上实际跑通它；把单次运行中每一步的完整 Prompt、中间状态、工具调用与输出打印出来，逐帧解剖它在真实运行中究竟是怎么工作的（或者在哪里犯了意想不到的傻）。</li><li><strong>小规模复现关键图表或消融结论（Micro-Reproduction）</strong>： 在论文所使用的基准切片（如 20–30 个样本）上，亲手复现论文中的某一项核心对比数字或消融实验，检验其结论在小样本或当前最新API版本下是否依然稳健。</li><li><strong>跨模型、跨提示或跨环境的边界压力测试（Perturbation &amp; Stress Testing）</strong>： 改变论文默认设置中的一个关键变量——例如将论文原本使用的 GPT-4 换成轻量级开源模型、修改工具返回格式引入微小噪声、或者构造几个对抗性边界案例（Edge Cases），观察系统的性能退化曲线。</li><li><strong>与课程中的另一种方法做同台受控对比（Head-to-Head Comparison）</strong>： 在完全相同的任务切片和 Token 预算下，将论文提出的方法与我们在课程中学到的另一种经典模式（如 ReAct、CodeAct、BM25+RRF、Observation Masking 等）进行同台对比，分析各自的胜负区间。</li><li><strong>从零实现论文的核心算法微缩版（Minimal Core Implementation）</strong>： 如果论文没有开源代码（或者官方代码极其臃肿），用一两百行干净的 Python 代码将论文最核心的那一个算法模块（例如它的记忆检索打分公式、动态组队剪枝逻辑或特殊提示演化循环）从零实现出来，并在合成数据集上验证其行为。</li></ol>
+<blockquote><p><strong>关于失败实验的科学态度</strong>：如果你在尝试复现论文代码或测试新样本时，发现论文的方法在你的实验设置下<strong>效果并不如预期，甚至跑不通</strong>——只要你严谨地排除了自己的低级配置错误，<strong>如实展示这次失败的复现过程、报错证据以及对原因的深入剖析，同样是一份极高价值的 Added Value！</strong> 真实可靠的负面实验结果，远胜于为了迎合论文结论而拼凑的数据。</p></blockquote>
+<h2 id="4-推荐执行步骤与自检清单">4. 推荐执行步骤与自检清单</h2>
+<ol><li><strong>建立候选排除与精读笔记</strong>：先对照第 01–08 讲阅读列表确认所选论文符合资格，精读全文并手绘出系统的架构数据流图。</li><li><strong>先定可验证假设，再写扩展代码</strong>：在动手写扩展实验前，先写下一句明确的实验假设（例如：“我预测当把候选 API 数量从 5 个增加到 30 个且混入同名参数时，该方法在无重排器下的准确率会下降超过 25%”），然后冻结测试样本运行实验。</li><li><strong>打磨可视化幻灯片与讲解节奏</strong>：一页幻灯片只讲清一个核心观点，多用架构流图、具体的输入输出轨迹对比框（Callout Boxes）与清晰的统计图表，避免满屏堆砌密密麻麻的小字段落。</li><li><strong>同伴互评视角（Peer Review Checklist）</strong>：完成后，站在一位挑剔的同行审稿人角度自检：<ul><li>没读过原论文的听众，听完前 4 分钟能听懂这篇论文到底是怎么工作的吗？</li><li>批判性分析是否指出了论文实验设计或工程落地中真正切中要害的软肋？</li><li>动手扩展部分是否展示了<strong>真实运行的代码、输入样本与原始输出凭证</strong>？</li></ul></li></ol></article>
+        <nav id="chapter-footer" aria-label="章节翻页"><a href="./lab22.html"><small>← 上一节</small>学期项目：设计、构建与评测</a><a href="./lab24.html"><small>下一节 →</small>配套代码架构导读</a></nav>
+      </main>
+
+      <aside class="toc" aria-label="本节大纲">
+        <div class="toc-card">
+          <div class="toc-label">本讲目录</div>
+          <nav id="toc-links"><a class="depth-2" href="./lab23.html#1-%E8%AE%BA%E6%96%87%E9%80%89%E9%A2%98%E8%8C%83%E5%9B%B4%E4%B8%8E%E8%B5%84%E6%A0%BC%E6%A0%87%E5%87%86" data-anchor="1-论文选题范围与资格标准">1. 论文选题范围与资格标准</a><a class="depth-2" href="./lab23.html#2-%E6%8A%A5%E5%91%8A%E7%BB%93%E6%9E%84%E4%B8%8E%E8%AF%84%E5%88%86%E6%A0%87%E5%87%86%E6%BB%A1%E5%88%86-70-%E5%88%86" data-anchor="2-报告结构与评分标准满分-70-分">2. 报告结构与评分标准（满分 70 分）</a><a class="depth-2" href="./lab23.html#3-%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E9%AB%98%E8%B4%A8%E9%87%8F%E7%9A%84%E5%8A%A8%E6%89%8B%E6%89%A9%E5%B1%95added-value" data-anchor="3-如何设计高质量的动手扩展added-value">3. 如何设计高质量的“动手扩展（Added Value）”？</a><a class="depth-2" href="./lab23.html#4-%E6%8E%A8%E8%8D%90%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4%E4%B8%8E%E8%87%AA%E6%A3%80%E6%B8%85%E5%8D%95" data-anchor="4-推荐执行步骤与自检清单">4. 推荐执行步骤与自检清单</a></nav>
+          <a class="source-link" id="source-link" href="https://github.com/wanghao-SunSky/cs329z-chinese/blob/main/exercises/Paper-Video-%E8%AE%BA%E6%96%87%E8%AE%B2%E8%A7%A3%E4%B8%8E%E5%A4%8D%E7%8E%B0.md">查看 Markdown 源文件 ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="page-footer">
+      <span>CS329Z · AI Agent 系统工程（Engineering AI Agents）</span>
+      <a href="https://github.com/wanghao-SunSky/cs329z-chinese">GitHub · Markdown 与 HTML</a>
+    </footer>
+  </div>
+
+  <dialog id="search-dialog">
+    <form method="dialog" class="search-head">
+      <label for="search-input">搜索</label>
+      <input id="search-input" type="search" placeholder="输入概念、算法、论文或练习关键词（如 ReAct, BM25, GRPO, MCP）…" autocomplete="off">
+      <button type="submit" aria-label="关闭搜索">ESC</button>
+    </form>
+    <p class="search-hint" id="search-hint">支持跨全部 19 讲课程、4 项实践与代码架构导读实时检索</p>
+    <div id="search-results" aria-live="polite"></div>
+  </dialog>
+
+  <noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/reader.js"></script>
+</body>
+</html>

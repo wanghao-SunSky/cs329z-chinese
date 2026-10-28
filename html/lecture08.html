@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>多 Agent 系统 | CS329Z 中文教程</title>
+<meta name="description" content="当单个 Agent 在面对复杂庞大的工程任务（比如同时维护一个大型代码仓库的前端、后端与测试套件，或者从零编写一个完整的 C 语言编译器）感到力不从心时，一个自然的想法是：“三个臭皮匠，顶个诸葛亮”——能不能让多个不同角色的 Agent 组成团队协同作战？">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture08.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CS329Z 中文教程">
+  <meta property="og:title" content="多 Agent 系统 | CS329Z 中文教程">
+  <meta property="og:description" content="当单个 Agent 在面对复杂庞大的工程任务（比如同时维护一个大型代码仓库的前端、后端与测试套件，或者从零编写一个完整的 C 语言编译器）感到力不从心时，一个自然的想法是：“三个臭皮匠，顶个诸葛亮”——能不能让多个不同角色的 Agent 组成团队协同作战？">
+  <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture08.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="多 Agent 系统 | CS329Z 中文教程">
+  <meta name="twitter:description" content="当单个 Agent 在面对复杂庞大的工程任务（比如同时维护一个大型代码仓库的前端、后端与测试套件，或者从零编写一个完整的 C 语言编译器）感到力不从心时，一个自然的想法是：“三个臭皮匠，顶个诸葛亮”——能不能让多个不同角色的 Agent 组成团队协同作战？">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"多 Agent 系统 | CS329Z 中文教程","description":"当单个 Agent 在面对复杂庞大的工程任务（比如同时维护一个大型代码仓库的前端、后端与测试套件，或者从零编写一个完整的 C 语言编译器）感到力不从心时，一个自然的想法是：“三个臭皮匠，顶个诸葛亮”——能不能让多个不同角色的 Agent 组成团队协同作战？","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture08.html","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture08.html","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","大语言模型","多 Agent 系统"]}</script>
+  <link rel="stylesheet" href="./assets/reader.css">
+</head>
+<body data-static="true" data-initial-doc="lecture08" data-doc="lecture08">
+  <a class="skip" href="#main">跳到正文</a>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-code">CS329Z<span class="brand-dot">.</span></span>
+        <span class="brand-sub">ENGINEERING AI AGENTS</span>
+      </a>
+      <p class="edition">AI Agent 系统工程教程 <span>中文学习资料</span></p>
+      <button type="button" class="search-trigger" id="open-search">
+        <span class="search-trigger-text">搜索课程、概念与算法…</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item active" data-doc="lecture08" href="./lecture08.html" aria-current="page"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item" data-doc="lab26" href="./lab26.html"><span>编写说明与待修订问题</span></a></div></nav>
+    <div class="sidebar-foot">
+      <span>CS329Z · Engineering AI Agents</span>
+      <span>System · Data · Evals</span>
+    </div>
+  </aside>
+
+  <div class="shade" id="shade"></div>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" id="menu" class="mobile-only" aria-label="打开课程目录" aria-expanded="false" aria-controls="sidebar">目录</button>
+        <div id="breadcrumb" class="breadcrumb">多 Agent 系统</div>
+      </div>
+      <div class="reading-tools">
+        <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
+        <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
+        <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
+        <button type="button" id="print" aria-label="打印或导出 PDF">打印 / PDF</button>
+      </div>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <div class="chapter-meta" id="chapter-meta"></div>
+
+        <section class="home-intro" id="home-intro" hidden>
+          <p class="eyebrow">CS329Z 中文教程 · ENGINEERING AI AGENTS</p>
+          <h1>从理解语言模型，<br>到构建可靠的 <em>AI Agent</em> 系统。</h1>
+          <p class="hero-lead">面向 Python 开发者的中文自学教程，包含 19 讲、4 项实践和配套代码导读。从 RAG、工具调用开始，逐步学习记忆、协作、评测与安全。</p>
+          <div class="hero-bottom">
+            <div class="hero-stats">
+              <span><strong>19</strong> 讲核心课程</span>
+              <span><strong>4</strong> 项工程实践</span>
+              <span><strong>2</strong> 套配套源码解析</span>
+            </div>
+            <div class="hero-actions">
+              <a class="start-link" href="./lecture01.html">开始第 01 讲 <span>→</span></a>
+              <a class="secondary-link" href="./lab20.html">进入 HW1 实战</a>
+            </div>
+          </div>
+        </section>
+
+        <article id="article"><h1 id="第-08-讲多-agent-系统">第 08 讲｜多 Agent 系统</h1>
+<p>当单个 Agent 在面对复杂庞大的工程任务（比如同时维护一个大型代码仓库的前端、后端与测试套件，或者从零编写一个完整的 C 语言编译器）感到力不从心时，一个自然的想法是：<strong>“三个臭皮匠，顶个诸葛亮”——能不能让多个不同角色的 Agent 组成团队协同作战？</strong></p>
+<p>近年来，多智能体系统（Multi-Agent Systems, MAS）频频登上技术头条，但也伴随着大量盲目堆砌角色的噱头。在实际工程中，把一个任务拆给 5 个 Agent 互相聊天，往往不仅使 Token 成本暴增数倍，还可能因为沟通断层、目标冲突或相互带偏，导致最终表现还不如一个配置得当的单 Agent！本讲将用严谨的工程视角拆解多 Agent 系统：何时应当坚持单 Agent 基线、何时值得引入多 Agent；如何设计编排拓扑（Independent、Centralized、Decentralized Swarm、Hybrid 与动态组队 DyLAN）、通信通道（AutoGen 会话、Handoff 与 Agent-as-Tool、共享信息板与 Google A2A 协议）以及协调基础设施（任务账本 Task Ledger、G-Memory 与 Git Worktree 隔离）；最后结合 Cemri et al.（2025）与 CooperBench 的实证研究，深入剖析多 Agent 系统为什么会失败。</p>
+<h2 id="学习目标">学习目标</h2>
+<ul><li>理解单智能体系统（SAS）与多智能体系统（MAS）的收益与代价边界，掌握“先建立强单 Agent 基线，再按需引入多 Agent”的工程原则。</li><li>掌握四种核心多 Agent 编排拓扑（独立聚合、中心化编排器、去中心化蜂群、混合架构）及动态团队选择算法（DyLAN）的机制与成本规律。</li><li>严格区分<strong>通信（Communication，如何交换信息）</strong>与<strong>协调（Coordination，如何管理相互依赖的工作）</strong>，掌握 Handoff 与 Agent-as-Tool 的控制权差异及 Google Agent2Agent（A2A）协议。</li><li>掌握三大协调基础设施（任务账本 Task Ledger、多智能体共享图记忆 G-Memory、Git Worktree 工作区隔离）与三种协作模式（角色分工、资源划分、计划协商）。</li><li>能够运用 MAST 三层失效分类法诊断多 Agent 故障，理解“协调诅咒（Curse of Coordination）”、群体趋同（Conformity）及大规模去中心化协作的成功要素。</li></ul>
+<h2 id="知识讲解">知识讲解</h2>
+<h3 id="1-多-agent-的收益与代价">1. 多 Agent 的收益与代价</h3>
+<h4 id="系统定义">系统定义</h4>
+<p>沿着我们在课程中反复使用的系统复杂度光谱：<strong>单个模型（Model）<span class="math-inline">&rarr;</span> 固定工作流（Workflow）<span class="math-inline">&rarr;</span> 单智能体（Single Agent，如实现单个功能特性）<span class="math-inline">&rarr;</span> 多智能体系统（Multi-Agent System，如维护整个大型软件仓库）</strong>，多智能体系统位于复杂度的最右端。</p>
+<p>从定义上看，<strong>多智能体系统（MAS）是由多个围绕共同目标协同工作的 Agent 组成的集合</strong>。要让多个 Agent 真正形成合力而非一盘散沙，架构师必须同时设计好三个核心维度：</p>
+<ol><li><strong>编排拓扑（Orchestration）</strong>：谁来分派任务、按什么拓扑结构组织团队；</li><li><strong>通信机制（Communication）</strong>：Agent 之间通过什么通道、按什么格式交换消息与产物；</li><li><strong>协调设施（Coordination）</strong>：如何管理共享工作区、任务依赖、共同记忆与操作冲突。</li></ol>
+<h4 id="为什么可能更好">为什么可能更好</h4>
+<p>为什么在某些场景下，多 Agent 系统能够超越单 Agent？核心收益来自四个方面：</p>
+<ul><li><strong>并行执行（Parallel Execution）</strong>：当一个大任务可以被拆解为多个相互独立的子任务时，多个 Agent 同时开工能显著缩短端到端墙钟时间（Wall-clock Time）；</li><li><strong>职责专业化（Specialization）</strong>：可以为不同角色配置专门定制的系统指令、不同尺寸/专长的底层模型以及最小化的专属工具集（例如让擅长视觉的模型负责前端 UI 检查，让擅长推理的模型负责后端逻辑）；</li><li><strong>聚焦的独立上下文（Focused Context）</strong>：每个 Agent 的上下文窗口里只包含与自己子任务直接相关的信息，避免单窗口被所有子任务的冗长中间过程撑爆；</li><li><strong>更广的探索覆盖（Broader Exploration）</strong>：多个 Agent 可以同时从不同假设或不同技术路线出发探索解法，降低单路思维陷入局部死胡同的风险。</li></ul>
+<h4 id="为什么可能更差">为什么可能更差</h4>
+<p>然而，多 Agent 绝非免费的午餐。每增加一个 Agent，系统都会引入五项实打实的工程代价：</p>
+<ul><li><strong>高昂的协调开销（Coordination Overhead）</strong>：任务委派、往返消息传递与结果整合会消耗大量额外的时间与 Token 预算；</li><li><strong>交接中的信息丢失（Information Loss）</strong>：当 Agent A 把任务转交给 Agent B 时，往往会漏掉关键的隐含约束或早期背景；</li><li><strong>动作冲突与覆写（Conflicting Actions）</strong>：两个 Agent 可能重复干同一件事、违背之前的约定，甚至在同一个文件里互相覆盖对方的修改；</li><li><strong>跨主体误差传播（Error Propagation）</strong>：上游 Agent 的一次事实幻觉或错误假设，会被下游 Agent 当作既定事实全盘接收并进一步放大；</li><li><strong>调试与维护复杂度激增（Engineering Complexity）</strong>：更多的角色提示词、接口协议与交互状态使得故障定位难度倍增。</li></ul>
+<h4 id="强单-agent-baseline">强单 Agent baseline</h4>
+<p>Kim et al.（2025/2026）在《Towards a Science of Scaling Agent Systems》中通过系统的控制变量实验揭示了一个重要结论：<strong>在许多高度依赖上下文连续推理的任务上，给定同等算力预算，单智能体系统（SAS）的表现明显优于多智能体系统！</strong></p>
+<p>这为我们确立了清晰的多 Agent 选型准则：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>优先使用单智能体系统（SAS）的场景</th><th>值得尝试多智能体系统（MAS）的场景</th></tr></thead><tbody><tr><td>任务各个步骤之间高度串行依赖、环环相扣</td><td>子任务之间耦合度低，可以在有限同步下独立推进</td></tr><tr><td>所有操作紧密耦合在同一个共享状态上（存在大量重叠修改）</td><td>信息可以自然切分为互不干扰的聚焦上下文（如按模块或文档分片）</td></tr><tr><td>单个 Agent 在质量、成本与延迟上已经满足业务目标</td><td>并行探索、角色专精或独立审查恰好能解决已测出的单 Agent 瓶颈</td></tr></tbody></table></div>
+<p><strong>工程铁律</strong>：永远先用相同的工具集与充足的 Token 预算构建一个<strong>强单 Agent 基线（Strong Single-Agent Baseline）</strong>；只有当新增 Agent 带来的实测质量或速度收益大于其协调成本时，才保留多 Agent 架构。</p>
+<h3 id="2-拓扑与动态选择">2. 拓扑与动态选择</h3>
+<h4 id="independent-与-centralized">Independent 与 centralized</h4>
+<p>多 Agent 系统的编排拓扑（Orchestration Patterns）主要有四种基本形态。前两种结构最为常见：</p>
+<ol><li><strong>独立聚合型（Independent）</strong>：<code>Agent 1</code>、<code>Agent 2</code>、<code>Agent 3</code> 各自独立处理任务，彼此之间<strong>不交换任何中间消息</strong>，最后由一个聚合器（Aggregator）汇总或投票选出最终输出。这种模式并行度最高、无通信死循环风险，但各 Agent 无法在途中互相借鉴对方的中间发现。</li><li><strong>中心化编排型（Centralized / Orchestrator）</strong>：设置一个主导全局的 <code>Orchestrator Agent</code>，由它负责拆解任务并分别与 <code>Worker Agent 1, 2, 3</code> 单独通信；Workers 只向 Orchestrator 汇报结果，由 Orchestrator 决定下一步调度。中心化监管简化了全局状态控制，但 Orchestrator 本身容易成为吞吐量与上下文容量的瓶颈。</li></ol>
+<h4 id="decentralized--swarm-与-hybrid">Decentralized / swarm 与 hybrid</h4>
+<p>另外两种拓扑则赋予了工作节点直接横向交互的自由度：</p>
+<ol><li><strong>去中心化蜂群型（Decentralized / Swarm）</strong>：没有唯一的中心主控节点，所有 Agent 地位对等，可以通过共享消息板或点对点通道直接相互通信（All-to-all communication），甚至动态派生新的子 Agent。这种拓扑非常适合大规模开放式探索与并行发现，但协调与收敛难度最高。</li><li><strong>混合型（Hybrid）</strong>：既有顶层的 <code>Orchestrator Agent</code> 把控全局目标与最终集成，又允许部分 <code>Worker Agents</code> 在子任务需要紧密配合时直接横向交换信息，兼顾全局视野与局部协作效率。</li></ol>
+<p>在 Token 消耗与计算成本结构上，实验表明通常遵循明显的递增规律：<strong>单智能体（Single Agent）<span class="math-inline">&lt;</span> 中心化编排（Orchestrated）<span class="math-inline">&lt;</span> 去中心化蜂群（Swarms）</strong>。</p>
+<h4 id="dylan">DyLAN</h4>
+<p>既然固定一个庞大臃肿的 Agent 团队既费钱又容易互相干扰，能不能根据具体任务动态挑选最得力的精干小队？<strong>DyLAN（Dynamic LLM-Powered Agent Network, Liu et al., 2023）</strong> 提出了将多轮多 Agent 交互建模为多层前馈网络，并引入了动态组队与早停机制：</p>
+<ol><li><strong>前向传播与互评（Forward Pass &amp; Peer Rating）</strong>：在每一轮时间步，各个 Agent 生成方案并对上一轮同伴的回答进行实用性打分（Utility Scoring）；</li><li><strong>反向贡献归因（Backward Credit Assignment）</strong>：在训练/探测阶段，从最终达成共识的正确答案出发，沿着交互图反向传播贡献度权重，计算出每个角色的 <strong>智能体重要性得分（Agent Importance Scores）</strong>，从而筛选出对该领域任务真正有贡献的精锐团队；</li><li><strong>推理时动态剪枝与早停（Dynamic Pruning &amp; Early Stopping）</strong>：在执行新任务时，实时剔除得分低效的 Agent，且一旦有 <strong>$2/3$ 以上的 Agent 达成一致答案便立即提前终止（Early Stop）</strong>，从而以更少的 API 调用次数获得更高的决策准确率。</li></ol>
+<h3 id="3-通信交接与协议">3. 通信、交接与协议</h3>
+<h4 id="communication-不等于-coordination">Communication 不等于 coordination</h4>
+<p>在设计多 Agent 交互时，初学者最容易混淆的两个概念是<strong>通信（Communication）</strong>与<strong>协调（Coordination）</strong>：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>维度</th><th>通信（Communication）</th><th>协调（Coordination）</th></tr></thead><tbody><tr><td><strong>核心问题</strong></td><td>Agent 之间<strong>如何交换信息</strong>（How agents exchange information）</td><td>Agent 之间<strong>如何管理相互依赖的工作</strong>（How agents manage interdependent work）</td></tr><tr><td><strong>关注焦点</strong></td><td>谁在什么时机、通过什么信道收到什么消息？</td><td>谁负责哪项子任务？先后依赖顺序是什么？冲突如何裁决？</td></tr><tr><td><strong>工程原语</strong></td><td>消息格式、会话流、交接协议与共享产物（Artifacts）</td><td>任务账本（Task Ledger）、共享记忆、工作区隔离与资源锁</td></tr></tbody></table></div>
+<p>简言之：<strong>把话发出去（Communication）绝不等于工作已经对齐（Coordination）</strong>。如果四个 Agent 在群聊里热烈讨论了五十轮，却既没有明确谁去改哪个文件，也没有防止两个人同时改同一行代码，那系统只有通信而毫无协调。</p>
+<h4 id="autogen-的会话结构">AutoGen 的会话结构</h4>
+<p>微软提出的 <strong>AutoGen（Wu et al., 2024）</strong> 将多 Agent 通信统一抽象为<strong>可编程的多方对话（Multi-Agent Conversations）</strong>：每个 Agent 都可以定制底层模型、工具执行能力与人工介入策略，并组合成丰富的会话模式：</p>
+<ul><li><strong>顺序接力（Sequential Chat）</strong>：前一个团队完成后将摘要交给下一个团队继续；</li><li><strong>嵌套会话（Nested Chat）</strong>：当某个 Agent 接到复杂请求时，在内部私下拉起一组子 Agent 讨论，得出结论后再回到主会话回复；</li><li><strong>群聊模式（Group Chat）</strong>：所有 Agent 共享同一个会话上下文，由群聊管理器通过轮询（<code>RoundRobinGroupChat</code>）、大模型动态点名（<code>SelectorGroupChat</code>）或蜂群自主接力（<code>Swarm</code>）决定下一轮谁来发言。</li></ul>
+<h4 id="handoff-与-agent-as-tool">Handoff 与 agent-as-tool</h4>
+<p>当主 Agent 需要借助另一个专业 Agent（比如退款专员 Agent 或代码安全审计 Agent）的力量时，在架构上有两种截然不同的调用方式（以 OpenAI Agents SDK 等框架为例）：</p>
+<ol><li><strong>控制权移交（Handoff）</strong>：<ul><li><strong>机制</strong>：当前 Agent 将对话的主导权（Control）连同历史上下文彻底<strong>移交</strong>给目标专业 Agent；接收方成为新的活跃主体，直接与用户继续后续交互。</li><li><strong>适用场景</strong>：类似电话客服中的“为您转接专席”——后续步骤完全由该领域专家接管并直接面向用户负责。</li></ul></li><li><strong>将智能体作为工具（Agent-as-Tool）</strong>：<ul><li><strong>机制</strong>：主控 Agent（Caller）<strong>保留全局控制权</strong>，它只把一个边界清晰的局部请求和精选的必要上下文当作函数参数传给专业 Agent；专业 Agent 完成后将结果或产物作为工具返回值交回给主控 Agent，由主控 Agent 整合各方结果并向用户输出最终回答。</li><li><strong>适用场景</strong>：需要由单一主控入口统筹多个不同专长子模块、且不希望用户感知底层角色频繁切换的场景。</li></ul></li></ol>
+<h4 id="公共信息板与多方环境">公共信息板与多方环境</h4>
+<p>除了点对点对话与函数调用，多 Agent 还可以通过<strong>共享消息板（Message Board / Publish-Subscribe）</strong>进行通信：</p>
+<ul><li><strong>MetaGPT（Hong et al., 2024）</strong>：模拟软件公司的标准作业程序（SOP），让产品经理、架构师、工程师、测试员不要在群聊里漫无目的地闲聊，而是将结构化的产品需求文档（PRD）、接口设计图与代码文件发布到公共消息池（Shared Message Pool），各角色按订阅规则拉取自己关心的上游标准件开展工作。</li><li><strong>开放多方社交与平台环境（如 MoltBook、HuggingFace 社区事件）</strong>：当成百上千个来自不同开发者的自主 Agent 在共享讨论板或开源平台上自由发帖、评论与触发动作时，还会涌现出复杂的社交传染与不可控的群体级联效应。</li></ul>
+<h4 id="a2a">A2A</h4>
+<p>如果说第 04 讲介绍的 <strong>MCP（Model Context Protocol）</strong> 标准化了“Agent 如何调用外部工具与资源”，那么 Google 推出的 <strong>Agent2Agent（A2A）协议</strong> 则致力于标准化<strong>“不同厂商、不同框架构建的独立 Agent 之间如何跨网络发现彼此并协同完成任务”</strong>。</p>
+<p>A2A 协议的核心交互流程围绕四个关键机制展开：</p>
+<ol><li><strong>能力声明与发现（Agent Cards）</strong>：每个远程服务端 Agent 暴露一张标准 JSON 格式的“名片（Agent Card）”，明确声明自己的身份、擅长技能（Skills）、支持的多模态输入输出格式与鉴权方式；</li><li><strong>可追踪的任务派发（Task Dispatch）</strong>：客户端 Agent 读取 Agent Card 后，向服务端 Agent 发送结构化任务请求，创建具有唯一 ID 和生命周期状态的 Task；</li><li><strong>流式进度通知与双向协商</strong>：在长任务执行期间，服务端可以通过流式推送（Server-Sent Events / Notifications）实时汇报进度，若遇到信息缺失还可以与客户端 Agent 双向多轮追问；</li><li><strong>交付物归档（Artifacts）</strong>：任务完成后，服务端将最终生成的文档、代码或结构化数据封装为标准 <code>Artifact</code> 返回给客户端。</li></ol>
+<h3 id="4-协调共享记忆与文件">4. 协调、共享记忆与文件</h3>
+<h4 id="magentic-one-的-task-ledger">Magentic-One 的 task ledger</h4>
+<p>有了通信通道后，我们如何构建可靠的<strong>协调基础设施（Coordination Infrastructure）</strong>？第一件核心武器是<strong>显式任务账本（Task Ledger）</strong>。</p>
+<p>在微软的通用多智能体系统 <strong>Magentic-One（Fourney et al., 2024）</strong> 中，主导编排器不再依赖翻阅冗长混乱的聊天记录来猜测进度，而是维护一份结构化的实时任务账本，显式记录四件事：</p>
+<ol><li><strong>全局目标与已知事实（Facts &amp; Objective）</strong>：当前已经确认的事实、待核实的假设与最终目标；</li><li><strong>当前计划与分工（Plan &amp; Assignments）</strong>：拆解出的子步骤列表及每一步指派给哪个 Worker；</li><li><strong>执行进度与依赖（Progress &amp; Dependencies）</strong>：哪些步骤已完成、当前卡在哪个阻塞点（Blocker）；</li><li><strong>停滞恢复触发（Recovery）</strong>：外层循环每步检查账本，一旦发现连续几步进度未推进或陷入死循环，立即清空局部卡死状态、修正计划账本并重新指派。</li></ol>
+<h4 id="symphony">Symphony</h4>
+<p>在软件工程团队自动化中，OpenAI 展示的 <strong>Symphony</strong> 进一步将理念延伸为<strong>“把项目原有的 Issue Tracker（问题追踪系统）直接变成多 Agent 编排器”</strong>：系统实时监听工单状态流转，自动将符合条件的独立开发或修复任务派发给运行在隔离工作区中的后台编程 Agent，使人类工程师与多个 AI Agent 共享同一套看板账本。</p>
+<h4 id="gmemory">GMemory</h4>
+<p>第二件协调基础设施是<strong>面向多 Agent 定制的共享记忆架构</strong>。单 Agent 的记忆只需要记录“我做过什么”，而多 Agent 团队的记忆还需要知道“哪个角色在什么协作模式下解决了什么问题”。</p>
+<p><strong>G-Memory（Zhang et al., 2025）</strong> 提出了三层层次化图记忆结构，分别对应不同的认知抽象粒度：</p>
+<ol><li><strong>洞察图（Insight Graph <span class="math-inline">&le;ftrightarrow</span> Reflections）</strong>：最顶层，存储从过往团队成败中提炼出的跨任务通用协作经验与高阶洞察；</li><li><strong>查询图（Query Graph <span class="math-inline">&le;ftrightarrow</span> Episodic Task Index）</strong>：中间层，编码历史任务的语义特征及任务之间的关联索引；</li><li><strong>交互图（Interaction Graph <span class="math-inline">&le;ftrightarrow</span> Episodic Memory）</strong>：最底层，忠实保存某次任务中各个 Agent 之间关键的消息交互拓扑与动作轨迹。</li></ol>
+<p>当新任务到来时，系统先在 Query Graph 中匹配相似历史任务，再向上抽取 Insight Graph 中的高层避坑指南、向下抽取 Interaction Graph 中的精简示范轨迹，按各个角色的职责精准分发，实验表现显著优于直接套用单 Agent 记忆的基线。</p>
+<h4 id="git-worktree-与整合">Git worktree 与整合</h4>
+<p>第三件协调基础设施解决的是多 Agent 并行写代码时的头号灾难——<strong>工作区文件踩踏</strong>。如果两个编程 Agent 同时在同一个文件夹里运行 <code>edit</code> 和 <code>pytest</code>，Agent A 刚改到一半的代码会让 Agent B 的测试直接报错，而 Agent B 的保存又会把 Agent A 的修改冲掉。</p>
+<p>工程上的标准解法是 <strong>Git Worktree 工作区隔离（Worktree Isolation）</strong>：</p>
+<ul><li>利用 <code>git worktree add</code> 为每一个并发工作的 Agent 检出（Checkout）一个<strong>物理目录完全独立、各自绑定独立 Git 分支</strong>的工作树；</li><li>每个 Agent 在自己的专属沙箱目录里自由修改代码、运行测试，彼此绝对零干扰；</li><li>当子任务开发并通过本地测试后，再进入<strong>受控集成阶段（Controlled Integration）</strong>：通过 Git 合并（Merge / Rebase）各分支贡献、检测并解决代码冲突，最后在集成主干上跑全量回归测试。</li></ul>
+<h4 id="cooperbench-的角色与资源分工">CooperBench 的角色与资源分工</h4>
+<p>在基础设施之上，多个 Agent 在微观协作中会演化出三种核心协调模式（Khatua et al., 2026 在 <strong>CooperBench</strong> 中对其进行了系统形式化）：</p>
+<ol><li><strong>角色分工（Role Division）</strong>：各 Agent 明确约定谁负责实现哪一部分功能模块及模块间的接口签名；</li><li><strong>资源划分（Resource Division）</strong>：对共享文件、端口或命名空间进行分区，避免操作碰撞；</li><li><strong>计划协商（Negotiation）</strong>：当两个 Agent 的设计方案存在不兼容冲突时，通过沟通收敛到统一的接口规范上。</li></ol>
+<h3 id="5-失败分类与工程案例">5. 失败分类与工程案例</h3>
+<h4 id="三类失败">三类失败</h4>
+<p>为什么精心设计的多 Agent 系统在实际运行中依然频繁翻车？Cemri et al.（2025）在《Why Do Multi-Agent LLM Systems Fail?》中收集了大量主流多 Agent 框架的真实运行轨迹，归纳出了著名的 <strong>MAST（Multi-Agent System Failure Taxonomy）三大类、14 小类失效分类体系</strong>：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>失效大类</th><th>核心症结</th><th>典型具体故障表现</th></tr></thead><tbody><tr><td><strong>1. 系统设计与规范缺陷（System Design Issues）</strong></td><td>角色定义、任务拆解或流程边界本身不合理</td><td>违背任务规范与约束；角色职责重叠或缺失；完全无视历史步骤无限重复循环；丢失上下文关键背景。</td></tr><tr><td><strong>2. 智能体间交互失调（Inter-Agent Misalignment）</strong></td><td>沟通断层、承诺落空或相互带偏</td><td>对话突然偏离原始主题（Derailment）；隐藏重要信息未同步给同伴；完全忽略同伴发来的合理建议；未搞清需求就盲目出手而非请求澄清；说法与实际执行的动作自相矛盾。</td></tr><tr><td><strong>3. 任务验证与终止缺陷（Task Verification &amp; Termination）</strong></td><td>缺乏有效验收就草率收工</td><td><strong>过早终止（Premature Termination）</strong>：子任务还没做完或代码还没跑通就宣布大功告成；验证不完整；或者验证器明明发现了错误却无力纠正、错误放行。</td></tr></tbody></table></div>
+<p>这套分类法的实用价值在于：当你遇到多 Agent 任务失败时，可以先将失败轨迹归入这三类之一——如果是第 1 类，应该去改拓扑与角色提示；如果是第 2 类，应该引入结构化交接契约与任务账本；如果是第 3 类，则必须补强独立的确定性测试验证器（Verifier）。</p>
+<h4 id="预期承诺与通信断裂">预期、承诺与通信断裂</h4>
+<p>为什么即使底层模型单打独斗能力很强，两两配对协作时却依然漏洞百出？Khatua et al.（2026）将这一现象称为<strong>“协调诅咒（The Curse of Coordination）”</strong>，并指出了三大根源：</p>
+<ul><li><strong>预期错位（Expectation Failures）</strong>：Agent A 想当然地默认 Agent B 会帮它处理边界空值校验，而 Agent B 根本没这么想；</li><li><strong>承诺违约（Commitment Failures）</strong>：Agent A 在群聊里满口答应“我会把返回类型改成字典”，转头写代码时却依然返回了列表；</li><li><strong>通信断裂（Communication Breakdowns）</strong>：发送的消息含糊不清、时机过晚，或者充斥着毫无信息量的客套废话。</li></ul>
+<h4 id="cooperbench-的证据">CooperBench 的证据</h4>
+<p><strong>CooperBench（Khatua et al., 2026）</strong> 在跨越 4 种编程语言、12 个真实开源库的 <strong>600 个协作编程任务</strong>上进行了严格测试：让两个 Agent 各自负责在同一个代码库中实现一个相互关联的特性，要求两者合并后同时通过测试。实验结果令人警醒：<strong>把两个特性都交给同一个单 Agent 独自完成（Solo），成功率显著高于让两个 Agent 分工协作（Coop）！</strong> 这再次用硬核数据证明了：跨 Agent 协调本身具有极高的能力门槛，在缺乏严密的接口契约与集成验证时，盲目拆分任务只会招致集成灾难。</p>
+<h4 id="conformity-与不兼容目标">Conformity 与不兼容目标</h4>
+<p>当多 Agent 规模进一步扩大或目标存在张力时，还会出现两类棘手的涌现行为问题（Zou, 2026）：</p>
+<ul><li><strong>群体趋同与多样性坍塌（Conformity）</strong>：研究者让一群 Agent 自由协作、“各自创造一个令人印象深刻的项目”，结果超过一半的 Agent 最终都不约而同地扎堆去写“光线追踪器（Ray Tracers）”或“自举编译器（Self-hosting Compilers）”——模型在相互交流中不仅没有激发出百花齐放的创意，反而迅速收敛到了预训练分布中最刻板的常见套路上。</li><li><strong>不兼容目标与对抗冲突（Incompatible Goals）</strong>：当不同 Agent 被赋予存在潜在利益冲突的目标时（例如让几个分别偏爱不同编程语言的 Agent 共同迁移同一台虚拟机上的后端服务），它们甚至会相互覆盖配置、争夺系统控制权或学会隐瞒信息。</li></ul>
+<h4 id="可选案例多-agent-构建-c-compiler">可选案例：多 Agent 构建 C compiler</h4>
+<p>既然多 Agent 协作有这么多坑，那在什么条件下它才能真正发挥惊人威力？本讲最后剖析了一个极具启发性的成功工程案例——<strong>使用去中心化多 Agent 团队从零构建一个能编译 Linux 内核的 C 语言编译器（Carlini, 2026）</strong>。</p>
+<p>这个系统之所以没有陷入群聊扯皮，核心在于它用<strong>极度规范的软件工程基础设施取代了自然语言闲聊</strong>：</p>
+<ol><li><strong>去中心化无限循环 + 文件锁任务认领</strong>：没有容易成为瓶颈的中心编排器，每个 Agent 运行在一个简单的无限循环中——完成一个任务后，立即去 <code>current_tasks/</code> 目录下通过创建锁文件（利用 Git 原子同步）认领下一个待办任务；</li><li><strong>Git Worktree 隔离 + 强制合并前测试</strong>：每个 Agent 在独立工作目录开发，只有跑通测试套件才允许推送合并回主仓库；</li><li><strong>职能高度专业化</strong>：除了负责实现编译特性的主カ Agent，还专门设置了负责合并与消除重复代码的 Agent、负责优化编译器性能的 Agent、负责精简报错信息的 Agent 以及维护文档的 Agent；</li><li><strong>专为 LLM 设计的测试与环境</strong>：测试脚本被改造得极快，且打印出的错误日志极其精简并自带关键词标签，方便 Agent 用 <code>grep</code> 瞬间定位问题，避免几万行报错撑爆上下文；同时通过维护 <code>README.md</code> 与进度文档，让任何新启动的无状态 Agent 都能在几秒钟内看懂全局架构并接手工作。</li></ol>
+<h2 id="原课程阅读清单与导读">原课程阅读清单与导读</h2>
+<ul><li><a href="https://arxiv.org/abs/2308.08155" target="_blank" rel="noopener noreferrer">Wu et al. &quot;AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation.&quot; COLM (2024).</a> 导读：理解如何通过可对话智能体（Conversable Agents）与会话编程（Conversation Programming）统一表达顺序、嵌套与群聊协作模式。</li><li><a href="https://arxiv.org/abs/2503.13657" target="_blank" rel="noopener noreferrer">Cemri et al. &quot;Why Do Multi-Agent LLM Systems Fail?&quot; NeurIPS Datasets &amp; Benchmarks (2025).</a> 导读：精读 MAST 的三阶段 14 类失效分类表，重点思考为什么仅靠改进局部提示词无法解决系统级协调与验证缺陷。</li><li><a href="https://arxiv.org/abs/2512.08296" target="_blank" rel="noopener noreferrer">Kim et al. &quot;Towards a Science of Scaling Agent Systems.&quot; arXiv (2025).</a> 导读：对照论文中单 Agent 与独立、中心化、去中心化、混合多 Agent 在不同任务结构与预算下的定量表现，掌握何时应当（以及何时不应当）扩展 Agent 数量。</li></ul>
+<h2 id="动手练习">动手练习</h2>
+<ol><li><strong>单 Agent 基线与双 Agent 协作对比</strong>：设计一个“根据两份长文档编写带精确引用的对比分析简报”任务。固定总 Token 预算上限，对比（a）单 Agent 独立完成检索、撰写与核查，与（b）“撰稿人 Agent + 独立事实核查员 Agent（通过 Agent-as-Tool 或 Evaluator-Optimizer 交互）”两种方案在发现虚构引用上的准确率与耗时差异。</li><li><strong>基于任务账本与接口契约的协作设计</strong>：假设你需要让两个编程 Agent 分别编写同一个项目中的 <code>bm25_index.py</code> 模块和 <code>doc_search_tool.py</code> 模块。请设计一份共享的 <strong>Task Ledger（JSON/Markdown 格式）</strong> 与模块间接口契约，避免出现 CooperBench 中常见的“承诺违约”与“接口参数不兼容”故障。</li></ol></article>
+        <nav id="chapter-footer" aria-label="章节翻页"><a href="./lecture07.html"><small>← 上一节</small>Agent 记忆架构</a><a href="./lecture09.html"><small>下一节 →</small>Agent 系统优化</a></nav>
+      </main>
+
+      <aside class="toc" aria-label="本节大纲">
+        <div class="toc-card">
+          <div class="toc-label">本讲目录</div>
+          <nav id="toc-links"><a class="depth-2" href="./lecture08.html#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87" data-anchor="学习目标">学习目标</a><a class="depth-2" href="./lecture08.html#%E7%9F%A5%E8%AF%86%E8%AE%B2%E8%A7%A3" data-anchor="知识讲解">知识讲解</a><a class="depth-3" href="./lecture08.html#1-%E5%A4%9A-agent-%E7%9A%84%E6%94%B6%E7%9B%8A%E4%B8%8E%E4%BB%A3%E4%BB%B7" data-anchor="1-多-agent-的收益与代价">1. 多 Agent 的收益与代价</a><a class="depth-3" href="./lecture08.html#2-%E6%8B%93%E6%89%91%E4%B8%8E%E5%8A%A8%E6%80%81%E9%80%89%E6%8B%A9" data-anchor="2-拓扑与动态选择">2. 拓扑与动态选择</a><a class="depth-3" href="./lecture08.html#3-%E9%80%9A%E4%BF%A1%E4%BA%A4%E6%8E%A5%E4%B8%8E%E5%8D%8F%E8%AE%AE" data-anchor="3-通信交接与协议">3. 通信、交接与协议</a><a class="depth-3" href="./lecture08.html#4-%E5%8D%8F%E8%B0%83%E5%85%B1%E4%BA%AB%E8%AE%B0%E5%BF%86%E4%B8%8E%E6%96%87%E4%BB%B6" data-anchor="4-协调共享记忆与文件">4. 协调、共享记忆与文件</a><a class="depth-3" href="./lecture08.html#5-%E5%A4%B1%E8%B4%A5%E5%88%86%E7%B1%BB%E4%B8%8E%E5%B7%A5%E7%A8%8B%E6%A1%88%E4%BE%8B" data-anchor="5-失败分类与工程案例">5. 失败分类与工程案例</a><a class="depth-2" href="./lecture08.html#%E5%8E%9F%E8%AF%BE%E7%A8%8B%E9%98%85%E8%AF%BB%E6%B8%85%E5%8D%95%E4%B8%8E%E5%AF%BC%E8%AF%BB" data-anchor="原课程阅读清单与导读">原课程阅读清单与导读</a><a class="depth-2" href="./lecture08.html#%E5%8A%A8%E6%89%8B%E7%BB%83%E4%B9%A0" data-anchor="动手练习">动手练习</a></nav>
+          <a class="source-link" id="source-link" href="https://github.com/wanghao-SunSky/cs329z-chinese/blob/main/08-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F.md">查看 Markdown 源文件 ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="page-footer">
+      <span>CS329Z · AI Agent 系统工程（Engineering AI Agents）</span>
+      <a href="https://github.com/wanghao-SunSky/cs329z-chinese">GitHub · Markdown 与 HTML</a>
+    </footer>
+  </div>
+
+  <dialog id="search-dialog">
+    <form method="dialog" class="search-head">
+      <label for="search-input">搜索</label>
+      <input id="search-input" type="search" placeholder="输入概念、算法、论文或练习关键词（如 ReAct, BM25, GRPO, MCP）…" autocomplete="off">
+      <button type="submit" aria-label="关闭搜索">ESC</button>
+    </form>
+    <p class="search-hint" id="search-hint">支持跨全部 19 讲课程、4 项实践与代码架构导读实时检索</p>
+    <div id="search-results" aria-live="polite"></div>
+  </dialog>
+
+  <noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/reader.js"></script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>工具使用与函数调用 | CS329Z 中文教程</title>
+<meta name="description" content="在上一讲中，我们看到检索增强生成（RAG）能够为大语言模型补充外部静态或动态文档。但如果用户问的是：“17,423 892 等于多少？”或者“帮我查一下斯坦福现在的实时气温，并在我的日历上把今天下午 3 点的会议推迟半小时”，光靠检索文档就无能为力了。">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture04.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CS329Z 中文教程">
+  <meta property="og:title" content="工具使用与函数调用 | CS329Z 中文教程">
+  <meta property="og:description" content="在上一讲中，我们看到检索增强生成（RAG）能够为大语言模型补充外部静态或动态文档。但如果用户问的是：“17,423 892 等于多少？”或者“帮我查一下斯坦福现在的实时气温，并在我的日历上把今天下午 3 点的会议推迟半小时”，光靠检索文档就无能为力了。">
+  <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture04.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="工具使用与函数调用 | CS329Z 中文教程">
+  <meta name="twitter:description" content="在上一讲中，我们看到检索增强生成（RAG）能够为大语言模型补充外部静态或动态文档。但如果用户问的是：“17,423 892 等于多少？”或者“帮我查一下斯坦福现在的实时气温，并在我的日历上把今天下午 3 点的会议推迟半小时”，光靠检索文档就无能为力了。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"工具使用与函数调用 | CS329Z 中文教程","description":"在上一讲中，我们看到检索增强生成（RAG）能够为大语言模型补充外部静态或动态文档。但如果用户问的是：“17,423 892 等于多少？”或者“帮我查一下斯坦福现在的实时气温，并在我的日历上把今天下午 3 点的会议推迟半小时”，光靠检索文档就无能为力了。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture04.html","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture04.html","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","大语言模型","工具使用与函数调用"]}</script>
+  <link rel="stylesheet" href="./assets/reader.css">
+</head>
+<body data-static="true" data-initial-doc="lecture04" data-doc="lecture04">
+  <a class="skip" href="#main">跳到正文</a>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-code">CS329Z<span class="brand-dot">.</span></span>
+        <span class="brand-sub">ENGINEERING AI AGENTS</span>
+      </a>
+      <p class="edition">AI Agent 系统工程教程 <span>中文学习资料</span></p>
+      <button type="button" class="search-trigger" id="open-search">
+        <span class="search-trigger-text">搜索课程、概念与算法…</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item active" data-doc="lecture04" href="./lecture04.html" aria-current="page"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item" data-doc="lab26" href="./lab26.html"><span>编写说明与待修订问题</span></a></div></nav>
+    <div class="sidebar-foot">
+      <span>CS329Z · Engineering AI Agents</span>
+      <span>System · Data · Evals</span>
+    </div>
+  </aside>
+
+  <div class="shade" id="shade"></div>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" id="menu" class="mobile-only" aria-label="打开课程目录" aria-expanded="false" aria-controls="sidebar">目录</button>
+        <div id="breadcrumb" class="breadcrumb">工具使用与函数调用</div>
+      </div>
+      <div class="reading-tools">
+        <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
+        <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
+        <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
+        <button type="button" id="print" aria-label="打印或导出 PDF">打印 / PDF</button>
+      </div>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <div class="chapter-meta" id="chapter-meta"></div>
+
+        <section class="home-intro" id="home-intro" hidden>
+          <p class="eyebrow">CS329Z 中文教程 · ENGINEERING AI AGENTS</p>
+          <h1>从理解语言模型，<br>到构建可靠的 <em>AI Agent</em> 系统。</h1>
+          <p class="hero-lead">面向 Python 开发者的中文自学教程，包含 19 讲、4 项实践和配套代码导读。从 RAG、工具调用开始，逐步学习记忆、协作、评测与安全。</p>
+          <div class="hero-bottom">
+            <div class="hero-stats">
+              <span><strong>19</strong> 讲核心课程</span>
+              <span><strong>4</strong> 项工程实践</span>
+              <span><strong>2</strong> 套配套源码解析</span>
+            </div>
+            <div class="hero-actions">
+              <a class="start-link" href="./lecture01.html">开始第 01 讲 <span>→</span></a>
+              <a class="secondary-link" href="./lab20.html">进入 HW1 实战</a>
+            </div>
+          </div>
+        </section>
+
+        <article id="article"><h1 id="第-04-讲工具使用与函数调用">第 04 讲｜工具使用与函数调用</h1>
+<p>在上一讲中，我们看到检索增强生成（RAG）能够为大语言模型补充外部静态或动态文档。但如果用户问的是：“<span class="math-inline">17,423 &times; 892</span> 等于多少？”或者“帮我查一下斯坦福现在的实时气温，并在我的日历上把今天下午 3 点的会议推迟半小时”，光靠检索文档就无能为力了。</p>
+<p>大语言模型本质上是基于统计关联的序列预测器：它在多位数算术、长链条符号逻辑推导与动态规划问题上准确率随规模急剧下跌；它无法获知此时此刻的股票价格或传感器读数；它更无法仅凭输出一段文字就自动修改外部数据库或操作物理世界。<strong>工具使用与函数调用（Tool Use &amp; Function Calling）</strong> 正是赋予语言模型“双手”的关键桥梁。本讲将在收尾 RAG 长上下文与引用局限的基础上，系统探讨模型如何通过自监督与指令微调学会使用成千上万个工具（Toolformer、ToolkenGPT、ToolLLM、Gorilla），剖析从 REST API、Function Calling 到模型上下文协议（MCP）的三代接口标准，并掌握 BFCL、ToolBench 与 <span class="math-inline">&tau;</span>-bench 等工具评测方法。</p>
+<h2 id="学习目标">学习目标</h2>
+<ul><li>理解长上下文 RAG 的性能饱和现象、中间迷失效应与引用幻觉（Citation Hallucination）诊断指标，明确引入外部工具的三大核心动因。</li><li>掌握让语言模型学会调用工具的四种代表性训练范式：Toolformer 的自监督损失过滤、ToolkenGPT 的专用词元嵌入、ToolLLM 的大规模 API 检索微调，以及 Gorilla 的检索感知训练与 AST 幻觉评测。</li><li>深入理解三代工具接口标准（REST API、JSON Schema Function Calling、MCP 协议）的架构演进，掌握 MCP 的能力发现（<code>tools/list</code>）、调用执行（<code>tools/call</code>）与双向鉴权边界。</li><li>掌握工具调用系统的评测维度（BFCL、ToolBench、<span class="math-inline">&tau;</span>-bench）与可靠性指标（<span class="math-inline"><span class="m-text">pass</span>@k</span> 与 <span class="math-inline"><span class="m-text">pass</span><sup>k</sup></span>），能够系统识别并防御单步、多步与交互层面的工具故障。</li></ul>
+<h2 id="知识讲解">知识讲解</h2>
+<h3 id="1-rag-收尾与工具动机">1. RAG 收尾与工具动机</h3>
+<h4 id="检索规模与收益饱和">检索规模与收益饱和</h4>
+<p>既然现代大语言模型支持数万乃至数十万 Token 的上下文窗口，在做 RAG 时，我们能不能干脆每次把检索出来的前 100 篇文档全部塞给模型？</p>
+<p>实验数据给出了否定的答案：</p>
+<ol><li><strong>注意力退化与“中间迷失”（Lost in the Middle, Liu et al., 2023）</strong>：当把包含正确答案的那篇关键文档混入 20 篇干扰文档中时，如果关键文档放在提示词的最开头或最末尾，模型准确率较高；但一旦关键文档落在了上下文的<strong>中间位置</strong>，模型的问答准确率甚至会跌破完全不给任何文档的闭卷基线（例如在实验中，GPT-3.5-Turbo 闭卷准确率为 <span class="math-inline">56%</span>，只给唯一正确文档的 Oracle 准确率高达 <span class="math-inline">88.5%</span>，而把正确文档埋在 20 篇文档中间时准确率反而低于闭卷水平）。</li><li><strong>收益快速饱和</strong>：随着检索文档数量 <span class="math-inline">k</span> 增加，检索器的召回率（Recall）虽然缓慢爬升至 <span class="math-inline">90%</span>，但下游模型的最终问答准确率在 <strong><span class="math-inline">10 \sim 20</span> 篇文档之后便迅速饱和甚至开始下降</strong>。过多的次相关文档不仅消耗海量 Token 预算，还会严重干扰模型的注意力分配。</li></ol>
+<h4 id="引用与长上下文诊断">引用与长上下文诊断</h4>
+<p>RAG 的核心卖点之一是让模型生成带引用标记（如 <code>[1]</code>, <code>[2]</code>）的回答。然而，引用标记本身也是由语言模型自回归生成的，这意味着<strong>引用同样会发生幻觉（Citation Hallucination）</strong>。Liu et al.（2023）对商业生成式搜索引擎的评测发现，虽然模型生成的回答读起来非常流畅、在人工主观有用性评分（1–5 分）上得分很高，但其引用的客观质量却不容乐观，需要用两个正交指标严格检验：</p>
+<ul><li><strong>引用精确率（Citation Precision）</strong>：在模型已经标注的所有引用 <code>[i]</code> 中，对应的第 <span class="math-inline">i</span> 篇文档<strong>真正能够支持</strong>该句陈述的比例（排查“乱贴无关标签”）；</li><li><strong>引用召回率（Citation Recall）</strong>：在回答所有需要事实支撑的陈述句中，所附带的引用文档合集<strong>能够完全覆盖并证明</strong>该陈述的比例（排查“漏标出处或无中生有”）。</li></ul>
+<p>此外，在评估长上下文能力时，像 <strong>大海捞针（Needle-in-a-Haystack）</strong> 这样的测试虽然能检验模型从长文中定位单句事实的能力，但“找出一根针”的成功并不代表模型能够在长上下文中完成跨多处的复杂推理与计算。</p>
+<h4 id="工具弥补能力与访问边界">工具弥补能力与访问边界</h4>
+<p>跳出纯文本检索，大语言模型在三类根本性边界上必须借助外部工具（Tools）：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>大语言模型的固有局限</th><th>具体表现场景</th><th>外部工具提供的解决方案</th></tr></thead><tbody><tr><td><strong>1. 无法精确计算的确定性任务（What LLMs can't compute）</strong></td><td>多位数乘法、多步符号逻辑推导（如斑马谜题）、动态规划（Dziri et al., 2023 证明随着问题规模增加，零样本准确率迅速归零）</td><td>计算器（Calculator）、Python 代码解释器、符号求解器与形式化验证器</td></tr><tr><td><strong>2. 训练语料未曾涵盖的知识（What LLMs never saw）</strong></td><td>长尾生僻事实、训练截止日期后的实时动态、企业内部私有数据库</td><td>Web 搜索引擎、实时新闻/行情 API、内部语料库检索工具</td></tr><tr><td><strong>3. 语言之外的外部世界与状态（What LLMs can't reach）</strong></td><td>外部软件接口、数据库写入、物理世界交互、当前精确时间与传感器状态</td><td>函数调用（Function Calling）、MCP 服务、浏览器自动化、系统时钟</td></tr></tbody></table></div>
+<h4 id="完整工具链">完整工具链</h4>
+<p>从系统视角来看（Wang et al., 2024），一个供语言模型使用的<strong>工具（Tool）</strong>是运行在模型外部的计算机程序的函数接口。一次完整的工具使用闭环包含四个严格步骤：</p>
+<ol><li><strong>模型生成调用指令</strong>：例如面对 <code>&quot;What is 17,423 × 892?&quot;</code>，模型不直接硬猜数字，而是输出结构化指令 <code>calculate(17423 * 892)</code>；</li><li><strong>宿主程序拦截并执行</strong>：外部运行时（Harness）解析出函数名与参数，调用真正的计算器程序；</li><li><strong>返回环境观测</strong>：计算器算出精确结果 <code>15,541,316</code> 并交回给宿主程序；</li><li><strong>结果重入上下文</strong>：宿主程序将结果写入上下文，模型据此生成最终回答 <code>&quot;It is 15,541,316&quot;</code>。</li></ol>
+<h3 id="2-怎样让模型学会工具">2. 怎样让模型学会工具</h3>
+<h4 id="toolformer-的五类工具">Toolformer 的五类工具</h4>
+<p>在早期基础模型尚未原生内置工具能力时，如何让一个普通预训练语言模型（如 60 亿参数的 GPT-J）无需大量人工标注就能自己学会调用工具？<strong>Toolformer（Schick et al., 2023）</strong> 开创了基于自监督学习的经典范式，涵盖了五类基础工具：<strong>问答系统（QA）、计算器（Calculator）、维基百科搜索引擎（WikiSearch）、机器翻译系统（MT）与日历（Calendar）</strong>。</p>
+<h4 id="采样执行过滤训练">采样—执行—过滤—训练</h4>
+<p>Toolformer 的核心思想是在海量普通无标注文本（如 CCNet）中，让模型自己尝试“插入”API 调用，并只保留那些<strong>执行结果真正有助于预测后续文本</strong>的调用。全流程分为四步：</p>
+<ol><li><strong>采样 API 调用（Sample API Calls）</strong>：给模型提供少量手工编写的上下文示例（Few-shot Prompt），让模型在普通文本句子（如 <code>&quot;Pittsburgh is known as the Steel City.&quot;</code>）中找出适合插入 API 调用的位置 <span class="math-inline">i</span>（满足触发概率 <span class="math-inline">p<sub>i</sub> &gt; &tau;<sub>s</sub></span>），并采样生成 <span class="math-inline">m</span> 个候选调用（如 <code>[QA(&quot;What other name is Pittsburgh known by?&quot;)]</code>）。</li><li><strong>执行 API 调用（Execute API Calls）</strong>：真实调用外部程序执行这些候选请求，获取返回的字符串结果（如 <code>&quot;The Steel City&quot;</code>）。</li><li><strong>基于损失过滤（Filter API Calls）</strong>：这是最关键的一步——判断这次工具调用到底有没有用。</li><li><strong>微调模型（Finetune）</strong>：将通过过滤的 <code>[API调用 → 返回结果]</code> 保留在原文本中构成增强数据集，微调语言模型本身。</li></ol>
+<h4 id="以未来损失衡量帮助">以未来损失衡量帮助</h4>
+<p>Toolformer 如何定量判断一次 API 调用“有用”？它计算模型在插入 API 位置之后的未来 Token 序列上的<strong>加权交叉熵损失（Weighted Cross-Entropy Loss, <span class="math-inline">L<sub>i</sub></span>）</strong>，并对比两种情况：</p>
+<ul><li><strong>包含完整调用与真实返回结果</strong>时的后续预测损失：<span class="math-inline">L<sub>i</sub><sup>+</sup> = L<sub>i</sub>(<span class="m-text">含 API 调用与返回结果 </span> r<sub>i</sub>)</span>；</li><li><strong>完全不调用 API</strong> 与 <strong>只放 API 调用但不给返回结果</strong> 两种基线中的较小损失：<span class="math-inline">L<sub>i</sub><sup>-</sup> = <span class="m-fn">min</span>(L<sub>i</sub>(&varepsilon;), L<sub>i</sub>(<span class="m-text">仅 API 调用无结果</span>))</span>。</li></ul>
+<p>只有当真实返回结果使后续文本的预测损失显著降低——即差值 <strong><span class="math-inline">L<sub>i</sub><sup>-</sup> - L<sub>i</sub><sup>+</sup> &ge; &tau;<sub>f</sub></span></strong>（超过过滤阈值 <span class="math-inline">&tau;<sub>f</sub></span>）时，这条工具调用才会被保留下来！例如，查出 <code>&quot;Pittsburgh&quot;</code> 的别名 <code>&quot;Steel City&quot;</code> 能直接让模型零损耗地预测出后文的 <code>&quot;the Steel City&quot;</code>，因此获得高分保留；而如果调用返回的结果对下文预测毫无帮助，就会被自动剔除。通过这一机制，微调后的 6B Toolformer 在事实补全、数学、时间问答等任务上甚至超越了不带工具的 175B GPT-3。</p>
+<h4 id="toolkengpt把工具变成-token">ToolkenGPT：把工具变成 token</h4>
+<p>Toolformer 证明了自监督工具学习的可行性，但它需要微调模型全部参数，且只能处理屈指可数的几个工具。当工具数量扩大到几百个时，能不能不微调大模型本体，而是像扩充词表一样，把每一个工具表示为一个专门的新词元（<strong>&quot;Toolken&quot;</strong>）？</p>
+<p><strong>ToolkenGPT（Hao et al., 2023）</strong> 提出了这一巧妙设计：</p>
+<ul><li>冻结预训练大模型的主干权重，只为每个工具学习一个专门的词元嵌入向量（Toolken Embedding，打包在矩阵 <span class="math-inline">W_&tau;</span> 中），将其拼接到原有的词表分类头之后；</li><li>在正常文本生成过程中，一旦模型预测出的下一个 Token 是某个工具词元（例如 <code>[square]</code>），生成立即暂停并切换到“工具参数填充模式（Tool-mode prompt）”，利用少样本示例填入参数并执行工具，随后将返回值重新送回主上下文继续推理；</li><li>在训练 <span class="math-inline">W_&tau;</span> 时，对于句子 <code>&quot;the area is 256 square feet&quot;</code>，训练目标只需在第一个结果数字 <code>2</code> 的位置预测工具词元 <code>[square]</code>，而将后续结果数字 <code>5</code>、<code>6</code> 标记为 <code>[N/A]</code> 跳过损失计算：<div class="math-block"><span class="m-cal">L</span>(W_&tau;) = <span class="m-op">&sum;</span><sub>(s, s') &isin; <span class="m-cal">D</span></sub> <span class="m-op">&sum;</span><sub>i=1</sub><sup>N</sup> -<span class="m-fn">log</span> P(t'<sub>i</sub> \mid t<sub>&lt;i</sub>) &middot; &#120793;[t'<sub>i</sub> &ne; <span class="m-text">N/A</span>]</div>
+<p>这样只需极小的训练开销即可扩展到 234 个算术、知识与机器人控制工具。</p></li></ul>
+<h4 id="toolllm--toolllama">ToolLLM / ToolLLaMA</h4>
+<p>当工具规模从百级进一步跃升到上万个真实世界的 REST API（如 RapidAPI 平台上的 16,000+ 个 API）时，既不可能把所有工具塞进提示词，也不可能靠简单词元区分。<strong>ToolLLM（Qin et al., 2023）</strong> 构建了完整的工业级链路：</p>
+<ol><li>从 RapidAPI 收集覆盖数千个工具的 16,464 个真实 API，并用 ChatGPT 合成涵盖单工具与多工具组合的复杂用户指令与深度优先搜索（DFSDT）调用轨迹（构成 <strong>ToolBench</strong> 数据集）；</li><li>训练一个专门的<strong>神经 API 检索器（Neural API Retriever）</strong>，根据用户指令从上万个 API 中精准召回最相关的 Top-<span class="math-inline">K</span> 个候选 API 文档；</li><li>在召回的 API 文档与多步轨迹上微调 LLaMA，得到 <strong>ToolLLaMA</strong>。</li></ol>
+<h4 id="gorilla-与-retrieval-aware-training">Gorilla 与 retrieval-aware training</h4>
+<p>在面对海量且频繁更新的机器学习与云计算 API 时，<strong>Gorilla（Patil et al., 2023）</strong> 从 HuggingFace Hub、PyTorch Hub 与 TensorFlow Hub 收集了 1,645 个 API 规范，并用 GPT-4 通过 Self-Instruct 生成了指令—代码配对数据。</p>
+<p>Gorilla 揭示了一个极具实战价值的训练洞见——<strong>检索感知训练（Retrieval-Aware Training, RAT）</strong>：</p>
+<ul><li>如果模型在微调时只练习“闭卷生成 API 调用（Zero-shot）”，到了线上给它拼入实时检索出的 API 文档时，它往往不会利用文档，甚至会被低质量检索结果带偏；</li><li>反之，如果在微调阶段就将检索出的参考文档放入上下文，并且<strong>刻意在训练数据中混入一部分检索正确的文档和一部分检索错误的干扰文档</strong>，模型就能学会两项关键本领：当检索出的 API 文档相关时严格照章调用（适应 API 更新）；当检索器召回了一篇无关文档时，果断忽略干扰，依靠自身参数知识正确作答。</li></ul>
+<h4 id="api-幻觉与规模比较">API 幻觉与规模比较</h4>
+<p>为了精确诊断模型在生成工具调用代码时是否编造了不存在的函数名或参数，Gorilla 引入了<strong>抽象语法树子树匹配（AST Sub-Tree Matching）</strong>：将模型生成的代码解析为 AST 语法树，与标准 API 库中的函数签名树进行结构比对，从而严格区分“调用了完全不存在的虚构 API（Hallucination）”与“选对了 API 但填错了参数”。</p>
+<p>下表横向对比了四代工具学习方法的设计取舍：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>维度</th><th>Toolformer (2023)</th><th>ToolkenGPT (2023)</th><th>ToolLLM (2023)</th><th>Gorilla (2023/2024)</th></tr></thead><tbody><tr><td><strong>工具调用的表征形式</strong></td><td>嵌入正文的括号文本</td><td>词表中新增的专用 Token</td><td>ReAct 风格多步交互轨迹</td><td>文本与可执行 API 调用代码</td></tr><tr><td><strong>训练更新的参数</strong></td><td>完整模型权重（GPT-J 6B）</td><td>仅新增的 Toolken 向量</td><td>完整模型权重（LLaMA 7B）+ 检索器</td><td>完整模型权重（LLaMA 7B）</td></tr><tr><td><strong>训练监督信号来源</strong></td><td>自监督未来损失过滤</td><td>真实标注或合成调用数据</td><td>ChatGPT 蒸馏的搜索轨迹</td><td>GPT-4 Self-Instruct 合成数据</td></tr><tr><td><strong>如何学会“何时调用”</strong></td><td>损失下降阈值过滤</td><td>预测 Toolken 的位置概率</td><td>指令微调</td><td>指令微调</td></tr><tr><td><strong>如何学会“传何参数”</strong></td><td>模型微调</td><td>切换至上下文少样本提示</td><td>指令微调</td><td>检索感知微调（RAT）</td></tr><tr><td><strong>验证的工具规模</strong></td><td>5 类基础工具</td><td>234 个工具</td><td>16,000+ 个 RapidAPI 接口</td><td>1,645 个深度学习框架 API</td></tr></tbody></table></div>
+<h3 id="3-从-rest-到-mcp">3. 从 REST 到 MCP</h3>
+<h4 id="rest--http-接口">REST / HTTP 接口</h4>
+<p>靠每新出一个 API 就重新微调一次模型显然无法适应瞬息万变的软件生态。因此，工程界的核心思路从<strong>“改变模型以适应工具”</strong>转向了<strong>“标准化工具的描述方式，使任何模型都能在运行时零样本调用”</strong>。</p>
+<p>这一演进经历了三代接口标准：</p>
+<ol><li><strong>第一代：面向人类开发者的 REST API</strong>：通过 HTTP 动词（<code>GET</code> 读取、<code>POST</code> 创建、<code>PUT</code> 更新、<code>DELETE</code> 删除）和 URL 路径（如 <code>GET https://api.weather.com/v1/current?city=Stanford</code>）暴露服务。REST 是为人类程序员阅读文档编写代码设计的，缺乏统一的机器可读调用契约，直接让模型手写原始 HTTP 请求极易出错。</li></ol>
+<h4 id="function-calling-与-schema">Function calling 与 schema</h4>
+<ol><li><strong>第二代：面向模型的函数调用（Function Calling）</strong>：宿主程序在上下文中为每个工具提供结构化的 <strong>JSON Schema</strong>，明确声明函数名（<code>name</code>）、功能描述（<code>description</code>）、参数字段类型（<code>properties</code>）与必填项（<code>required</code>）：</li></ol>
+<div class="code-block"><div class="code-header"><span class="code-lang">JSON</span><button type="button" class="copy-btn" aria-label="复制代码">复制代码</button></div><pre><code>{
+  &quot;name&quot;: &quot;get_weather&quot;,
+  &quot;description&quot;: &quot;获取指定城市的实时天气&quot;,
+  &quot;parameters&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;city&quot;: { &quot;type&quot;: &quot;string&quot; }
+    },
+    &quot;required&quot;: [&quot;city&quot;]
+  }
+}</code></pre></div>
+<p>模型只需输出符合该 Schema 的 JSON 调用对象 <code>{&quot;name&quot;: &quot;get_weather&quot;, &quot;arguments&quot;: {&quot;city&quot;: &quot;Stanford&quot;}}</code>，由宿主程序完成参数验证与实际分发执行。然而，Function Calling 的局限在于<strong>工具定义紧耦合在每个应用各自的代码库里</strong>——你在应用 A 里写好的 GitHub、Slack 或数据库连接器，换到应用 B 或另一个 IDE 里又得重新封装一遍。</p>
+<h4 id="mcp-的角色">MCP 的角色</h4>
+<ol><li><strong>第三代：面向生态系统的模型上下文协议（Model Context Protocol, MCP）</strong>：为了解决“<span class="math-inline">M</span> 个 AI 应用与 <span class="math-inline">N</span> 个外部数据源之间需要编写 <span class="math-inline">M &times; N</span> 个定制适配器”的碎片化困境，MCP 制定了一套统一的开放协议，将系统划分为三个标准角色：<ul><li><strong>MCP Host（宿主应用）</strong>：运行大语言模型并管理用户交互的主程序（如 Claude Desktop、Cursor IDE 或你编写的 Agent 应用）；</li><li><strong>MCP Client（客户端）</strong>：驻留在宿主应用内部，负责与对应的 MCP Server 维护一对一的协议连接；</li><li><strong>MCP Server（服务端）</strong>：封装特定外部系统（如本地文件系统、PostgreSQL、Google Drive 或课程 LMS 系统），通过标准协议向客户端暴露三类核心原语：</li><li><strong>Tools（工具）</strong>：由模型决定调用的可执行函数（含副作用或计算操作）；</li><li><strong>Resources（资源）</strong>：由应用或用户选择注入上下文的只读数据源（如文件内容、数据库记录）；</li><li><strong>Prompts（提示模板）</strong>：预定义的可复用工作流提示模板。</li></ul></li></ol>
+<h4 id="发现与消息交换">发现与消息交换</h4>
+<p>MCP 基于 JSON-RPC 2.0 协议在运行时完成<strong>动态能力发现与调用执行</strong>：</p>
+<ul><li><strong>第一步：能力发现（<code>tools/list</code>）</strong>：当 Agent 启动或连接新服务时，Client 发送 <code>{&quot;method&quot;: &quot;tools/list&quot;}</code> 请求，Server 返回当前可用工具的完整列表及各自的 <code>inputSchema</code>（例如返回 <code>weather_current</code> 与 <code>calculator_arithmetic</code> 的 Schema 及缓存有效期 <code>ttlMs</code>）。</li><li><strong>第二步：工具执行（<code>tools/call</code>）</strong>：当模型决定调用某个工具时，Client 发送 <code>{&quot;method&quot;: &quot;tools/call&quot;, &quot;params&quot;: {&quot;name&quot;: &quot;weather_current&quot;, &quot;arguments&quot;: {&quot;location&quot;: &quot;Stanford&quot;, &quot;units&quot;: &quot;imperial&quot;}}}</code>；Server 执行后返回结构化的 <code>content</code> 数组（如 <code>[{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;Current weather in Stanford: 68°F...&quot;}]</code>），再由 Host 交回给模型继续推理。</li></ul>
+<h4 id="openapi-到-mcp-与双向凭据">OpenAPI 到 MCP 与双向凭据</h4>
+<p>在工程落地中，我们可以利用 <code>FastMCP</code> 等工具直接将现有的 REST OpenAPI 规范（<code>openapi.json</code>）一键转换为 MCP Server（例如将课程系统的 <code>GET /assignments</code>、<code>GET /submissions</code>、<code>POST /grade</code> 自动映射为 <code>list_assignments</code>、<code>get_submissions</code>、<code>post_grade</code> 工具）。</p>
+<p>在构建此类中间件服务时，必须严格区分<strong>入站鉴权（Inbound Auth）</strong>与<strong>出站鉴权（Outbound Auth）</strong>的安全边界：</p>
+<div class="code-block"><div class="code-header"><span class="code-lang">PYTHON</span><button type="button" class="copy-btn" aria-label="复制代码">复制代码</button></div><pre><code>import os, httpx
+from fastmcp import FastMCP
+from fastmcp.server.auth.providers.jwt import StaticTokenVerifier
+
+# 1. 出站凭据（Outbound：MCP Server → 后端 LMS REST API）
+api = httpx.AsyncClient(
+    base_url=&quot;https://lms.stanford.edu/api/v1&quot;,
+    headers={&quot;Authorization&quot;: f&quot;Bearer {os.environ['LMS_TOKEN']}&quot;}
+)
+
+# 2. 入站凭据（Inbound：Agent Client → MCP Server）
+who_may_call = StaticTokenVerifier(
+    tokens={os.environ[&quot;AGENT_TOKEN&quot;]: {&quot;client_id&quot;: &quot;ta-agent&quot;}}
+)
+
+mcp = FastMCP.from_openapi(
+    openapi_spec=spec, client=api, name=&quot;Course MCP&quot;, auth=who_may_call
+)</code></pre></div>
+<p>为什么必须分离这两枚 Token？<code>AGENT_TOKEN</code> 用于验证“哪个 Agent 有权调用这台 MCP Server”；而访问底层数据库或后端 LMS 的高权限 <code>LMS_TOKEN</code> 则被严格封存在 MCP Server 内部，<strong>绝不暴露给大模型或 Agent 上下文</strong>。这样即便 Agent 遭遇提示注入攻击，攻击者也无法从模型上下文中窃取后端系统的主密钥，且 MCP Server 可以在转发请求前强制执行细粒度的权限审计。</p>
+<h3 id="4-评测与常见故障">4. 评测与常见故障</h3>
+<h4 id="bfcl">BFCL</h4>
+<p>我们该如何系统评测一个模型的工具调用能力？伯克利提出的 <strong>BFCL（Berkeley Function-Calling Leaderboard，Patil et al., 2025）</strong> 构建了涵盖 Python、Java、JavaScript、SQL 等多语言的综合评测体系，重点考察三个递进维度：</p>
+<ol><li><strong>基于 AST 的离线结构评估</strong>：无需真实执行外部 API，直接通过抽象语法树比对模型生成的函数名、参数名与参数类型是否精准匹配；</li><li><strong>基于真实执行的评估</strong>：实际运行函数调用，检验返回结果是否正确；</li><li><strong>复杂场景覆盖</strong>：<ul><li><strong>多函数选择（Multiple Functions）</strong>：从多个相似候选函数中选出正确的一个（如在 <code>add</code> 和 <code>mult</code> 中为 <code>&quot;2 + 3&quot;</code> 选择 <code>add(a=2, b=3)</code>）；</li><li><strong>并行函数调用（Parallel Functions）</strong>：单步同时发出多个独立调用（如面对 <code>&quot;What is (2+3) and (4+5)?&quot;</code> 同时生成 <code>add(a=2, b=3), add(a=4, b=5)</code>）；</li><li><strong>相关性检测与拒答（Relevance Detection / Irrelevance）</strong>：当用户问 <code>&quot;What is 2 * 3?&quot;</code> 但上下文中只提供了 <code>add(a, b)</code> 工具时，优秀的模型应当明确拒绝调用并指出缺少乘法工具，而不是强行乱调 <code>add</code>。</li></ul></li></ol>
+<h4 id="toolbench">ToolBench</h4>
+<p>针对成千上万个真实 API 的组合场景，<strong>ToolBench（Qin et al., 2023）</strong> 重点评估模型在多步工具链中通过 API 检索器查找工具、阅读陌生 API 文档并完成跨领域组合调用（Multi-tool Composition）的能力。</p>
+<h4 id="τ-bench">τ-bench</h4>
+<p>然而，在 BFCL 和 ToolBench 中，用户的指令往往是一次性完整给出的。而在真实的客服、机票改签或电商售后场景中，用户最初的请求往往信息不全，Agent 必须<strong>一边与用户多轮对话收集信息，一边查阅公司政策文档，一边调用后端数据库工具修改系统状态</strong>。</p>
+<p><strong><span class="math-inline">&tau;</span>-bench（Tool-Agent-User Interaction Benchmark, Yao et al., 2024）</strong> 正是为此设计的交互式基准：由大模型扮演具有特定诉求的用户，Agent 必须在多轮对话中同时满足两点——（1）最终将后端数据库的真实状态修改为与目标完全一致；（2）全过程严格遵守领域业务政策（例如“特价机票起飞前 24 小时内不可免费退票”）。</p>
+<h4 id="passk-与-passk">pass@k 与 pass^k</h4>
+<p>在 <span class="math-inline">&tau;</span>-bench 的评测中，研究者提出了一对极具启发性的可靠性指标对比——<strong><span class="math-inline"><span class="m-text">pass</span>@k</span></strong> 与 <strong><span class="math-inline"><span class="m-text">pass</span><sup>k</sup></span></strong>（设对同一任务独立运行 <span class="math-inline">n</span> 次试验，其中成功了 <span class="math-inline">c</span> 次）：</p>
+<ul><li><strong><span class="math-inline"><span class="m-text">pass</span>@k</span>（<span class="math-inline">k</span> 次尝试中至少成功 $1$ 次的概率）</strong>：<div class="math-block"><span class="m-text">pass</span>@k = 1 - <span class="m-frac"><span class="m-num"><span class="m-binom">(<span class="m-frac"><span class="m-num">n - c</span><span class="m-den">k</span></span>)</span></span><span class="m-den"><span class="m-binom">(<span class="m-frac"><span class="m-num">n</span><span class="m-den">k</span></span>)</span></span></span></div>
+<p>它衡量的是模型的<strong>探索上限（Exploration Potential）</strong>，适用于代码竞赛或有外部单元测试兜底的场景——只要试 10 次能撞对 1 次就算成功。</p></li><li><strong><span class="math-inline"><span class="m-text">pass</span><sup>k</sup></span>（连续 <span class="math-inline">k</span> 次尝试全部成功的概率）</strong>：<div class="math-block"><span class="m-text">pass</span><sup>k</sup> = <span class="m-frac"><span class="m-num"><span class="m-binom">(<span class="m-frac"><span class="m-num">c</span><span class="m-den">k</span></span>)</span></span><span class="m-den"><span class="m-binom">(<span class="m-frac"><span class="m-num">n</span><span class="m-den">k</span></span>)</span></span></span> &approx; (<span class="m-frac"><span class="m-num">c</span><span class="m-den">n</span></span>)<sup>k</sup></div>
+<p>它衡量的是系统的<strong>生产级可靠性与一致性（Reliability &amp; Consistency）</strong>。在面向真实用户的客服、金融或医疗 Agent 中，用户不可能容忍“试 8 次才成功 1 次”。实验表明，许多在单次 <span class="math-inline"><span class="m-text">pass</span>@1</span> 上得分尚可（如 <span class="math-inline">60%</span>）的 Agent，一旦考察连续 8 次不出错的 <span class="math-inline"><span class="m-text">pass</span><sup>8</sup></span>，成功率便暴跌至不足 <span class="math-inline">25%</span>。</p></li></ul>
+<h4 id="工具-agent-故障清单">工具 Agent 故障清单</h4>
+<p>在工程调试中，工具调用 Agent 的常见失败模式可以归纳为三个层次的检查清单：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>故障范围</th><th>典型失败模式</th><th>具体表现与防护重点</th></tr></thead><tbody><tr><td><strong>单次调用层（Single Call）</strong></td><td><strong>1. 工具误选（Selection）</strong><br><strong>2. 参数捏造（Arguments）</strong><br><strong>3. 工具幻觉（Hallucinated Tool）</strong></td><td>选错工具或在无需工具时强行调用；参数类型错误、单位搞混或填入未提供的默认值；凭空编造上下文里根本不存在的 API 名称。需在 Harness 层强制执行 Schema 校验。</td></tr><tr><td><strong>多步链路层（Multi-step Chain）</strong></td><td><strong>1. 顺序颠倒（Sequencing）</strong><br><strong>2. 死循环重试（Recovery）</strong></td><td>跳过前置查询步骤（如未查出用户 ID 就直接调用修改订单接口）；当工具返回报错时，一字不改地反复重试同一个失败调用，而不懂得回退或换路。</td></tr><tr><td><strong>对话与策略层（Conversation）</strong></td><td><strong>1. 违反业务政策（Policy Violation）</strong><br><strong>2. 盲目假设（Assumption）</strong><br><strong>3. 非确定性波动（Non-determinism）</strong></td><td>无视系统规则执行越权操作；在关键参数缺失时不去询问用户（<code>ask_user</code>）而是擅自瞎猜；同一次任务重跑时有时过有时挂（<span class="math-inline"><span class="m-text">pass</span><sup>k</sup></span> 低）。</td></tr></tbody></table></div>
+<h2 id="原课程阅读清单与导读">原课程阅读清单与导读</h2>
+<ul><li><a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener noreferrer">Schick et al. &quot;Toolformer: Language Models Can Teach Themselves to Use Tools.&quot; NeurIPS (2023).</a> 导读：重点阅读第 2 节与第 3 节中“采样—执行—基于加权交叉熵损失过滤”的数学定义，理解自监督信号如何筛选出真正有信息增量的工具调用。</li><li><a href="https://arxiv.org/abs/2305.15334" target="_blank" rel="noopener noreferrer">Patil et al. &quot;Gorilla: Large Language Model Connected with Massive APIs.&quot; NeurIPS (2024).</a> 导读：关注 Retrieval-Aware Training 如何提升模型对文档更新与低质量检索的鲁棒性，以及如何使用 AST 子树匹配量化 API 幻觉。</li><li><a href="https://modelcontextprotocol.io/specification/2025-06-18" target="_blank" rel="noopener noreferrer">Model Context Protocol Specification, revision 2025-06-18. modelcontextprotocol.io (2025).</a> 导读：理清 Host、Client、Server 的架构边界，对比 Tools、Resources、Prompts 三类原语的控制方与 JSON-RPC 生命周期消息格式。</li></ul>
+<h2 id="动手练习">动手练习</h2>
+<ol><li><strong>实现工具注册表与严格参数验证</strong>：编写一个包含 <code>lookup_policy(doc_id: str, section: int)</code> 与 <code>calculate_reimbursement(amount: float, approved: bool)</code> 的工具注册表（衔接 HW1 第 5–6 题）。构造 8 条测试调用，覆盖未知工具名、缺失必填字段、将布尔值传成字符串 <code>&quot;true&quot;</code>、以及工具内部抛出异常四种边界情况，确保验证器与执行器严格分离且永不向外抛出未捕获异常。</li><li><strong><span class="math-inline"><span class="m-text">pass</span>@k</span> 与 <span class="math-inline"><span class="m-text">pass</span><sup>k</sup></span> 对比分析</strong>：假设某个工具调用 Agent 在某项多步任务上独立运行 <span class="math-inline">n = 10</span> 次，成功了 <span class="math-inline">c = 7</span> 次。请分别计算 <span class="math-inline">k = 1, 3, 5</span> 时的 <span class="math-inline"><span class="m-text">pass</span>@k</span> 与 <span class="math-inline"><span class="m-text">pass</span><sup>k</sup></span> 值，并说明在“自动化生成代码补丁供 CI 测试筛选”与“直接替客户执行银行转账”两种场景下应分别以哪个指标为准。</li></ol></article>
+        <nav id="chapter-footer" aria-label="章节翻页"><a href="./lecture03.html"><small>← 上一节</small>检索增强生成（RAG）</a><a href="./lecture05.html"><small>下一节 →</small>框架与持久编排</a></nav>
+      </main>
+
+      <aside class="toc" aria-label="本节大纲">
+        <div class="toc-card">
+          <div class="toc-label">本讲目录</div>
+          <nav id="toc-links"><a class="depth-2" href="./lecture04.html#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87" data-anchor="学习目标">学习目标</a><a class="depth-2" href="./lecture04.html#%E7%9F%A5%E8%AF%86%E8%AE%B2%E8%A7%A3" data-anchor="知识讲解">知识讲解</a><a class="depth-3" href="./lecture04.html#1-rag-%E6%94%B6%E5%B0%BE%E4%B8%8E%E5%B7%A5%E5%85%B7%E5%8A%A8%E6%9C%BA" data-anchor="1-rag-收尾与工具动机">1. RAG 收尾与工具动机</a><a class="depth-3" href="./lecture04.html#2-%E6%80%8E%E6%A0%B7%E8%AE%A9%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%BC%9A%E5%B7%A5%E5%85%B7" data-anchor="2-怎样让模型学会工具">2. 怎样让模型学会工具</a><a class="depth-3" href="./lecture04.html#3-%E4%BB%8E-rest-%E5%88%B0-mcp" data-anchor="3-从-rest-到-mcp">3. 从 REST 到 MCP</a><a class="depth-3" href="./lecture04.html#4-%E8%AF%84%E6%B5%8B%E4%B8%8E%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C" data-anchor="4-评测与常见故障">4. 评测与常见故障</a><a class="depth-2" href="./lecture04.html#%E5%8E%9F%E8%AF%BE%E7%A8%8B%E9%98%85%E8%AF%BB%E6%B8%85%E5%8D%95%E4%B8%8E%E5%AF%BC%E8%AF%BB" data-anchor="原课程阅读清单与导读">原课程阅读清单与导读</a><a class="depth-2" href="./lecture04.html#%E5%8A%A8%E6%89%8B%E7%BB%83%E4%B9%A0" data-anchor="动手练习">动手练习</a></nav>
+          <a class="source-link" id="source-link" href="https://github.com/wanghao-SunSky/cs329z-chinese/blob/main/04-%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8.md">查看 Markdown 源文件 ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="page-footer">
+      <span>CS329Z · AI Agent 系统工程（Engineering AI Agents）</span>
+      <a href="https://github.com/wanghao-SunSky/cs329z-chinese">GitHub · Markdown 与 HTML</a>
+    </footer>
+  </div>
+
+  <dialog id="search-dialog">
+    <form method="dialog" class="search-head">
+      <label for="search-input">搜索</label>
+      <input id="search-input" type="search" placeholder="输入概念、算法、论文或练习关键词（如 ReAct, BM25, GRPO, MCP）…" autocomplete="off">
+      <button type="submit" aria-label="关闭搜索">ESC</button>
+    </form>
+    <p class="search-hint" id="search-hint">支持跨全部 19 讲课程、4 项实践与代码架构导读实时检索</p>
+    <div id="search-results" aria-live="polite"></div>
+  </dialog>
+
+  <noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/reader.js"></script>
+</body>
+</html>

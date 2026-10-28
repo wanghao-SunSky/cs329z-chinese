@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>检索增强生成（RAG） | CS329Z 中文教程</title>
+<meta name="description" content="如果直接向一个大语言模型提问：“本周哪一节助教答疑（Office Hour）排队的人最少？”没有任何外部信息源的模型只能根据训练语料中的统计常识编造一个看似合理的建议：“试试周三下午吧，通常周中人最少。”而如果系统能够先检索课程过去三周的排队日志，查出“周二下午 4 点平均排队 14 人，">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture03.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CS329Z 中文教程">
+  <meta property="og:title" content="检索增强生成（RAG） | CS329Z 中文教程">
+  <meta property="og:description" content="如果直接向一个大语言模型提问：“本周哪一节助教答疑（Office Hour）排队的人最少？”没有任何外部信息源的模型只能根据训练语料中的统计常识编造一个看似合理的建议：“试试周三下午吧，通常周中人最少。”而如果系统能够先检索课程过去三周的排队日志，查出“周二下午 4 点平均排队 14 人，">
+  <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture03.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="检索增强生成（RAG） | CS329Z 中文教程">
+  <meta name="twitter:description" content="如果直接向一个大语言模型提问：“本周哪一节助教答疑（Office Hour）排队的人最少？”没有任何外部信息源的模型只能根据训练语料中的统计常识编造一个看似合理的建议：“试试周三下午吧，通常周中人最少。”而如果系统能够先检索课程过去三周的排队日志，查出“周二下午 4 点平均排队 14 人，">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"检索增强生成（RAG） | CS329Z 中文教程","description":"如果直接向一个大语言模型提问：“本周哪一节助教答疑（Office Hour）排队的人最少？”没有任何外部信息源的模型只能根据训练语料中的统计常识编造一个看似合理的建议：“试试周三下午吧，通常周中人最少。”而如果系统能够先检索课程过去三周的排队日志，查出“周二下午 4 点平均排队 14 人，","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture03.html","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture03.html","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","大语言模型","检索增强生成（RAG）"]}</script>
+  <link rel="stylesheet" href="./assets/reader.css">
+</head>
+<body data-static="true" data-initial-doc="lecture03" data-doc="lecture03">
+  <a class="skip" href="#main">跳到正文</a>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-code">CS329Z<span class="brand-dot">.</span></span>
+        <span class="brand-sub">ENGINEERING AI AGENTS</span>
+      </a>
+      <p class="edition">AI Agent 系统工程教程 <span>中文学习资料</span></p>
+      <button type="button" class="search-trigger" id="open-search">
+        <span class="search-trigger-text">搜索课程、概念与算法…</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item active" data-doc="lecture03" href="./lecture03.html" aria-current="page"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item" data-doc="lab26" href="./lab26.html"><span>编写说明与待修订问题</span></a></div></nav>
+    <div class="sidebar-foot">
+      <span>CS329Z · Engineering AI Agents</span>
+      <span>System · Data · Evals</span>
+    </div>
+  </aside>
+
+  <div class="shade" id="shade"></div>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" id="menu" class="mobile-only" aria-label="打开课程目录" aria-expanded="false" aria-controls="sidebar">目录</button>
+        <div id="breadcrumb" class="breadcrumb">检索增强生成（RAG）</div>
+      </div>
+      <div class="reading-tools">
+        <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
+        <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
+        <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
+        <button type="button" id="print" aria-label="打印或导出 PDF">打印 / PDF</button>
+      </div>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <div class="chapter-meta" id="chapter-meta"></div>
+
+        <section class="home-intro" id="home-intro" hidden>
+          <p class="eyebrow">CS329Z 中文教程 · ENGINEERING AI AGENTS</p>
+          <h1>从理解语言模型，<br>到构建可靠的 <em>AI Agent</em> 系统。</h1>
+          <p class="hero-lead">面向 Python 开发者的中文自学教程，包含 19 讲、4 项实践和配套代码导读。从 RAG、工具调用开始，逐步学习记忆、协作、评测与安全。</p>
+          <div class="hero-bottom">
+            <div class="hero-stats">
+              <span><strong>19</strong> 讲核心课程</span>
+              <span><strong>4</strong> 项工程实践</span>
+              <span><strong>2</strong> 套配套源码解析</span>
+            </div>
+            <div class="hero-actions">
+              <a class="start-link" href="./lecture01.html">开始第 01 讲 <span>→</span></a>
+              <a class="secondary-link" href="./lab20.html">进入 HW1 实战</a>
+            </div>
+          </div>
+        </section>
+
+        <article id="article"><h1 id="第-03-讲检索增强生成rag">第 03 讲｜检索增强生成（RAG）</h1>
+<p>如果直接向一个大语言模型提问：“本周哪一节助教答疑（Office Hour）排队的人最少？”没有任何外部信息源的模型只能根据训练语料中的统计常识编造一个看似合理的建议：“试试周三下午吧，通常周中人最少。”而如果系统能够先检索课程过去三周的排队日志，查出“周二下午 4 点平均排队 14 人，周四上午 9 点平均排队 3 人”，模型就能给出精准、可核查的回答：“周四上午 9 点——前面大约只有 3 名同学。”</p>
+<p>大语言模型的参数记忆是静态且不透明的：它既不知道训练截止日期之后的实时动态，也无法访问企业的私有文档，更无法为自己凭记忆生成的数字提供可靠的原始出处。<strong>检索增强生成（Retrieval-Augmented Generation, RAG）</strong> 正是通过在推理时将外部检索器与语言模型结合，把“死记硬背”转化为“开卷查阅”。本讲将系统拆解端到端 RAG 流水线：从潜变量概率建模、文档切块与上下文增强索引，到稀疏检索（BM25）、稠密检索（DPR）、混合排序（RRF）、晚期交互重排（ColBERT），再到模型自主控制检索循环的 Agentic RAG 与三层故障诊断。</p>
+<h2 id="学习目标">学习目标</h2>
+<ul><li>理解检索增强生成的概率建模基础（RAG-Sequence 与 RAG-Token）以及从 DrQA、REALM、DPR 到现代 RAG 的演进脉络。</li><li>掌握文档切块（Chunking）、上下文增强检索（Contextual Retrieval）、晚期切块（Late Chunking）、层次化树索引（RAPTOR）与图索引（GraphRAG）的设计取舍。</li><li>深入理解 HNSW 近似最近邻搜索、BM25 词频饱和公式、DPR 双编码器对比学习、RRF 混合检索以及 ColBERT 晚期交互（MaxSim）重排机制，熟练运用 Hit@<span class="math-inline">k</span>、Recall@<span class="math-inline">k</span>、MRR 与 nDCG 评估检索质量。</li><li>掌握 Agentic RAG（Self-RAG、CRAG、Search-R1）的闭环决策机制，并能从检索端、阅读端与循环控制端系统诊断 RAG 故障。</li></ul>
+<h2 id="知识讲解">知识讲解</h2>
+<h3 id="1-项目与检索动机">1. 项目与检索动机</h3>
+<h4 id="项目要从可评测问题开始">项目要从可评测问题开始</h4>
+<p>在本课程开启学期项目（Course Project）之际，首先需要确立一条贯穿始终的工程准则：<strong>任何有价值的 Agent 系统或研究项目，都必须从一个可被严格评测的问题出发</strong>。</p>
+<p>无论是探索 Agent 在成本、延迟与安全性上的权衡、研究对提示注入与工具报错的鲁棒性、设计面向特定代码库的编程助手，还是构建自动读取课程大纲并写入日历的个人助理，单次跑通的演示（Demo）都不足以构成工程证据。在动手写复杂架构之前，必须尽早确定四件事：<strong>你的任务定义是什么、测试数据从哪里来、什么结果算成功、以及使用代码评分器（Code Graders）、LLM 裁判（LLM-as-Judge）还是人工评估来量化基线（Baselines）与失败模式</strong>。</p>
+<h4 id="检索为什么帮助生成">检索为什么帮助生成</h4>
+<p>与其指望语言模型把世界上所有的知识都死记硬背到数百亿个权重参数里，不如在模型需要回答问题时，按需（Just-in-time）将最相关的参考资料提供给它。检索机制为生成模型带来了两大核心优势：</p>
+<ol><li><strong>动态可更新性（Dynamic）</strong>：当公司政策修改、代码库更新或新邮件到达时，只需实时更新外部检索索引，而无需耗费巨资重新训练或微调模型权重。</li><li><strong>可解释与可核查性（Interpretable &amp; Verifiable）</strong>：模型可以生成指向所检索文档的明确引用（Citations），让人类用户或下游验证程序能够直接核对原文，大幅降低事实幻觉。</li></ol>
+<h4 id="drqarealm-与-dpr-的脉络">DrQA、REALM 与 DPR 的脉络</h4>
+<p>现代 RAG 并非凭空诞生，而是脱胎于开放域问答（Open-Domain QA）的经典 <strong>“检索器—阅读器（Retriever-Reader）”</strong> 框架：</p>
+<ul><li><strong>DrQA（Chen et al., 2017）</strong>：面对“1933 年华沙有多少居民讲波兰语？”这类问题，先用传统的稀疏词频检索模型（TF-IDF）从维基百科全集中快速召回前 <span class="math-inline">K</span> 篇候选文档（<span class="math-inline">f(<span class="m-cal">D</span>, Q) &rarr; P<sub>1</sub>, &hellip;, P<sub>K</sub></span>），再用在 SQuAD 阅读理解数据集上训练的双向 RNN 阅读器从文档中抽取答案片段（<code>$833,500$</code>）。</li><li><strong>REALM（Guu et al., 2020）与 DPR（Karpukhin et al., 2020）</strong>：将检索步骤从固定的 TF-IDF 升级为基于 BERT 的可学习稠密向量检索（Dense Passage Retrieval），实现了语义层面的高效匹配。</li><li><strong>RAG（Lewis et al., 2020）</strong>：将稠密检索器 DPR 与序列到序列生成模型 BART 端到端结合，正式确立了“检索增强生成”这一范式。</li></ul>
+<h3 id="2-原始-rag-模型">2. 原始 RAG 模型</h3>
+<h4 id="把文档当作潜变量">把文档当作潜变量</h4>
+<p>在 Lewis et al.（2020）提出的原始 RAG 数学框架中，给定用户输入 <span class="math-inline">x</span>，检索到的相关文档段落 <span class="math-inline">z</span> 被建模为一个<strong>潜变量（Latent Variable）</strong>。系统包含两个概率组件：</p>
+<ol><li><strong>检索器（Retriever）<span class="math-inline">p_&eta;(z \mid x)</span></strong>：给定查询 <span class="math-inline">x</span>，返回与查询最相关的前 <span class="math-inline">K</span> 个文档段落及其概率分布；</li><li><strong>生成器（Generator）<span class="math-inline">p_&theta;(y<sub>i</sub> \mid x, z, y<sub>1:i-1</sub>)</span></strong>：同时以查询 <span class="math-inline">x</span>、检索到的段落 <span class="math-inline">z</span> 以及前序已生成词元为条件，逐 Token 预测输出答案 <span class="math-inline">y</span>。</li></ol>
+<p>为了根据 <span class="math-inline">x</span> 生成完整答案 <span class="math-inline">y</span>，模型在 Top-<span class="math-inline">K</span> 检索候选集合上对潜变量 <span class="math-inline">z</span> 进行边际化求和（Marginalization）：按检索器认为每篇文档相关的概率，对各文档生成的答案概率进行加权汇总。</p>
+<h4 id="rag-sequence-与-rag-token">RAG-Sequence 与 RAG-Token</h4>
+<p>根据边际化求和发生粒度的不同，原始 RAG 提出了两种变体：</p>
+<ul><li><strong>RAG-Sequence（序列级边际化）</strong>：假设整段回答 <span class="math-inline">y</span> 由同一篇潜在文档支撑。模型先针对每一篇候选文档 <span class="math-inline">z</span> 独立生成完整的序列概率，最后在序列层面加权求和：<div class="math-block">p<sub><span class="m-text">RAG-Sequence</span></sub>(y \mid x) &approx; <span class="m-op">&sum;</span><sub>z &isin; <span class="m-text">top-</span>k(p(&middot; \mid x))</sub> p_&eta;(z \mid x) <span class="m-op">&prod;</span><sub>i=1</sub><sup>N</sup> p_&theta;(y<sub>i</sub> \mid x, z, y<sub>1:i-1</sub>)</div></li><li><strong>RAG-Token（词元级边际化）</strong>：允许模型在生成同一个回答的不同 Token 时，动态参考不同的检索文档。模型在预测每一个 Token <span class="math-inline">y<sub>i</sub></span> 时都对所有候选文档边际化求和，再将各步概率相乘：<div class="math-block">p<sub><span class="m-text">RAG-Token</span></sub>(y \mid x) &approx; <span class="m-op">&prod;</span><sub>i=1</sub><sup>N</sup> <span class="m-op">&sum;</span><sub>z &isin; <span class="m-text">top-</span>k(p(&middot; \mid x))</sub> p_&eta;(z \mid x) p_&theta;(y<sub>i</sub> \mid x, z, y<sub>1:i-1</sub>)</div></li></ul>
+<p>这种区分非常直观地揭示了多源信息综合的机制：当答案完整存在于单篇文档中时，序列级一致性更好；而当一句回答的前半句需要引用文档 A、后半句需要结合文档 B 时，Token 级混合则提供了跨文档拼图的灵活性。</p>
+<h4 id="dpr-与-bart-的组合">DPR 与 BART 的组合</h4>
+<p>在具体实现中，检索器 <span class="math-inline">p_&eta;(z \mid x) &prop; <span class="m-fn">exp</span>(<strong>d</strong>(z)^&#8868; <strong>q</strong>(x))</span> 采用双编码器架构：文档编码器 <span class="math-inline"><strong>d</strong>(z) = <span class="m-text">BERT</span><sub>d</sub>(z)</span> 预先将所有知识库文档编码为向量，查询编码器 <span class="math-inline"><strong>q</strong>(x) = <span class="m-text">BERT</span><sub>q</sub>(x)</span> 实时编码用户问题，并通过<strong>最大内积搜索（Maximum Inner Product Search, MIPS）</strong> 找出得分最高的 <span class="math-inline">K</span> 个段落；生成器则将 <span class="math-inline">x</span> 与 <span class="math-inline">z</span> 拼接后输入给编码器—解码器模型 <strong>BART</strong>。在训练时，系统直接最小化目标答案的负边际对数似然 <span class="math-inline"><span class="m-op">&sum;</span><sub>j</sub> -<span class="m-fn">log</span> p(y<sub>j</sub> \mid x<sub>j</sub>)</span>，无需任何人工标注“哪篇文档应该被检索出来”，即可端到端微调查询编码器与生成器。</p>
+<h4 id="原课评测与-rag-变体">原课评测与 RAG 变体</h4>
+<p>在 Natural Questions（NQ）、TriviaQA、WebQuestions 和 CuratedTrec 等开放域问答基准上，RAG 显著超越了仅靠参数记忆的闭卷大模型与传统抽取式问答系统；在 Jeopardy 问题生成任务的人工盲测中，RAG 生成的内容在事实准确性（Factuality）与具体性（Specificity）上也大幅胜出。随着大模型上下文能力的演进，现代工程实践中更常将检索出的 Top-<span class="math-inline">K</span> 段落直接拼接到单个 Decoder-only LLM 的提示词中（In-Context RAG），并在其基础上衍生出查询改写、多路路由、重排序与迭代自省等丰富的系统变体（Gao et al., 2024）。</p>
+<h3 id="3-表示切块与组织">3. 表示、切块与组织</h3>
+<h4 id="embedding-的不同粒度">Embedding 的不同粒度</h4>
+<p>构建高质量向量检索器的前提是选择合适的<strong>稠密向量表征（Embeddings）</strong>。不同历史阶段与任务场景的编码器覆盖的语义粒度各不相同：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>向量类型</th><th>代表模型</th><th>单个向量表征的对象</th><th>适用场景</th></tr></thead><tbody><tr><td><strong>静态词向量（Static Word）</strong></td><td>word2vec, GloVe</td><td>词表中的一个独立词型（不论上下文）</td><td>早期词汇相似度匹配</td></tr><tr><td><strong>上下文化词元向量（Contextual Token）</strong></td><td>BERT, RoBERTa</td><td>特定句子语境下的单个 Token</td><td>命名实体识别、序列标注、ColBERT 晚期交互</td></tr><tr><td><strong>段落/文本块向量（Passage / Chunk）</strong></td><td>Sentence-BERT, DPR, E5, BGE</td><td>整段文本或文档切块（Chunk）</td><td>主流 RAG 稠密向量检索</td></tr><tr><td><strong>多模态共享空间向量（Multimodal）</strong></td><td>CLIP, SigLIP</td><td>文本或图像（映射至同一向量空间）</td><td>跨模态图文检索</td></tr><tr><td><strong>图结构向量（Graph）</strong></td><td>node2vec, GNN Encoders</td><td>图中的节点或关系边</td><td>知识图谱与社交网络检索</td></tr></tbody></table></div>
+<p>在段落检索中，我们将每个文档切块映射为固定维度的向量，并通过<strong>余弦相似度（Cosine Similarity）</strong>或<strong>向量内积（Inner Product）</strong>衡量查询与文档块的匹配程度。</p>
+<h4 id="chunking-的边界与元信息">Chunking 的边界与元信息</h4>
+<p>我们不能把一本几百页的手册压成一个向量，因此<strong>文档切块（Chunking）</strong>是索引构建的第一道关键工序：</p>
+<ul><li><strong>固定大小切块（Fixed-size Chunking）</strong>：通常以 100–500 Tokens 为一个切块单位，并设置 <strong>10%–20% 的滑动窗口重叠（Overlap）</strong>。切块太小会导致句子缺乏上下文背景，切块太大则会把多个无关主题平均在同一个向量里稀释关键信号；而设置重叠是为了防止关键句子恰好在切块边界处被拦腰截断（例如前一块末尾停在 <code>&quot;The project milestone is due Week 6, Thursday&quot;</code>，后一块开头变成 <code>&quot;11:59pm. Late days may not be applied...&quot;</code>）。</li><li><strong>语义与结构切块（Semantic / Structure Chunking）</strong>：按照 Markdown 标题、章节、自然段落或语义断点切分，保持逻辑单元完整，同时在每个块中附带所属章节标题、文档 ID 与更新时间等元数据。</li></ul>
+<h4 id="contextual-retrieval">Contextual retrieval</h4>
+<p>即便按自然段落切块，脱离了全文的孤立段落依然经常出现<strong>指代不明</strong>的问题。来看课件中的一个典型反例：</p>
+<blockquote><p><strong>用户查询</strong>：“ACME 公司在 2023 年第二季度的营收增长率是多少？”
+<strong>原始切块（Chunk）</strong>：“该公司营收较上一季度增长了 3%。”</p></blockquote>
+<p>如果只对“该公司营收较上一季度增长了 3%”这句话建索引，它既不包含“ACME 公司”，也不包含“2023 年 Q2”，无论是向量检索还是关键词检索都会彻底漏掉它！</p>
+<p>Anthropic 提出的<strong>上下文增强检索（Contextual Retrieval）</strong>给出了简洁高效的解法：在构建索引时，将整篇文档与当前切块一起传给语言模型，让模型生成一句简短的背景说明前缀（例如：<em>“摘自 ACME 公司 2023 年 Q2 SEC 财报；2023 年 Q1 营收为 3.14 亿美元。”</em>），将其拼接到原始切块前面后再进行向量化与 BM25 索引。实验表明，结合 Contextual Embeddings 与 Contextual BM25 能将检索失败率大幅降低。</p>
+<h4 id="late-chunking">Late chunking</h4>
+<p>Contextual Retrieval 虽然有效，但需要为每个切块额外调用一次生成模型并增加了索引 Token 数。有没有不需要生成前缀的替代方案？<strong>晚期切块（Late Chunking, Günther et al., 2024）</strong> 提出了“先全文编码，再按区间池化”的思路：</p>
+<ol><li>先用支持长上下文的双向编码器（如长上下文 Embedding 模型）一次性读取<strong>整篇完整文档</strong>，由于自注意力覆盖全文，此时每个 Token 的输出向量都已经自然融合了整篇文档的上下文信息（包括前文提到的公司名与财报季度）；</li><li>然后再按照每个切块的起止 Token 边界，对相应区间内的 Token 向量做均值池化（Mean Pooling），得到每个切块的最终向量。</li></ol>
+<p>Late Chunking 与 Contextual Retrieval 目标一致，但实现路径完全不同：前者通过长上下文编码器的注意力层在向量表征内部注入全文语境，零额外生成开销；后者则通过显式生成文本前缀同时服务于向量检索与词法检索。</p>
+<h4 id="raptor">RAPTOR</h4>
+<p>当用户提出的问题跨越整篇长文档（例如针对《灰姑娘》全书提问：“这个故事的核心主题是什么？”或“她是如何迎来美好结局的？”），仅靠底层零散的叶子切块很难拼凑出全局脉络。<strong>RAPTOR（Sarthi et al., 2024）</strong> 通过自底向上构建层次化摘要树解决了这一难题：</p>
+<ol><li>将原始文档切块作为树的叶子节点并计算向量；</li><li>对向量进行聚类（Clustering），并用 LLM 为每个簇生成一段高层摘要；</li><li>将生成的摘要再次编码、聚类并生成更高层的摘要，直至根节点；</li><li>在检索时，系统同时在所有层级的节点中搜索——局部细节问题会自然命中底层的叶子切块，而宏观主题问题则会命中高层的聚类摘要节点。</li></ol>
+<h4 id="graphrag">GraphRAG</h4>
+<p>对于需要跨多篇文档梳理实体关联与全局结构的复杂查询，微软提出的 <strong>GraphRAG（Edge et al., 2024）</strong> 进一步用 LLM 从文档库中抽取出实体（Entities）与关系（Relationships）构建知识图谱，利用图社区发现算法（如 Leiden 算法）将紧密关联的实体划分为不同层级的社区（Communities），并预先生成每个社区的摘要报告，从而支持跨实体的多跳推理与全局总结。</p>
+<h3 id="4-索引与检索算法">4. 索引与检索算法</h3>
+<h4 id="exact-search-与-ann">Exact search 与 ANN</h4>
+<p>当文档库包含 <span class="math-inline">N</span> 个 <span class="math-inline">d</span> 维切块向量时，最朴素的<strong>精确最近邻搜索（Exact Search / Brute-force Scan）</strong>需要计算查询向量与所有 <span class="math-inline">N</span> 个向量的内积，单次查询时间复杂度为 <span class="math-inline">O(N &middot; d)</span>。当 <span class="math-inline">N</span> 达到数百万甚至上亿规模时，暴力扫描无法满足实时交互要求。</p>
+<p>因此，工业界普遍采用<strong>近似最近邻搜索（Approximate Nearest Neighbor, ANN）</strong>，用极小比例的召回率损失换取数量级的速度提升，主流方法包括三类：</p>
+<ul><li><strong>倒排文件索引（IVF, Inverted File Index）</strong>：先用 K-Means 将向量空间划分为多个聚类中心（Centroids），查询时只扫描距离查询向量最近的少数几个簇；</li><li><strong>乘积量化（PQ, Product Quantization）</strong>：将高维浮点向量拆分为多个子向量并量化为短编码，大幅压缩内存占用并加速距离估算；</li><li><strong>分层可导航小世界图（HNSW, Hierarchical Navigable Small World）</strong>：目前最主流的高性能内存图索引结构。</li></ul>
+<h4 id="hnsw-的插入与搜索">HNSW 的插入与搜索</h4>
+<p><strong>HNSW</strong> 的核心思想就像交通网络中的“高铁—城际—地铁”分层导航：</p>
+<ul><li><strong>多层图结构</strong>：第 $0$ 层（最底层）包含全部 <span class="math-inline">N</span> 个向量节点，连接密集；往上每一层以指数衰减的概率随机抽取少数节点保留，越往顶层节点越稀疏，边跨越的几何距离越远。</li><li><strong>贪心搜索过程</strong>：当一个查询向量进来时，从最顶层的入口节点出发，在当前层每次贪心地跳向距离查询更近的邻居节点；当在当前层达到局部最近点无法继续前进时，就下降一层继续贪心微调，直到在第 $0$ 层精细搜索出 Top-<span class="math-inline">k</span> 最近邻。全过程平均只需约 <span class="math-inline">O(<span class="m-fn">log</span> N)</span> 次跳转。</li><li><strong>构图防陷机制</strong>：在逐个插入新向量构图时，系统会随机决定该节点能到达的最高层级，并在每一层不仅连接最近的 <span class="math-inline">M</span> 个邻居，还会按启发式规则保留跨簇的长距离连边，防止贪心搜索在局部孤岛中陷入死胡同。</li></ul>
+<h4 id="bm25-的组成">BM25 的组成</h4>
+<p>尽管稠密向量检索发展迅猛，但在工程实践中，最经典、最不可或缺的检索基石依然是基于倒排索引（Inverted Index）的词法检索算法 <strong>BM25（Best Matching 25）</strong>。</p>
+<p>给定包含词元 <span class="math-inline">q<sub>1</sub>, &hellip;, q<sub>n</sub></span> 的查询 <span class="math-inline">Q</span> 与文档 <span class="math-inline">D</span>，BM25 的打分公式由三部分精妙配合而成：</p>
+<div class="math-block"><span class="m-text">score</span>(D, Q) = <span class="m-op">&sum;</span><sub>i=1</sub><sup>n</sup> <span class="m-text">IDF</span>(q<sub>i</sub>) &middot; <span class="m-frac"><span class="m-num">f(q<sub>i</sub>, D) &middot; (k<sub>1</sub> + 1)</span><span class="m-den">f(q<sub>i</sub>, D) + k<sub>1</sub> &middot; (1 - b + b &middot; <span class="m-frac"><span class="m-num">|D|</span><span class="m-den"><span class="m-text">avgdl</span></span></span>)</span></span></div>
+<ol><li><strong>逆文档频率 <span class="math-inline"><span class="m-text">IDF</span>(q<sub>i</sub>)</span></strong>：衡量查询词 <span class="math-inline">q<sub>i</sub></span> 在整个语料库中的稀有程度。像 <code>&quot;the&quot;</code>、<code>&quot;email&quot;</code> 这样几乎每篇文档都出现的常见词权重极低，而特定项目代号、人名或错误码等稀有词则拥有极高权重。</li><li><strong>词频饱和（Term Frequency Saturation，由 <span class="math-inline">k<sub>1</sub></span> 控制，通常取 <span class="math-inline">1.2 \sim 2.0</span>）</strong>：传统 TF-IDF 中词频 <span class="math-inline">f(q<sub>i</sub>, D)</span> 是线性增长的，一篇把某关键词重复 50 次的垃圾文档得分会是出现 5 次文档的 10 倍。而在 BM25 的分式 <span class="math-inline"><span class="m-frac"><span class="m-num">f &middot; (k<sub>1</sub> + 1)</span><span class="m-den">f + k<sub>1</sub> &middot; (&hellip;)</span></span></span> 中，随着 <span class="math-inline">f &rarr; &infin;</span>，这一项会渐近收敛于上界 <span class="math-inline">k<sub>1</sub> + 1</span>，从而防止单个词的高频堆砌绑架总分。</li><li><strong>文档长度归一化（Length Normalization，由 <span class="math-inline">b &isin; [0, 1]</span> 控制，通常取 $0.75$）</strong>：长文档天然包含更多词汇，更容易碰巧命中查询词。比值 <span class="math-inline"><span class="m-frac"><span class="m-num">|D|</span><span class="m-den"><span class="m-text">avgdl</span></span></span></span> 将当前文档长度 <span class="math-inline">|D|</span> 与语料库平均文档长度 <span class="math-inline"><span class="m-text">avgdl</span></span> 对比：若文档比平均长度更长，分母中的惩罚项变大，从而公平拉平长短文档的得分起跑线。</li></ol>
+<h4 id="bm25-公式与版本差异">BM25 公式与版本差异</h4>
+<p>在编写代码实现 BM25（例如在 HW1 第 3 题中）时，需要特别注意 <span class="math-inline"><span class="m-text">IDF</span>(q<sub>i</sub>)</span> 的两个常见公式变体：</p>
+<ul><li><strong>经典 Robertson-Spärck Jones 原始形式</strong>（课件展示形式）：<div class="math-block"><span class="m-text">IDF</span><sub><span class="m-text">classic</span></sub>(q<sub>i</sub>) = <span class="m-fn">ln</span> <span class="m-frac"><span class="m-num">N - n(q<sub>i</sub>) + 0.5</span><span class="m-den">n(q<sub>i</sub>) + 0.5</span></span></div>
+<p>其中 <span class="math-inline">N</span> 为文档总数，<span class="math-inline">n(q<sub>i</sub>)</span>（即 <span class="math-inline"><span class="m-text">df</span></span>）为包含词元 <span class="math-inline">q<sub>i</sub></span> 的文档数。注意当一个词出现在超过一半的文档中（<span class="math-inline">n(q<sub>i</sub>) &gt; N/2</span>）时，该式对数内部小于 $1$，计算出的 IDF 会变成<strong>负数</strong>。</p></li><li><strong>Lucene / 现代工程非负形式</strong>（HW1 采用的标准形式）：<div class="math-block"><span class="m-text">IDF</span><sub><span class="m-text">Lucene</span></sub>(q<sub>i</sub>) = <span class="m-fn">ln</span> (1 + <span class="m-frac"><span class="m-num">N - n(q<sub>i</sub>) + 0.5</span><span class="m-den">n(q<sub>i</sub>) + 0.5</span></span>)</div>
+<p>通过在真数中加 $1$，保证了任何词元的 IDF 严格非负。在工程实现与单元测试中，务必严格对齐接口规范所指定的公式与分词器。</p></li></ul>
+<h4 id="dpr-的训练">DPR 的训练</h4>
+<p>为什么我们需要在 BM25 之外训练稠密检索器 <strong>DPR（Dense Passage Retrieval, Karpukhin et al., 2020）</strong>？因为 BM25 完全依赖字面词元重叠（Word-overlap）：如果用户搜 <code>&quot;Who is the bad guy in Lord of the Rings?&quot;</code>，而文档里写的是 <code>&quot;Sauron is the main antagonist...&quot;</code>，由于 <code>&quot;bad guy&quot;</code> 与 <code>&quot;antagonist&quot;</code> 没有任何共同字母，BM25 得分为零。</p>
+<p>DPR 使用两个独立的 BERT 编码器分别将问题与段落映射为低维稠密向量，并使用对比学习（Contrastive Loss）进行训练：拉近问题 <span class="math-inline">q</span> 与正样本段落 <span class="math-inline">p<sup>+</sup></span> 的内积相似度，同时推远与负样本段落 <span class="math-inline">p<sup>-</sup></span> 的相似度。DPR 成功的关键工程诀窍在于<strong>负样本的构造</strong>：除了利用同一个训练批次内其他问题的正样本作为免费负样本（<strong>In-batch Negatives</strong>），还专门加入了一批 <strong>BM25 难负样本（BM25 Hard Negatives）</strong>——即字面与问题高度重合（BM25 得分很高）、但实际上并不包含正确答案的段落。这迫使编码器不能偷懒只做浅层关键词匹配，而必须学会深层语义甄别。</p>
+<h4 id="命中与排序指标">命中与排序指标</h4>
+<p>为了科学评估一个检索器的好坏，我们需要根据下游使用场景区分两类核心指标（设测试查询集为 <span class="math-inline">Q</span>，查询 <span class="math-inline">q</span> 的真实相关文档集合为 <span class="math-inline">R<sub>q</sub></span>，检索器返回的前 <span class="math-inline">k</span> 个文档集合为 <span class="math-inline"><span class="m-text">Top</span><sub>k</sub>(q)</span>）：</p>
+<ol><li><strong>命中与召回指标（不敏感于前 <span class="math-inline">k</span> 名内部的具体位次）</strong>：<ul><li><strong><span class="math-inline"><span class="m-text">Hit</span>@k</span>（命中率）</strong>：前 <span class="math-inline">k</span> 个结果中<strong>至少包含一篇</strong>相关文档的查询比例：</li></ul>
+<div class="math-block"><span class="m-text">Hit</span>@k = <span class="m-frac"><span class="m-num">1</span><span class="m-den">|Q|</span></span> <span class="m-op">&sum;</span><sub>q &isin; Q</sub> &#120793;[R<sub>q</sub> &cap; <span class="m-text">Top</span><sub>k</sub>(q) &ne; &empty;], &emsp; <span class="m-text">Failed</span>@k = 1 - <span class="m-text">Hit</span>@k</div>
+<ul><li><strong><span class="math-inline"><span class="m-text">Recall</span>@k</span>（召回率）</strong>：前 <span class="math-inline">k</span> 个结果找回的相关文档占该查询<strong>全部相关文档</strong>的比例：</li></ul>
+<div class="math-block"><span class="m-text">Recall</span>@k = <span class="m-frac"><span class="m-num">1</span><span class="m-den">|Q|</span></span> <span class="m-op">&sum;</span><sub>q &isin; Q</sub> <span class="m-frac"><span class="m-num">|R<sub>q</sub> &cap; <span class="m-text">Top</span><sub>k</sub>(q)|</span><span class="m-den">|R<sub>q</sub>|</span></span></div></li></ol>
+<ol><li><strong>顺序敏感指标（越靠前权重越高）</strong>：<ul><li><strong><span class="math-inline"><span class="m-text">MRR</span>@k</span>（平均倒数排名，Mean Reciprocal Rank）</strong>：关注<strong>第一篇</strong>相关文档出现的排名 <span class="math-inline"><span class="m-text">rank</span><sub>q</sub></span>（若未出现在前 <span class="math-inline">k</span> 名则记为 $0$）：</li></ul>
+<div class="math-block"><span class="m-text">MRR</span>@k = <span class="m-frac"><span class="m-num">1</span><span class="m-den">|Q|</span></span> <span class="m-op">&sum;</span><sub>q &isin; Q</sub> <span class="m-frac"><span class="m-num">1</span><span class="m-den"><span class="m-text">rank</span><sub>q</sub></span></span></div>
+<ul><li><strong><span class="math-inline"><span class="m-text">nDCG</span>@k</span>（归一化折损累计增益）</strong>：当不同文档具有多级相关度得分 <span class="math-inline"><span class="m-text">rel</span><sub>q, i</sub></span> 时，按位置对数折损累加 <span class="math-inline"><span class="m-text">DCG</span><sub>q</sub>@k = <span class="m-op">&sum;</span><sub>i=1</sub><sup>k</sup> \frac{<span class="m-text">rel</span><sub>q, i</sub>}{<span class="m-fn">log</span><sub>2</sub>(i + 1)}</span>，再除以理想最优排序下的 <span class="math-inline"><span class="m-text">IDCG</span><sub>q</sub>@k</span> 进行归一化。</li></ul></li></ol>
+<h4 id="dpr-实验的适用边界">DPR 实验的适用边界</h4>
+<p>Karpukhin et al.（2020）的实验表明，仅需约 1,000 对问答训练样本，微调后的 DPR 就能在开放域问答的 Top-<span class="math-inline">k</span> 准确率上超越 BM25，并在 Natural Questions、TriviaQA 等 5 个数据集中的 4 个上显著领先。不过在只包含极少训练样本且高度依赖专有名词精确匹配的数据集（如 SQuAD）上，BM25 依然极具竞争力。</p>
+<h4 id="hybrid-search-与-rrf">Hybrid search 与 RRF</h4>
+<p>既然 BM25 擅长精确匹配专有名词、产品编号、错误码与罕见字面词，而稠密向量检索擅长处理同义替换与语义改写，最稳健的工程方案就是将两者结合起来做<strong>混合检索（Hybrid Search）</strong>。</p>
+<p>但 BM25 输出的是无上界的词频对数得分（可能从 $0$ 到 <span class="math-inline">30+</span>），而向量检索输出的是 <span class="math-inline">[-1, 1]</span> 之间的余弦相似度，量纲完全不同，直接加权求和需要针对每个数据集繁琐地调节超参数。为此，工程界广泛采用无需调参的 <strong>倒数排名融合（Reciprocal Rank Fusion, RRF）</strong>：完全忽略原始分数，仅根据文档 <span class="math-inline">d</span> 在各个检索器 <span class="math-inline">r &isin; R</span> 返回列表中的名次 <span class="math-inline"><span class="m-text">rank</span><sub>r</sub>(d)</span> 进行融合：</p>
+<div class="math-block"><span class="m-text">RRF</span>(d) = <span class="m-op">&sum;</span><sub>r &isin; R</sub> <span class="m-frac"><span class="m-num">1</span><span class="m-den">k + <span class="m-text">rank</span><sub>r</sub>(d)</span></span> &emsp; (<span class="m-text">通常取常数 </span> k = 60)</div>
+<p>常数 <span class="math-inline">k = 60</span> 平滑了头部排名的极端差距，使得在两个检索器中都排在前列的文档能够稳居榜首，同时兼收单边检索器排在第一名的强匹配结果。</p>
+<h3 id="5-重排与-colbert">5. 重排与 ColBERT</h3>
+<h4 id="bi-encoder-与-cross-encoder">Bi-encoder 与 cross-encoder</h4>
+<p>在神经检索架构中，<strong>计算效率</strong>与<strong>交互深度</strong>之间存在着根本矛盾：</p>
+<ul><li><strong>双编码器（Bi-encoder，如 DPR）</strong>：查询 <span class="math-inline">q</span> 和文档 <span class="math-inline">d</span> 各自独立通过编码器变成单个向量，最后只做一次点积。优点是所有文档向量均可离线预先算好存入索引，线上查询只需几十毫秒；缺点是查询中的词与文档中的词在编码过程中完全没有发生注意力交互，细粒度匹配信息被压扁在了一个向量里。</li><li><strong>交叉编码器（Cross-encoder，如 BERT Reranker）</strong>：将查询和候选文档拼接成 <code>[CLS] q [SEP] d [SEP]</code> 一起送入 Transformer，让查询的每一个 Token 与文档的每一个 Token 在每一层都进行全注意力交互。准确率极高，但由于无法预计算文档向量，对 1,000 篇候选文档打分就需要实时跑 1,000 次完整的 BERT 前向传播（耗时可达数秒至十余秒），根本无法直接扫描全库。</li></ul>
+<p>因此，标准工业级流水线通常采用<strong>“两阶段检索（Retrieve-then-Rerank）”</strong>：第一阶段用快速的 Bi-encoder + BM25 从百万级文档中召回 Top-100 候选，第二阶段再用精细的 Cross-encoder 对这 100 个候选重排序（Reranking），选出最终的 Top-10 交给 LLM。</p>
+<h4 id="late-interaction--maxsim">Late interaction / MaxSim</h4>
+<p>有没有一种架构，既能像 Bi-encoder 一样离线预计算文档表征，又能像 Cross-encoder 一样保留 Token 级别的细粒度交互？斯坦福提出的 <strong>ColBERT（Khattab &amp; Zaharia, 2020）</strong> 给出了<strong>晚期交互（Late Interaction）</strong>的优雅方案：</p>
+<ol><li>文档编码器依然离线独立处理每篇文档，但<strong>不再把整篇文档池化成一个向量，而是保留文档中每一个 Token 的上下文化输出向量</strong> <span class="math-inline">&#123;<strong>d</strong><sub>1</sub>, &hellip;, <strong>d</strong><sub>m</sub>&#125;</span>；</li><li>查询编码器在线独立将查询编码为 Token 向量序列 <span class="math-inline">&#123;<strong>q</strong><sub>1</sub>, &hellip;, <strong>q</strong><sub>l</sub>&#125;</span>；</li><li>在打分阶段，通过无参数的 <strong>最大相似度求和算子（MaxSim）</strong> 进行交互：对于查询中的每一个词元 <span class="math-inline"><strong>q</strong><sub>i</sub></span>，在文档的所有词元向量中找出内积最大的一项，再对所有查询词元求和：<div class="math-block">S<sub>q, d</sub> = <span class="m-op">&sum;</span><sub>i &isin; q</sub> <span class="m-fn">max</span><sub>j &isin; d</sub> ( <strong>q</strong><sub>i</sub> &middot; <strong>d</strong><sub>j</sub> )</div></li></ol>
+<p>MaxSim 算子极其轻量且支持向量索引加速，它精准刻画了“查询中的每一个关键概念，是否在文档中找到了最匹配的对应词元”。</p>
+<h4 id="公平的速度比较">公平的速度比较</h4>
+<p>下表汇总了四类检索器在预计算机制、延迟量级与优劣边界上的工程对比（以 MS MARCO 基准上的典型量级为例）：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>检索器架构</th><th>离线预计算内容</th><th>典型查询延迟</th><th>核心胜出场景</th><th>主要局限与代价</th></tr></thead><tbody><tr><td><strong>BM25（稀疏检索）</strong></td><td>倒排索引（Inverted Index）</td><td><span class="math-inline">\sim 60<span class="m-text"> ms</span></span>（极快）</td><td>专有名词、ID、错误码等精确字面匹配</td><td>无法识别同义词与句式改写</td></tr><tr><td><strong>DPR（双编码器）</strong></td><td>每篇文档段落 1 个稠密向量</td><td>数十毫秒（极快）</td><td>大规模语料上的语义相似匹配</td><td>压缩成单向量丢失细节，对罕见字面词弱</td></tr><tr><td><strong>ColBERT（晚期交互）</strong></td><td>文档中每个 Token 1 个向量</td><td><span class="math-inline">\sim 450<span class="m-text"> ms</span></span>（中等）</td><td>兼顾全库检索速度与 Token 级细粒度匹配</td><td>索引存储体积增大（按 Token 数而非文档数存储）</td></tr><tr><td><strong>Cross-encoder（交叉编码器）</strong></td><td>无（必须在线联合编码）</td><td>对 1k 候选需 <span class="math-inline">\sim 10<span class="m-text"> s</span></span>（慢）</td><td>小规模候选列表（Shortlist）的高精度重排</td><td>计算开销过大，无法直接扫描海量文档库</td></tr></tbody></table></div>
+<h3 id="6-agentic-rag-与失败分析">6. Agentic RAG 与失败分析</h3>
+<h4 id="谁决定查什么和何时停止">谁决定查什么和何时停止</h4>
+<p>前面讨论的传统 RAG 流水线都是“一锤子买卖”：无论用户问什么，固定检索一次 Top-<span class="math-inline">k</span>，塞进提示词生成答案就结束。然而在复杂任务中（例如 HW1 第 4 题的多跳邮件问答：“负责 Foxglove 项目的那位经理，他的备用审批人是谁？”），第一轮检索只能查出“负责 Foxglove 项目的经理是 Alice”，必须根据第一轮阅读的结果，发起第二轮查询“Alice 的备用审批人”才能找到最终答案。</p>
+<p><strong>Agentic RAG</strong> 将检索器封装为 Agent 循环中的一个可调用动作（Action），把三项核心控制权交还给模型：</p>
+<ol><li><strong>是否需要检索（When to retrieve）</strong>：常识问题直接回答，缺事实证据时才触发检索；</li><li><strong>如何构造与改写查询（What query to issue）</strong>：将复杂的原始问题拆解为精准的子查询，并在首轮未命中时换用同义词或提取出的新实体追查；</li><li><strong>何时停止检索（When to stop）</strong>：判断当前收集到的证据是否已经足以回答问题，或者在达到预算上限（如最多 3 次检索）时终止循环。</li></ol>
+<h4 id="self-rag">Self-RAG</h4>
+<p><strong>Self-RAG（Asai et al., 2024）</strong> 通过在模型词表中引入特殊的控制与自省词元（Reflection Tokens），训练单个语言模型在生成过程中自主完成“按需检索—自我评估—生成回答”的闭环：模型先生成 <code>Retrieve</code> 标记决定是否需要检索；读入多篇候选段落后，依次生成 <code>IsRel</code>（段落是否相关）、<code>IsSup</code>（生成内容是否有据可查）与 <code>IsUse</code>（回答整体是否有用）等自省评分，从而在解码阶段自动过滤无关噪声并确保事实可溯源。</p>
+<h4 id="crag-与-search-r1">CRAG 与 Search-R1</h4>
+<p>为了进一步提高多步检索的鲁棒性，两条代表性技术路线值得关注：</p>
+<ul><li><strong>纠错式 RAG（CRAG, Yan et al., 2024）</strong>：引入一个轻量级的检索评估器（Retrieval Evaluator）对召回文档的相关性置信度打分，按得分高低触发三种不同动作——高分（Correct）则精炼提取关键句；低分（Incorrect）则丢弃原结果并改用外部网页搜索；居中（Ambiguous）则结合两者。</li><li><strong>强化学习训练搜索策略（Search-R1, Jin et al., 2025）</strong>：不再手工编写复杂的启发式重搜规则，而是直接在多轮搜索交互环境中，利用最终答案是否正确的可验证奖励（RLVR），通过强化学习端到端优化模型的 <code>&lt;think&gt; ... &lt;search&gt; query &lt;/search&gt; &lt;information&gt; ... &lt;/information&gt; ... &lt;answer&gt;</code> 推理与搜索轨迹。</li></ul>
+<h4 id="三层故障诊断">三层故障诊断</h4>
+<p>当一个 RAG 或 Agentic RAG 系统给出了错误答案时，切忌盲目修改提示词。工程上应当按照<strong>检索端（Retrieval-side）</strong>、<strong>阅读端（Reader-side）</strong>与<strong>循环端（Loop-side）</strong>三层分类法逐层排查：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>故障层级</th><th>典型失败模式</th><th>现象与机理</th><th>工程排查与修复策略</th></tr></thead><tbody><tr><td><strong>检索端（Retrieval-side）</strong></td><td><strong>1. 召回上限（Recall Ceiling）</strong><br><strong>2. 索引过期（Stale Index）</strong><br><strong>3. 权限越界（Permission Leak）</strong></td><td>关键证据根本不在返回的 Top-<span class="math-inline">k</span> 中；文档已更新但旧向量未刷新；检索出了当前用户无权访问的机密文档。</td><td>单独统计检索器的 Recall@<span class="math-inline">k</span>；采用 BM25 + 稠密向量的 RRF 混合检索；在索引层强制绑定文档 ACL 权限过滤与版本时间戳。</td></tr><tr><td><strong>阅读端（Reader-side）</strong></td><td><strong>1. 中间迷失（Lost in the Middle）</strong><br><strong>2. 相似干扰（Distraction）</strong><br><strong>3. 证据冲突（Evidence Conflict）</strong></td><td>正确文档明明在 Top-<span class="math-inline">k</span> 中，但位于长上下文中部被模型忽略；被字面相似但对象不同的干扰文档误导；新旧两版政策同时进入上下文导致模型混淆。</td><td>引入 Reranker 缩减送入 LLM 的文档数并将高置信文档置于首尾；在切块中显式保留文档发布日期与生效状态（Contextual Retrieval）。</td></tr><tr><td><strong>循环端（Loop-side）</strong></td><td><strong>1. 误差累积（Compounding Error）</strong><br><strong>2. 缺乏终止规则（No Stopping Rule）</strong><br><strong>3. 提示注入（Prompt Injection）</strong></td><td>第一跳提取错了人名导致后续查询全偏；反复用相同关键词死循环搜索耗尽预算；被检索文档中夹带的恶意指令劫持。</td><td>强制设定最大搜索步数（如 <code>max_searches=3</code>）与重复查询拦截；对检索出的外部文本做严格的上下文边界隔离，仅将其视为不可信证据。</td></tr></tbody></table></div>
+<h2 id="原课程阅读清单与导读">原课程阅读清单与导读</h2>
+<ul><li><a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener noreferrer">Lewis et al. &quot;Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.&quot; NeurIPS (2020).</a> 导读：推导潜变量模型 <span class="math-inline">p(y \mid x)</span> 的边际化公式，对比 RAG-Sequence 与 RAG-Token 的生成过程及在开放域问答上的实验结论。</li><li><a href="https://arxiv.org/abs/2004.04906" target="_blank" rel="noopener noreferrer">Karpukhin et al. &quot;Dense Passage Retrieval for Open-Domain Question Answering.&quot; EMNLP (2020).</a> 导读：重点阅读双编码器的对比损失函数、In-batch Negatives 的矩阵计算技巧，以及 BM25 Hard Negatives 对提升检索精度的关键作用。</li><li><a href="https://arxiv.org/abs/2004.12832" target="_blank" rel="noopener noreferrer">Khattab &amp; Zaharia. &quot;ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT.&quot; SIGIR (2020).</a> 导读：理解晚期交互架构图与 MaxSim 算子如何在保留 Token 级细粒度匹配的同时，维持毫秒级的亚线性向量检索速度。</li></ul>
+<h2 id="动手练习">动手练习</h2>
+<ol><li><strong>手写 BM25 倒排索引与分数验算</strong>：使用纯 Python 实现一个支持 <code>build(docs)</code> 与 <code>search(query, k)</code> 的 BM25 检索器（参数取 <span class="math-inline">k<sub>1</sub> = 1.5, b = 0.75</span>，采用非负 IDF 公式 <span class="math-inline"><span class="m-fn">ln</span>(1 + <span class="m-frac"><span class="m-num">N - <span class="m-text">df</span> + 0.5</span><span class="m-den"><span class="m-text">df</span> + 0.5</span></span>)</span>）。在 5 篇短文档上手动计算一条双词查询的得分，并与代码输出比对至小数点后 6 位完全一致（可直接衔接 HW1 第 3 题）。</li><li><strong>RRF 混合检索与三层故障复现</strong>：构造一个包含 8 篇模拟公司报销制度文档的微型知识库（其中包含一篇 2024 年废止的旧版差旅标准、一篇 2026 年现行差旅标准，以及一篇需要跨两篇文档才能查清审批人的多跳场景）。分别测试单次检索与最多 3 跳的 Agentic RAG，记录每次检索召回的文档 ID、最终引用准确率，并针对一次失败案例定位其属于检索端、阅读端还是循环端故障。</li></ol></article>
+        <nav id="chapter-footer" aria-label="章节翻页"><a href="./lecture02.html"><small>← 上一节</small>面向构建者的大语言模型</a><a href="./lecture04.html"><small>下一节 →</small>工具使用与函数调用</a></nav>
+      </main>
+
+      <aside class="toc" aria-label="本节大纲">
+        <div class="toc-card">
+          <div class="toc-label">本讲目录</div>
+          <nav id="toc-links"><a class="depth-2" href="./lecture03.html#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87" data-anchor="学习目标">学习目标</a><a class="depth-2" href="./lecture03.html#%E7%9F%A5%E8%AF%86%E8%AE%B2%E8%A7%A3" data-anchor="知识讲解">知识讲解</a><a class="depth-3" href="./lecture03.html#1-%E9%A1%B9%E7%9B%AE%E4%B8%8E%E6%A3%80%E7%B4%A2%E5%8A%A8%E6%9C%BA" data-anchor="1-项目与检索动机">1. 项目与检索动机</a><a class="depth-3" href="./lecture03.html#2-%E5%8E%9F%E5%A7%8B-rag-%E6%A8%A1%E5%9E%8B" data-anchor="2-原始-rag-模型">2. 原始 RAG 模型</a><a class="depth-3" href="./lecture03.html#3-%E8%A1%A8%E7%A4%BA%E5%88%87%E5%9D%97%E4%B8%8E%E7%BB%84%E7%BB%87" data-anchor="3-表示切块与组织">3. 表示、切块与组织</a><a class="depth-3" href="./lecture03.html#4-%E7%B4%A2%E5%BC%95%E4%B8%8E%E6%A3%80%E7%B4%A2%E7%AE%97%E6%B3%95" data-anchor="4-索引与检索算法">4. 索引与检索算法</a><a class="depth-3" href="./lecture03.html#5-%E9%87%8D%E6%8E%92%E4%B8%8E-colbert" data-anchor="5-重排与-colbert">5. 重排与 ColBERT</a><a class="depth-3" href="./lecture03.html#6-agentic-rag-%E4%B8%8E%E5%A4%B1%E8%B4%A5%E5%88%86%E6%9E%90" data-anchor="6-agentic-rag-与失败分析">6. Agentic RAG 与失败分析</a><a class="depth-2" href="./lecture03.html#%E5%8E%9F%E8%AF%BE%E7%A8%8B%E9%98%85%E8%AF%BB%E6%B8%85%E5%8D%95%E4%B8%8E%E5%AF%BC%E8%AF%BB" data-anchor="原课程阅读清单与导读">原课程阅读清单与导读</a><a class="depth-2" href="./lecture03.html#%E5%8A%A8%E6%89%8B%E7%BB%83%E4%B9%A0" data-anchor="动手练习">动手练习</a></nav>
+          <a class="source-link" id="source-link" href="https://github.com/wanghao-SunSky/cs329z-chinese/blob/main/03-%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA%E7%94%9F%E6%88%90RAG.md">查看 Markdown 源文件 ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="page-footer">
+      <span>CS329Z · AI Agent 系统工程（Engineering AI Agents）</span>
+      <a href="https://github.com/wanghao-SunSky/cs329z-chinese">GitHub · Markdown 与 HTML</a>
+    </footer>
+  </div>
+
+  <dialog id="search-dialog">
+    <form method="dialog" class="search-head">
+      <label for="search-input">搜索</label>
+      <input id="search-input" type="search" placeholder="输入概念、算法、论文或练习关键词（如 ReAct, BM25, GRPO, MCP）…" autocomplete="off">
+      <button type="submit" aria-label="关闭搜索">ESC</button>
+    </form>
+    <p class="search-hint" id="search-hint">支持跨全部 19 讲课程、4 项实践与代码架构导读实时检索</p>
+    <div id="search-results" aria-live="polite"></div>
+  </dialog>
+
+  <noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/reader.js"></script>
+</body>
+</html>

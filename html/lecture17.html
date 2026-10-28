@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>编程与软件 Agent | CS329Z 中文教程</title>
+<meta name="description" content="如果问过去两年里，AI Agent 在哪个垂直领域率先走出了实验室、真正成为了全球数百万专业人士每天离不开的生产力工具，答案毫无疑问是软件工程与编程（Coding Software Engineering）。">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture17.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CS329Z 中文教程">
+  <meta property="og:title" content="编程与软件 Agent | CS329Z 中文教程">
+  <meta property="og:description" content="如果问过去两年里，AI Agent 在哪个垂直领域率先走出了实验室、真正成为了全球数百万专业人士每天离不开的生产力工具，答案毫无疑问是软件工程与编程（Coding Software Engineering）。">
+  <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture17.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="编程与软件 Agent | CS329Z 中文教程">
+  <meta name="twitter:description" content="如果问过去两年里，AI Agent 在哪个垂直领域率先走出了实验室、真正成为了全球数百万专业人士每天离不开的生产力工具，答案毫无疑问是软件工程与编程（Coding Software Engineering）。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"编程与软件 Agent | CS329Z 中文教程","description":"如果问过去两年里，AI Agent 在哪个垂直领域率先走出了实验室、真正成为了全球数百万专业人士每天离不开的生产力工具，答案毫无疑问是软件工程与编程（Coding Software Engineering）。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture17.html","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture17.html","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","大语言模型","编程与软件 Agent"]}</script>
+  <link rel="stylesheet" href="./assets/reader.css">
+</head>
+<body data-static="true" data-initial-doc="lecture17" data-doc="lecture17">
+  <a class="skip" href="#main">跳到正文</a>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-code">CS329Z<span class="brand-dot">.</span></span>
+        <span class="brand-sub">ENGINEERING AI AGENTS</span>
+      </a>
+      <p class="edition">AI Agent 系统工程教程 <span>中文学习资料</span></p>
+      <button type="button" class="search-trigger" id="open-search">
+        <span class="search-trigger-text">搜索课程、概念与算法…</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item active" data-doc="lecture17" href="./lecture17.html" aria-current="page"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item" data-doc="lab26" href="./lab26.html"><span>编写说明与待修订问题</span></a></div></nav>
+    <div class="sidebar-foot">
+      <span>CS329Z · Engineering AI Agents</span>
+      <span>System · Data · Evals</span>
+    </div>
+  </aside>
+
+  <div class="shade" id="shade"></div>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" id="menu" class="mobile-only" aria-label="打开课程目录" aria-expanded="false" aria-controls="sidebar">目录</button>
+        <div id="breadcrumb" class="breadcrumb">编程与软件 Agent</div>
+      </div>
+      <div class="reading-tools">
+        <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
+        <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
+        <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
+        <button type="button" id="print" aria-label="打印或导出 PDF">打印 / PDF</button>
+      </div>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <div class="chapter-meta" id="chapter-meta"></div>
+
+        <section class="home-intro" id="home-intro" hidden>
+          <p class="eyebrow">CS329Z 中文教程 · ENGINEERING AI AGENTS</p>
+          <h1>从理解语言模型，<br>到构建可靠的 <em>AI Agent</em> 系统。</h1>
+          <p class="hero-lead">面向 Python 开发者的中文自学教程，包含 19 讲、4 项实践和配套代码导读。从 RAG、工具调用开始，逐步学习记忆、协作、评测与安全。</p>
+          <div class="hero-bottom">
+            <div class="hero-stats">
+              <span><strong>19</strong> 讲核心课程</span>
+              <span><strong>4</strong> 项工程实践</span>
+              <span><strong>2</strong> 套配套源码解析</span>
+            </div>
+            <div class="hero-actions">
+              <a class="start-link" href="./lecture01.html">开始第 01 讲 <span>→</span></a>
+              <a class="secondary-link" href="./lab20.html">进入 HW1 实战</a>
+            </div>
+          </div>
+        </section>
+
+        <article id="article"><h1 id="第-17-讲编程与软件-agent">第 17 讲｜编程与软件 Agent</h1>
+<p>如果问过去两年里，AI Agent 在哪个垂直领域率先走出了实验室、真正成为了全球数百万专业人士每天离不开的生产力工具，答案毫无疑问是<strong>软件工程与编程（Coding &amp; Software Engineering）</strong>。</p>
+<p>为什么软件工程成了 Agent 最理想的突破口？一方面，代码库和命令行终端构成了一个天然数字化、工具完备的环境；另一方面，软件工程拥有极其强大的<strong>客观可验证反馈信号</strong>——代码能不能编译通过、静态类型检查报不报错、单元测试（Unit Tests）和集成测试能不能跑通，全都有确定性的环境反馈，这让 Agent 能够真正形成“定位问题 <span class="math-inline">&rarr;</span> 修改代码 <span class="math-inline">&rarr;</span> 运行测试 <span class="math-inline">&rarr;</span> 根据报错修正”的自主闭环。</p>
+<p>本讲将深入剖析现代<strong>编程与软件智能体（Coding &amp; Software Agents）</strong>的端到端工作原理：对比三大代表性架构——<strong>SWE-agent</strong>（开创性的 Agent-计算机接口 ACI）、<strong>Claude Code</strong>（极简工具与终端原生长程协作）以及 <strong>OpenHands</strong>（事件流驱动的全栈容器开发平台）；探讨为什么脚手架（Scaffolds）中的每一项细节都是关键的工程决策；结合 <strong>SWE-bench</strong> 审视四元组评测框架在真实开源仓库修复中的落地；并展望软件开发工程范式的未来演进。</p>
+<h2 id="学习目标">学习目标</h2>
+<ul><li>理解端到端编程 Agent 从理解需求/Issue、代码库探索定位、编辑修改到运行测试验证的完整工作循环。</li><li>深入掌握 <strong>Agent-计算机接口（ACI: Agent-Computer Interface）</strong> 的设计哲学，对比剖析 SWE-agent、Claude Code 与 OpenHands 三大主流架构的工程权衡。</li><li>理解脚手架设计决策（工具粒度、文件编辑格式、终端状态持久性、长程上下文压缩与跨会话进度交接）对编码表现的决定性影响。</li><li>掌握 SWE-bench 基准的四元组结构（Request、Environment、Stopping Criteria、Scorer）及其防泄漏与测试验证机制。</li></ul>
+<h2 id="知识讲解">知识讲解</h2>
+<h3 id="1-从需求到修改和验证">1. 从需求到修改和验证</h3>
+<h4 id="端到端-coding-agent">端到端 coding agent</h4>
+<p>早期的代码生成工具（如第一代 GitHub Copilot）本质上是光标处的“自动补全（Autocomplete）”：人类程序员负责找对文件、定位到具体函数、想好架构，模型只负责续写接下来的几行代码。</p>
+<p>而一个<strong>端到端编程智能体（End-to-End Coding Agent）</strong>面对的输入直接是一个仓库级的自然语言需求或 Bug 报告（例如一条真实的 GitHub Issue：“当传入空的 DataFrame 且设置了 <code>multi_index=True</code> 时，<code>groupby.agg()</code> 抛出 <code>KeyError</code>”）。为了独立解决这一问题，Coding Agent 必须自主完成五个紧密衔接的阶段：</p>
+<ol><li><strong>代码库探索与故障定位（Exploration &amp; Localization）</strong>：在包含成百上千个文件的陌生代码库中，利用目录浏览、关键词搜索（<code>grep</code> / <code>ripgrep</code>）或符号跳转，找出与 Issue 相关的核心源文件与测试文件；</li><li><strong>故障复现（Reproduction）</strong>：编写或运行一段最小复现脚本/测试，亲眼观察报错堆栈，确认自己真正抓住了病因；</li><li><strong>代码编辑与补丁生成（Editing &amp; Patching）</strong>：在保持原有代码风格与上下文缩进正确的前提下，跨一个或多个文件实施精准修改；</li><li><strong>测试验证与迭代修复（Verification &amp; Iteration）</strong>：运行复现测试与相关回归测试套件；若测试失败或引入了语法错误，根据编译器/测试报错信息迭代修改代码；</li><li><strong>生成干净补丁并提交（Submission）</strong>：检查 <code>git diff</code> 确认未残留临时调试文件或无关改动，输出最终代码补丁（Patch / Pull Request）。</li></ol>
+<h4 id="swe-agent-架构">SWE-agent 架构</h4>
+<p>如果直接把标准的 Linux Bash 终端和 <code>vim</code> 编辑器原封不动地交给大语言模型，会发生什么？模型很容易在非交互式管道里调出卡死的交互式命令，或者用 <code>cat</code> 一次性打印出一万行源码瞬间撑爆上下文窗口，抑或在用 <code>sed</code> 替换代码时因为引号转义和行号偏移把整个文件改坏。</p>
+<p>普林斯顿大学在 <strong>SWE-agent（Yang et al., 2024）</strong> 中提出了一个极具洞察力的核心概念——<strong>智能体—计算机接口（ACI: Agent-Computer Interface）</strong>：</p>
+<blockquote><p>正如人类程序员需要图形界面（GUI）或精心设计的 IDE（人机交互 HCI）才能高效工作一样，以大语言模型为核心的 Agent 也有其独特的感知与认知脾气，需要专门为 LM 量身定制一套 <strong>ACI 接口</strong>！</p></blockquote>
+<p>SWE-agent 的 ACI 设计体现在三个关键细节上：</p>
+<ul><li><strong>带滑动窗口的文件查看器（Windowed File Viewer）</strong>：不让模型直接 <code>cat</code> 整个大文件，而是提供 <code>open &lt;path&gt; [&lt;line_number&gt;]</code>、<code>scroll_down</code>、<code>scroll_up</code>，每次只展示约 100 行带行号的代码窗口，并在顶部提示文件总行数与当前所处位置；</li><li><strong>内置语法检查的受控编辑命令（Linter-gated Edit）</strong>：提供 <code>edit &lt;start_line&gt;:&lt;end_line&gt; &lt;&lt;EOF ... EOF</code>。最绝妙的设计在于：每当模型执行一次 <code>edit</code>，<strong>ACI 会在底层自动立即运行语法检查器（Linter，如 <code>flake8</code>）</strong>！如果模型这次修改漏了一个冒号或缩进错了一格导致语法错误，ACI 会<strong>直接拒绝写入该次修改</strong>，并把清晰的语法报错行号立即反馈给模型要求重改，从而彻底杜绝了“一步语法改错导致后续十步全面崩溃”的雪崩效应；</li><li><strong>精简高信噪比的搜索输出</strong>：定制 <code>search_dir</code> 与 <code>find_file</code>，当匹配结果过多时自动提示模型缩小搜索词，而不是把几千条无用匹配全倒进上下文。消融实验证明，在同一底座模型下，精心设计的 ACI 能将 SWE-bench 解决率比原生 Bash 提升数倍。</li></ul>
+<h4 id="claude-code-架构">Claude Code 架构</h4>
+<p>随着新一代前沿大模型自身对长上下文与原生工具调用的掌握越来越强，<strong>Claude Code（Anthropic, 2025）</strong> 展示了另一种极具代表性的现代架构哲学——<strong>“极简原子工具 + 终端原生协作（Minimalist Tools &amp; Terminal-Native）”</strong>：</p>
+<ol><li><strong>克制而正交的工具原语</strong>：不堆砌几十个复杂的专用封装命令，而是提供少数高正交性的核心工具——文件读取（<code>View</code>/<code>Read</code>）、高精度字符串替换编辑（<code>Edit</code>，通过匹配唯一旧代码块替换为新代码块，彻底避免了模型数错行号的问题）、全文件写入（<code>Write</code>）、高速模式搜索（<code>Glob</code> / <code>Grep</code>）以及直接执行测试与构建的 <code>Bash</code> 工具；</li><li><strong>项目级持久指令与记忆（<code>CLAUDE.md</code>）</strong>：通过读取代码库根目录或子目录下的 <code>CLAUDE.md</code> 文件，自动加载项目的构建命令、测试运行方式、代码规范与架构约定；</li><li><strong>子智能体上下文隔离（Sub-agents for Exploration）</strong>：当需要跨大量文件做探索性搜索时，派生只读子 Agent 去翻找代码，只将精简结论汇回主会话，保持主编码上下文干净聚焦；</li><li><strong>分层权限与人机共驾</strong>：文件读取与搜索默认放行，文件修改与 Shell 命令执行支持按目录、按命令前缀精细配置授权，支持开发者随时在终端里观察 diff、打断引导或切换至“先规划再执行（Plan Mode）”。</li></ol>
+<h4 id="openhands-架构">OpenHands 架构</h4>
+<p>作为开源软件工程 Agent 平台的标杆，<strong>OpenHands（原 OpenDevin, Wang et al., 2025）</strong> 则采用了<strong>事件流驱动的客户端—沙箱分离架构（Event-Stream &amp; Sandboxed Runtime Architecture）</strong>：</p>
+<ul><li><strong>核心中枢是不可变的事件流（Event Stream）</strong>：Agent、工具环境（Runtime）与用户界面之间全部通过结构化的 Action 和 Observation 事件通信；</li><li><strong>全功能持久化容器沙箱</strong>：每个会话运行在独立的 Docker 容器中，内部同时集成了持久化的 Bash 终端会话（通过 <code>tmux</code> 保持工作目录与虚拟环境状态）、Jupyter IPython 内核（支持 CodeAct 交互式执行 Python 代码块）以及无头浏览器（Headless Browser，支持前端页面渲染检查与网页查阅）；</li><li><strong>多 Agent 委派与卡死检测</strong>：支持主 Agent 将特定子任务委派给专职的浏览或验证 Agent，并在运行底座层内置循环检测器，防止在失败命令上无限空转。</li></ul>
+<h3 id="2-scaffold基准与未来">2. Scaffold、基准与未来</h3>
+<h4 id="scaffolds-as-design-decisions">Scaffolds as design decisions</h4>
+<p>对比 SWE-agent、Claude Code 与 OpenHands 可以看清一个核心工程事实：<strong>包裹在模型外层的脚手架（Scaffold / Harness）绝不是无关紧要的胶水代码，其中的每一处设计都是直接决定成败的架构决策</strong>。</p>
+<p>在设计或优化一个 Coding Agent 的 Scaffold 时，工程师需要重点权衡以下五个具体问题（Anthropic《Effective Harnesses for Long-Running Agents》, Young, 2025）：</p>
+<ol><li><strong>文件编辑接口怎么设计（Line-based vs. Search-Replace vs. Full Rewrite）</strong>？按行号替换容易因模型数错行号而破坏相邻代码；全文重写在几千行的大文件上既贵又容易漏代码；而<strong>要求模型提供足够长且唯一的原始上下文代码段（Old String）进行精确匹配替换（New String）</strong>，配合保存前的自动语法校验，是目前最稳健的工程实践。</li><li><strong>Shell 状态是否持久</strong>？独立子进程简单无副作用，持久会话保留环境变量但需防进程卡死。</li><li><strong>测试输出如何防爆窗</strong>？运行一次全量 <code>pytest</code> 可能打印出几万行通过日志和几百行堆栈，必须对终端输出做智能首尾保留或按需查询（Observation Masking）。</li><li><strong>长周期任务如何跨上下文窗口交接（Multi-Window Handover）</strong>？当一个大型软件开发任务跨越几十个小时、经历多次上下文窗口重置时，单靠模型记忆是不够的。最佳实践是将其拆分为<strong>初始化智能体（Initializer Agent，负责搭建环境、编写功能特性清单 <code>feature_list.json</code> 与进度日志 <code>claude-progress.txt</code> 并做初始 Git 提交）</strong>与<strong>增量编码智能体（Coding Agent，每次新会话启动先读进度文件与 <code>git log</code>，每次只专注完成并测试一个原子特性，提交干净的 Git commit 并更新进度文件）</strong>。</li></ol>
+<h4 id="swe-bench-的四元组">SWE-bench 的四元组</h4>
+<p>我们如何客观评测上述各种编程 Agent 的真实水平？普林斯顿提出的 <strong>SWE-bench（Jimenez et al., 2024）</strong> 及其人工精选验证子集 <strong>SWE-bench Verified</strong> 是目前公认的行业黄金标准。如果用第 13 讲学习的<strong>四元组框架</strong>来拆解 SWE-bench，其结构极其清晰：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>四元组组件</th><th>SWE-bench 中的具体设计</th></tr></thead><tbody><tr><td><strong>1. Request（请求）</strong></td><td>来自 GitHub 真实开源仓库（如 <code>django</code>、<code>scikit-learn</code>、<code>sympy</code>）的一条真实 <strong>Issue 文本描述</strong>（包含用户报告的现象或复现代码，不含对应的 Pull Request 讨论）</td></tr><tr><td><strong>2. Environment（环境）</strong></td><td>一个精确回滚到该 Issue 被修复前那个历史 Commit（<code>base_commit</code>）的独立 Docker 容器，内含完整源码与配好的 Conda/虚拟环境（测试集答案与未来 Git 历史已被彻底剥离）</td></tr><tr><td><strong>3. Stopping Criteria（终止条件）</strong></td><td>Agent 自主提交最终的 <code>git diff</code> 补丁文件（<code>model_patch</code>），或达到最大交互轮数 / Token 费用 / 时间上限</td></tr><tr><td><strong>4. Scorer（评分器）</strong></td><td>将 Agent 生成的 <code>model_patch</code> 应用到干净仓库中，接着将真实人类开发者当年提交的 <strong>黄金测试补丁（<code>test_patch</code>）</strong> 应用上去并运行测试套件，必须同时满足两项硬指标：<br>• <strong><code>FAIL_TO_PASS</code></strong>：原本能复现该 Bug 的新增测试必须全部由失败变为通过（证明 Bug 真的修好了）；<br>• <strong><code>PASS_TO_PASS</code></strong>：原本就通过的存量回归测试必须全部保持通过（证明没有修好一个 Bug 却搞挂了其他功能）。</td></tr></tbody></table></div>
+<h4 id="软件开发的未来问题">软件开发的未来问题</h4>
+<p>随着 Coding Agents 从“解决单个独立 Issue”走向“跨多天自主开发完整系统”，软件工程正面临一系列深刻的开放问题：</p>
+<ul><li><strong>从写代码转向写规格与写测试（Spec &amp; Test Engineering）</strong>：当生成代码的速度提升十倍时，工程瓶颈迅速转移到了“如何用无歧义的规格说明与严密的测试套件防止 Agent 引入隐蔽的架构债与安全漏洞”；</li><li><strong>代码审查与人类心智模型同步（Code Review &amp; Mental Model）</strong>：如果 Agent 一夜之间生成了 5,000 行虽然能跑通测试但人类工程师从未读过的代码，后续系统的可维护性与事故责任该如何界定？设计支持高可读性分解、小步提交与可验证不变量的协作范式，是未来软件 Agent 的核心方向。</li></ul>
+<h2 id="原课程阅读清单与导读">原课程阅读清单与导读</h2>
+<ul><li><a href="https://arxiv.org/abs/2405.15793" target="_blank" rel="noopener noreferrer">Yang et al. &quot;SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering.&quot; NeurIPS (2024).</a> 导读：重点阅读 ACI 的设计原则，对比带行号滑动窗口、自动 Linter 拦截编辑与原生 Bash 在错误率与定位效率上的消融实验。</li><li><a href="https://arxiv.org/abs/2407.16741" target="_blank" rel="noopener noreferrer">Wang et al. &quot;OpenHands: An Open Platform for AI Software Developers.&quot; ICLR (2025).</a> 导读：理解事件流（Event Stream）与 Docker 沙箱运行时的解耦架构，以及如何统一支持代码执行、命令行与网页浏览。</li><li><strong>拓展阅读</strong>：<a href="https://www.anthropic.com/engineering/claude-code-best-practices" target="_blank" rel="noopener noreferrer">Anthropic. &quot;Claude Code: Best Practices for Agentic Coding.&quot; (2025).</a> 导读：掌握 <code>CLAUDE.md</code> 上下文配置、“先探索、再规划、后编码验证（Explore, Plan, Code, Commit）”的工作流以及测试驱动开发（TDD）在 Agent 编程中的实战技巧。</li><li><strong>拓展阅读</strong>：<a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank" rel="noopener noreferrer">Young. &quot;Effective Harnesses for Long-Running Agents.&quot; Anthropic (2025).</a> 导读：精读跨多个上下文窗口的长周期编码 Agent 为什么容易“过早宣布完成”或留下半拉子状态，以及如何通过 <code>feature_list.json</code>、进度日志与 Git 提交契约实现可靠的跨会话接力。</li><li><strong>拓展阅读</strong>：<a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener noreferrer">Jimenez et al. &quot;SWE-bench: Can Language Models Resolve Real-World GitHub Issues?&quot; ICLR (2024).</a> 导读：理解 SWE-bench 的任务采集过滤管线以及 <code>FAIL_TO_PASS</code> / <code>PASS_TO_PASS</code> 双重测试验证机制。</li></ul>
+<h2 id="动手练习">动手练习</h2>
+<ol><li><strong>ACI 文件编辑工具对比设计</strong>：编写两个供 Agent 修改本地代码文件的工具函数：（a）按行号区间替换 <code>edit_by_lines(path, start_line, end_line, new_text)</code>；（b）按唯一原文本块匹配替换 <code>edit_by_match(path, old_str, new_str)</code>，并在写入后自动调用 <code>ast.parse()</code> 检查 Python 语法合法性（若语法错误则回滚并返回报错行）。在一段 200 行的代码文件上模拟连续两次修改，分析为什么方案（b）加语法门禁能显著减少连续编辑事故。</li><li><strong>微型 SWE-bench 任务构造与验证</strong>：在一个包含 3 个文件的小型 Python 项目中植入一个真实的边界条件 Bug（例如除零或时区偏移错误），编写对应的 Issue 描述（<code>Request</code>）、一个在修复前必定失败的 <code>FAIL_TO_PASS</code> 单元测试以及三个存量的 <code>PASS_TO_PASS</code> 回归测试，并用你的 Agent 走完“搜索定位 <span class="math-inline">&rarr;</span> 运行测试复现 <span class="math-inline">&rarr;</span> 修改代码 <span class="math-inline">&rarr;</span> 验证通过”的完整闭环。</li></ol></article>
+        <nav id="chapter-footer" aria-label="章节翻页"><a href="./lecture16.html"><small>← 上一节</small>专题研讨：复合 Agent 系统架构复盘</a><a href="./lecture18.html"><small>下一节 →</small>主动式 Agent</a></nav>
+      </main>
+
+      <aside class="toc" aria-label="本节大纲">
+        <div class="toc-card">
+          <div class="toc-label">本讲目录</div>
+          <nav id="toc-links"><a class="depth-2" href="./lecture17.html#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87" data-anchor="学习目标">学习目标</a><a class="depth-2" href="./lecture17.html#%E7%9F%A5%E8%AF%86%E8%AE%B2%E8%A7%A3" data-anchor="知识讲解">知识讲解</a><a class="depth-3" href="./lecture17.html#1-%E4%BB%8E%E9%9C%80%E6%B1%82%E5%88%B0%E4%BF%AE%E6%94%B9%E5%92%8C%E9%AA%8C%E8%AF%81" data-anchor="1-从需求到修改和验证">1. 从需求到修改和验证</a><a class="depth-3" href="./lecture17.html#2-scaffold%E5%9F%BA%E5%87%86%E4%B8%8E%E6%9C%AA%E6%9D%A5" data-anchor="2-scaffold基准与未来">2. Scaffold、基准与未来</a><a class="depth-2" href="./lecture17.html#%E5%8E%9F%E8%AF%BE%E7%A8%8B%E9%98%85%E8%AF%BB%E6%B8%85%E5%8D%95%E4%B8%8E%E5%AF%BC%E8%AF%BB" data-anchor="原课程阅读清单与导读">原课程阅读清单与导读</a><a class="depth-2" href="./lecture17.html#%E5%8A%A8%E6%89%8B%E7%BB%83%E4%B9%A0" data-anchor="动手练习">动手练习</a></nav>
+          <a class="source-link" id="source-link" href="https://github.com/wanghao-SunSky/cs329z-chinese/blob/main/17-%E7%BC%96%E7%A8%8B%E4%B8%8E%E8%BD%AF%E4%BB%B6Agent.md">查看 Markdown 源文件 ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="page-footer">
+      <span>CS329Z · AI Agent 系统工程（Engineering AI Agents）</span>
+      <a href="https://github.com/wanghao-SunSky/cs329z-chinese">GitHub · Markdown 与 HTML</a>
+    </footer>
+  </div>
+
+  <dialog id="search-dialog">
+    <form method="dialog" class="search-head">
+      <label for="search-input">搜索</label>
+      <input id="search-input" type="search" placeholder="输入概念、算法、论文或练习关键词（如 ReAct, BM25, GRPO, MCP）…" autocomplete="off">
+      <button type="submit" aria-label="关闭搜索">ESC</button>
+    </form>
+    <p class="search-hint" id="search-hint">支持跨全部 19 讲课程、4 项实践与代码架构导读实时检索</p>
+    <div id="search-results" aria-live="polite"></div>
+  </dialog>
+
+  <noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/reader.js"></script>
+</body>
+</html>

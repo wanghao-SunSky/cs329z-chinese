@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>编写说明与待修订问题 | CS329Z 中文教程</title>
+<meta name="description" content="本教程依据 2026 年 10 月 28 日获取的 CS329Z 公开材料整理，包含中文转述、解释和自学练习，不是官方课程翻译或课堂实录。">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lab26.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CS329Z 中文教程">
+  <meta property="og:title" content="编写说明与待修订问题 | CS329Z 中文教程">
+  <meta property="og:description" content="本教程依据 2026 年 10 月 28 日获取的 CS329Z 公开材料整理，包含中文转述、解释和自学练习，不是官方课程翻译或课堂实录。">
+  <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lab26.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="编写说明与待修订问题 | CS329Z 中文教程">
+  <meta name="twitter:description" content="本教程依据 2026 年 10 月 28 日获取的 CS329Z 公开材料整理，包含中文转述、解释和自学练习，不是官方课程翻译或课堂实录。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"编写说明与待修订问题 | CS329Z 中文教程","description":"本教程依据 2026 年 10 月 28 日获取的 CS329Z 公开材料整理，包含中文转述、解释和自学练习，不是官方课程翻译或课堂实录。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lab26.html","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lab26.html","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","大语言模型","编写说明与待修订问题"]}</script>
+  <link rel="stylesheet" href="./assets/reader.css">
+</head>
+<body data-static="true" data-initial-doc="lab26" data-doc="lab26">
+  <a class="skip" href="#main">跳到正文</a>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-code">CS329Z<span class="brand-dot">.</span></span>
+        <span class="brand-sub">ENGINEERING AI AGENTS</span>
+      </a>
+      <p class="edition">AI Agent 系统工程教程 <span>中文学习资料</span></p>
+      <button type="button" class="search-trigger" id="open-search">
+        <span class="search-trigger-text">搜索课程、概念与算法…</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item active" data-doc="lab26" href="./lab26.html" aria-current="page"><span>编写说明与待修订问题</span></a></div></nav>
+    <div class="sidebar-foot">
+      <span>CS329Z · Engineering AI Agents</span>
+      <span>System · Data · Evals</span>
+    </div>
+  </aside>
+
+  <div class="shade" id="shade"></div>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" id="menu" class="mobile-only" aria-label="打开课程目录" aria-expanded="false" aria-controls="sidebar">目录</button>
+        <div id="breadcrumb" class="breadcrumb">编写说明与待修订问题</div>
+      </div>
+      <div class="reading-tools">
+        <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
+        <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
+        <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
+        <button type="button" id="print" aria-label="打印或导出 PDF">打印 / PDF</button>
+      </div>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <div class="chapter-meta" id="chapter-meta"></div>
+
+        <section class="home-intro" id="home-intro" hidden>
+          <p class="eyebrow">CS329Z 中文教程 · ENGINEERING AI AGENTS</p>
+          <h1>从理解语言模型，<br>到构建可靠的 <em>AI Agent</em> 系统。</h1>
+          <p class="hero-lead">面向 Python 开发者的中文自学教程，包含 19 讲、4 项实践和配套代码导读。从 RAG、工具调用开始，逐步学习记忆、协作、评测与安全。</p>
+          <div class="hero-bottom">
+            <div class="hero-stats">
+              <span><strong>19</strong> 讲核心课程</span>
+              <span><strong>4</strong> 项工程实践</span>
+              <span><strong>2</strong> 套配套源码解析</span>
+            </div>
+            <div class="hero-actions">
+              <a class="start-link" href="./lecture01.html">开始第 01 讲 <span>→</span></a>
+              <a class="secondary-link" href="./lab20.html">进入 HW1 实战</a>
+            </div>
+          </div>
+        </section>
+
+        <article id="article"><h1 id="编写说明">编写说明</h1>
+<p>本教程依据 2026 年 10 月 28 日获取的 CS329Z 公开材料整理，包含中文转述、解释和自学练习，不是官方课程翻译或课堂实录。</p>
+<h2 id="原始材料">原始材料</h2>
+<ul><li><a href="https://cs329z.stanford.edu/" target="_blank" rel="noopener noreferrer">Stanford CS329Z 课程主页</a></li><li><a href="https://web.stanford.edu/class/cs329z/logistics.html" target="_blank" rel="noopener noreferrer">课程安排与作业要求</a></li><li><a href="https://github.com/cs329z/assignment1-harness" target="_blank" rel="noopener noreferrer">HW1：Agent Harness 配套代码</a></li><li><a href="https://github.com/cs329z/lecture5-frameworks" target="_blank" rel="noopener noreferrer">第 5 讲：框架演示代码</a></li><li><a href="https://web.stanford.edu/class/cs329z/assignments/paper_video.pdf" target="_blank" rel="noopener noreferrer">Paper Video 作业说明</a></li></ul>
+<p>课程中的论文链接指向各篇原文。原始课件、论文与配套代码保留各自的版权与许可，本仓库不为第三方材料重新指定许可。</p>
+<h2 id="内容范围">内容范围</h2>
+<p>已有材料包含第 1–10 讲的课件文字；第 11–19 讲以课表和阅读清单为基础补充讲解，不能据此认定为完整复原课堂内容。原课第 16 讲主题为 TBA，本教程的架构复盘属于扩展专题。HW2 未取得完整原始说明，其中具体任务数量、示例和实现步骤属于自学设计。课件图片、登录后录像及未提供的作业数据不包含在本仓库。</p>
+<h2 id="当前待修订问题">当前待修订问题</h2>
+<p>本次发布保留现有教程正文，以下问题已反馈给原编写任务，尚未作为已修复项验收：</p>
+<ul><li>部分数学公式的 HTML 转换不完整，例如第 2 讲温度公式。</li><li>第 2 讲将 DPO 与训练独立奖励模型混写。标准 DPO 无需单独训练奖励模型，见 <a href="https://arxiv.org/abs/2305.18290" target="_blank" rel="noopener noreferrer">原论文</a>。</li><li>个别章节的原课内容与扩展内容需要更清楚地区分。</li><li>部分段落的术语过密、表达夸张，需要精简。</li><li>HW2 和第 14 讲的长度偏差练习同时改变回答长度与事实正确性，应拆成分别控制变量的实验。</li></ul>
+<p>结构与链接检查不能代替内容审校；配套作业和 Notebook 未在本次发布中实际运行。</p></article>
+        <nav id="chapter-footer" aria-label="章节翻页"><a href="./lab25.html"><small>← 上一节</small>课程目录与学习路径</a><span></span></nav>
+      </main>
+
+      <aside class="toc" aria-label="本节大纲">
+        <div class="toc-card">
+          <div class="toc-label">本讲目录</div>
+          <nav id="toc-links"><a class="depth-2" href="./lab26.html#%E5%8E%9F%E5%A7%8B%E6%9D%90%E6%96%99" data-anchor="原始材料">原始材料</a><a class="depth-2" href="./lab26.html#%E5%86%85%E5%AE%B9%E8%8C%83%E5%9B%B4" data-anchor="内容范围">内容范围</a><a class="depth-2" href="./lab26.html#%E5%BD%93%E5%89%8D%E5%BE%85%E4%BF%AE%E8%AE%A2%E9%97%AE%E9%A2%98" data-anchor="当前待修订问题">当前待修订问题</a></nav>
+          <a class="source-link" id="source-link" href="https://github.com/wanghao-SunSky/cs329z-chinese/blob/main/docs/editorial-notes.md">查看 Markdown 源文件 ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="page-footer">
+      <span>CS329Z · AI Agent 系统工程（Engineering AI Agents）</span>
+      <a href="https://github.com/wanghao-SunSky/cs329z-chinese">GitHub · Markdown 与 HTML</a>
+    </footer>
+  </div>
+
+  <dialog id="search-dialog">
+    <form method="dialog" class="search-head">
+      <label for="search-input">搜索</label>
+      <input id="search-input" type="search" placeholder="输入概念、算法、论文或练习关键词（如 ReAct, BM25, GRPO, MCP）…" autocomplete="off">
+      <button type="submit" aria-label="关闭搜索">ESC</button>
+    </form>
+    <p class="search-hint" id="search-hint">支持跨全部 19 讲课程、4 项实践与代码架构导读实时检索</p>
+    <div id="search-results" aria-live="polite"></div>
+  </dialog>
+
+  <noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/reader.js"></script>
+</body>
+</html>

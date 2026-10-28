@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>主动式 Agent | CS329Z 中文教程</title>
+<meta name="description" content="到目前为止，我们在课程中讨论的几乎所有 Agent——无论是问答助手、RAG 流水线还是处理工单的编程 Agent——都遵循着同一种交互模式：被动响应式（Reactive）。如果你不向它发消息，它就永远安静地停在那里；只有当你明确敲下指令、点明要做什么，它才会启动循环去执行。">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture18.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CS329Z 中文教程">
+  <meta property="og:title" content="主动式 Agent | CS329Z 中文教程">
+  <meta property="og:description" content="到目前为止，我们在课程中讨论的几乎所有 Agent——无论是问答助手、RAG 流水线还是处理工单的编程 Agent——都遵循着同一种交互模式：被动响应式（Reactive）。如果你不向它发消息，它就永远安静地停在那里；只有当你明确敲下指令、点明要做什么，它才会启动循环去执行。">
+  <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture18.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="主动式 Agent | CS329Z 中文教程">
+  <meta name="twitter:description" content="到目前为止，我们在课程中讨论的几乎所有 Agent——无论是问答助手、RAG 流水线还是处理工单的编程 Agent——都遵循着同一种交互模式：被动响应式（Reactive）。如果你不向它发消息，它就永远安静地停在那里；只有当你明确敲下指令、点明要做什么，它才会启动循环去执行。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"主动式 Agent | CS329Z 中文教程","description":"到目前为止，我们在课程中讨论的几乎所有 Agent——无论是问答助手、RAG 流水线还是处理工单的编程 Agent——都遵循着同一种交互模式：被动响应式（Reactive）。如果你不向它发消息，它就永远安静地停在那里；只有当你明确敲下指令、点明要做什么，它才会启动循环去执行。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture18.html","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture18.html","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","大语言模型","主动式 Agent"]}</script>
+  <link rel="stylesheet" href="./assets/reader.css">
+</head>
+<body data-static="true" data-initial-doc="lecture18" data-doc="lecture18">
+  <a class="skip" href="#main">跳到正文</a>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-code">CS329Z<span class="brand-dot">.</span></span>
+        <span class="brand-sub">ENGINEERING AI AGENTS</span>
+      </a>
+      <p class="edition">AI Agent 系统工程教程 <span>中文学习资料</span></p>
+      <button type="button" class="search-trigger" id="open-search">
+        <span class="search-trigger-text">搜索课程、概念与算法…</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item active" data-doc="lecture18" href="./lecture18.html" aria-current="page"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item" data-doc="lab26" href="./lab26.html"><span>编写说明与待修订问题</span></a></div></nav>
+    <div class="sidebar-foot">
+      <span>CS329Z · Engineering AI Agents</span>
+      <span>System · Data · Evals</span>
+    </div>
+  </aside>
+
+  <div class="shade" id="shade"></div>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" id="menu" class="mobile-only" aria-label="打开课程目录" aria-expanded="false" aria-controls="sidebar">目录</button>
+        <div id="breadcrumb" class="breadcrumb">主动式 Agent</div>
+      </div>
+      <div class="reading-tools">
+        <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
+        <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
+        <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
+        <button type="button" id="print" aria-label="打印或导出 PDF">打印 / PDF</button>
+      </div>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <div class="chapter-meta" id="chapter-meta"></div>
+
+        <section class="home-intro" id="home-intro" hidden>
+          <p class="eyebrow">CS329Z 中文教程 · ENGINEERING AI AGENTS</p>
+          <h1>从理解语言模型，<br>到构建可靠的 <em>AI Agent</em> 系统。</h1>
+          <p class="hero-lead">面向 Python 开发者的中文自学教程，包含 19 讲、4 项实践和配套代码导读。从 RAG、工具调用开始，逐步学习记忆、协作、评测与安全。</p>
+          <div class="hero-bottom">
+            <div class="hero-stats">
+              <span><strong>19</strong> 讲核心课程</span>
+              <span><strong>4</strong> 项工程实践</span>
+              <span><strong>2</strong> 套配套源码解析</span>
+            </div>
+            <div class="hero-actions">
+              <a class="start-link" href="./lecture01.html">开始第 01 讲 <span>→</span></a>
+              <a class="secondary-link" href="./lab20.html">进入 HW1 实战</a>
+            </div>
+          </div>
+        </section>
+
+        <article id="article"><h1 id="第-18-讲主动式-agent">第 18 讲｜主动式 Agent</h1>
+<p>到目前为止，我们在课程中讨论的几乎所有 Agent——无论是问答助手、RAG 流水线还是处理工单的编程 Agent——都遵循着同一种交互模式：<strong>被动响应式（Reactive）</strong>。如果你不向它发消息，它就永远安静地停在那里；只有当你明确敲下指令、点明要做什么，它才会启动循环去执行。</p>
+<p>然而，真正得力的人类搭档绝不会事事等你开口下令。当你正在撰写一份季度总结文档、反复在邮件和表格之间切换查核数据时，一位默契的搭档会注意到你的意图，主动帮你把最新一周的销售表格整理好放在手边；当你收到一封重要会议改期的邮件时，他会主动提醒你这与周四的航班冲突，并为你拟好改签建议草稿等你确认。</p>
+<p>从<strong>“你问一句，我动一下（Reactive）”</strong>走向<strong>“理解你的上下文与长远目标，在恰当时机主动提供协助（Proactive）”</strong>，是个人与企业 AI Agent 演进的下一个重大前沿。本讲将深入剖析 <strong>主动式智能体（Proactive Agents）</strong> 的核心技术体系：探讨如何从日常计算机交互中构建<strong>通用用户模型（General User Models, GUM）</strong>、如何进行<strong>下一步动作预测（Next Action Prediction）</strong>、剖析开源主动式个人 Agent（如 <strong>OpenClaw</strong>）的常驻架构，并深入研究持续观测带来的隐私信任挑战以及决定“何时该主动出手、何时该安静等待”的<strong>混合主动权（Mixed Initiative）</strong>决策机制。</p>
+<h2 id="学习目标">学习目标</h2>
+<ul><li>理解被动式智能体（Reactive Agents）与主动式智能体（Proactive Agents）的本质区别，认识主动性带来的生产力解放与干扰风险。</li><li>掌握通用用户模型（General User Models, GUM）如何从多模态计算机交互日志中归纳用户的知识状态、偏好与当前目标。</li><li>理解基于人机交互序列的下一步动作预测（Next Action Prediction），严格区分“预测用户下一步会做什么”与“Agent 获准替用户执行什么”。</li><li>剖析开源常驻主动式 Agent（如 OpenClaw）的心跳唤醒（Heartbeat）、多通道网关与夜间记忆整理机制，掌握混合主动权（Mixed Initiative）的效用—打扰权衡与隐私边界设计。</li></ul>
+<h2 id="知识讲解">知识讲解</h2>
+<h3 id="1-从-reactive-到-proactive">1. 从 reactive 到 proactive</h3>
+<h4 id="reactive-与-proactive">Reactive 与 proactive</h4>
+<p>将响应式 Agent 与主动式 Agent 放在系统层面对比，两者的触发机制与认知负担截然不同：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>维度</th><th>被动响应式智能体（Reactive Agents）</th><th>主动式智能体（Proactive Agents）</th></tr></thead><tbody><tr><td><strong>触发起点</strong></td><td>仅由用户的<strong>显式指令（Explicit User Prompt）</strong>触发</td><td>由<strong>环境事件、时间周期、上下文状态变化或观测到的用户行为流</strong>自主触发</td></tr><tr><td><strong>意图发现责任</strong></td><td>完全落在<strong>人类用户</strong>肩上（用户必须自己发现问题并把需求组织成清晰的提示词）</td><td>由 <strong>Agent 与用户分担</strong>（Agent 持续感知上下文，识别潜在需求、冲突或可自动化的重复劳动）</td></tr><tr><td><strong>主要失败模式</strong></td><td>答非所问、工具调用失败、执行超时</td><td><strong>误触发打扰（False-positive Interruption）</strong>、自作主张引发错误副作用、过度窥探造成隐私不安</td></tr><tr><td><strong>核心评测指标</strong></td><td>给定指令下的任务完成率（Pass Rate）、成本与延迟</td><td>建议采纳率、为用户节省的操作步数、<strong>打扰率（Interruption Rate）与撤销成本</strong></td></tr></tbody></table></div>
+<p>为什么在很多场景下仅靠 Reactive 是不够的？因为人类用户在专注工作时，往往存在三重障碍：（1）不知道某件繁琐的事其实可以让 Agent 自动化处理；（2）把复杂上下文用文字敲成提示词解释给 AI 听的功夫，还不如自己顺手干完（即<strong>提示规范开销 Prompting Overhead</strong>）；（3）对于日程冲突、后台报警或即将到期的截止日，用户自己根本还没注意到，自然不可能主动去问 AI。</p>
+<h4 id="general-user-modelsgum">General User Models（GUM）</h4>
+<p>要让一个 Agent 能够恰到好处地主动帮忙，前提是它必须先真正“懂你”——知道你正在忙什么项目、习惯什么样的工具流程、认识哪些合作者、有哪些未完成的待办事项。</p>
+<p>斯坦福团队提出的 <strong>通用用户模型（General User Models, GUM, Shaikh et al., 2025，《Creating General User Models from Computer Use》）</strong> 开创了从日常多模态计算机使用行为中自动构建结构化用户表征的范式：</p>
+<ol><li><strong>多源交互观测（Multimodal Computer Use Observation）</strong>：系统在本地受控环境下观测用户在操作系统中的日常交互（如屏幕截图变化、活跃窗口切换、文档编辑与网页浏览轨迹）；</li><li><strong>结构化命题归纳与置信度更新（Propositional User State）</strong>：GUM 不是简单地把几万张截图存进向量库，而是通过视觉—语言模型从交互流中持续提炼、更新关于用户的结构化命题（Propositions，例如<em>“用户正在准备 CS329Z 的期中项目报告，重点关注 RAG 评估指标”</em>、<em>“用户习惯使用 <code>uv</code> 而非 <code>pip</code> 管理 Python 环境”</em>），并为每条命题维护置信度、证据来源与时效衰减；</li><li><strong>跨应用泛化赋能</strong>：一旦建立起动态更新的 GUM，任何下游应用或 Agent 在启动时无需用户从零交代背景，即可直接查询 GUM 获得高精度的个性化上下文，不仅能够补全模糊指令中的指代，还能主动发现跨应用的工作流衔接机会。</li></ol>
+<h4 id="next-action-prediction">Next Action Prediction</h4>
+<p>有了对用户当前状态的理解，主动式 Agent 的下一个核心计算问题是 <strong>下一步动作预测（Next Action Prediction, Shaikh et al., 2026，《Learning Next Action Predictors from Human-Computer Interaction》）</strong>：给定用户过去一段时间的交互历史序列 <span class="math-inline">(s<sub>1</sub>, a<sub>1</sub>, s<sub>2</sub>, a<sub>2</sub>, &hellip;, s<sub>t</sub>)</span>，预测用户接下来最可能执行的操作 <span class="math-inline">a<sub>t+1</sub></span> 或高层次意图。</p>
+<p>在工程实现中，必须清醒把握一条关键原则：<strong>“准确预测出用户下一步想干什么”绝不直接等同于“Agent 应当立刻替用户把这一步干掉”！</strong></p>
+<ul><li>如果预测出用户正在把一封邮件里的 10 个日期逐个复制到表格里，主动帮他生成填好后 8 行的预览供他一键确认（Autocomplete / Draft），是极佳的体验；</li><li>但如果预测出用户看完了邮件准备点击“发送辞职信”或“合并生产分支”，Agent 绝不能不打招呼就直接替用户点下去。预测模型提供的是<strong>意图先验（Intent Prior）</strong>，而真正决定采取什么介入动作的，是上层的<strong>主动决策策略（Initiative Policy）</strong>。</li></ul>
+<h4 id="开源主动个人-agent">开源主动个人 Agent</h4>
+<p>在开源工程界，以 <strong>OpenClaw（Steinberger, 2025）</strong> 为代表的常驻型个人 Agent 展示了如何用简洁的工程组件搭起一套 7×24 小时运转的主动式系统（我们在第 05 讲曾简要见过其身影）：</p>
+<ol><li><strong>单一长驻网关进程（Long-lived Gateway）</strong>：不再是每次打开网页才初始化的临时会话，而是一个常驻后台的服务进程，统一接管用户的消息通道（如 Telegram、Slack、邮件通知与本地目录监听）；</li><li><strong>基于定时心跳的主动轮询（Scheduled Heartbeat Turns）</strong>：系统每隔固定周期（如每 30 分钟）自动触发一次隐式的“心跳轮次（Heartbeat）”——唤醒 Agent 检查当前时间、近期收到的新消息、日历待办与监控列表。<strong>最关键的设计在于静默默契</strong>：如果 Agent 检查后认为当前没有任何值得打扰用户的重要事项，它只需输出特殊标记 <code>NO_REPLY</code>，网关会直接吞掉这次心跳，用户端完全无感；只有确实发现紧急冲突或到期提醒时，才会真正向用户推送消息；</li><li><strong>基于 Markdown 文件的透明人格与记忆（File-based Identity &amp; Sleep-time Consolidation）</strong>：通过 <code>AGENTS.md</code>、<code>SOUL.md</code>、<code>USER.md</code> 与 <code>MEMORY.md</code> 维护长期状态，并在每天凌晨（如 3 AM）运行后台整理任务，将当天的交互日志提炼归档。</li></ol>
+<h3 id="2-隐私信任与-mixed-initiative">2. 隐私、信任与 mixed initiative</h3>
+<h4 id="privacy-and-trust">Privacy and trust</h4>
+<p>主动式 Agent 的能力越强、观测的屏幕与个人数据越全面，它所触及的<strong>隐私与信任边界（Privacy and Trust Implications）</strong>就越敏感：</p>
+<ul><li><strong>持续观测的最小化与本地化原则</strong>：屏幕截图、键鼠记录与私人通信包含了大量高度敏感的信息（密码框、私人聊天、银行账单）。在设计类似 GUM 的持续观测系统时，应当支持<strong>应用级黑名单过滤（排除密码管理器、私人金融与医疗页面）</strong>、优先采用本地端侧模型提炼抽象命题后立即销毁原始截图，并严禁将未经脱敏的原始监测流直接上传至不可信的公共云端；</li><li><strong>可审计与可修正的透明度（Inspectability &amp; Correctability）</strong>：用户必须能够随时打开查看“Agent 目前对我形成了哪些推断和记忆”，并能一键删除或纠正错误的推断（例如当 Agent 误以为用户对某个临时搜索过的商品长期感兴趣时，用户能直接划掉该画像条目），这是建立长期人机信任的基石。</li></ul>
+<h4 id="initiate-vs-wait">Initiate vs wait</h4>
+<p>主动式 Agent 设计的最高艺术，在于处理 <strong>混合主动权（Mixed Initiative，Horvitz, 1999 经典人机交互理论在 LLM 时代的延续）</strong>——即<strong>在每一个时刻，系统如何在“主动发起行动（Initiate）”、“礼貌询问或提供草稿（Suggest / Ask）”与“安静等待（Wait / Do Nothing）”之间做出最优抉择</strong>。</p>
+<p>我们可以用一个简单的<strong>期望效用决策矩阵</strong>来指导这一工程设计。设 Agent 估计当前用户确实需要某项帮助的概率为 <span class="math-inline">P(<span class="m-text">Need</span>)</span>：</p>
+<ul><li>如果主动出手且猜对了，能为用户带来的净收益为 <span class="math-inline">U<sub><span class="m-text">help</span></sub> &gt; 0</span>；</li><li>如果主动出手但猜错了（误触发），给用户造成的<strong>打扰成本与撤销/清理代价</strong>为 <span class="math-inline">C<sub><span class="m-text">interrupt</span></sub> &gt; 0</span>。</li></ul>
+<p>只有当期望收益大于期望打扰代价，即 <span class="math-inline">P(<span class="m-text">Need</span>) &middot; U<sub><span class="m-text">help</span></sub> &gt; (1 - P(<span class="m-text">Need</span>)) &middot; C<sub><span class="m-text">interrupt</span></sub></span> 时，才值得发起主动动作！更重要的是，我们可以通过设计<strong>渐进式的介入阶梯（Graduated Spectrum of Initiative）</strong>来大幅降低误判代价 <span class="math-inline">C<sub><span class="m-text">interrupt</span></sub></span>：</p>
+<div class="table-scroll" tabindex="0"><table><thead><tr><th>介入等级</th><th>触发条件（置信度 <span class="math-inline">P</span> 与操作可逆性）</th><th>Agent 采取的具体行为</th><th>误判时的用户撤销成本</th></tr></thead><tbody><tr><td><strong>Level 0：完全静默（Wait / <code>NO_REPLY</code>）</strong></td><td>置信度低，或用户正处于高频专注输入/会议免打扰状态</td><td>后台静默记录日志，不发出任何通知或动作</td><td>零打扰</td></tr><tr><td><strong>Level 1：无侵入就地准备（Silent Staging / Draft）</strong></td><td>置信度中等，发现需要处理的邮件或待办</td><td><strong>不弹窗打扰用户</strong>，但在后台默默查好相关资料、在草稿箱里生成好回复草稿（Draft）或待办卡片，等用户主动打开收件箱时直接呈现</td><td>极低（用户只需忽略草稿）</td></tr><tr><td><strong>Level 2：轻量级主动建议（Proactive Suggestion）</strong></td><td>置信度高，或检测到迫在眉睫的日程冲突/截止日期</td><td>发送一条简明扼要的通知卡片，附上已准备好的解决方案，提供 <code>[一键确认执行]</code> 与 <code>[忽略]</code> 按钮</td><td>中等（消耗用户几秒钟阅读注意力）</td></tr><tr><td><strong>Level 3：自主执行并事后汇报（Autonomous Action + Log）</strong></td><td>置信度极高、<strong>操作完全可逆（Reversible）</strong>且用户已预先明确授权该类规则</td><td>自动完成归档、打标签或启动本地构建，并在活动日志中留存一键回滚记录</td><td>仅限事先授权的低风险可逆操作</td></tr></tbody></table></div>
+<p>在评测主动式 Agent 时，切忌只拿正样本测试“它有没有主动提醒”。一个合格的主动式基准必须包含大量<strong>应该保持安静的日常流水样本</strong>，同时统计<strong>精确率（Precision，发出的主动打扰中有多少比例真正被用户采纳）</strong>、<strong>召回率（Recall，真正需要提醒的关键事件捕获了多少）</strong> 以及用户拒绝建议后的静默退避能力（当用户刚刚拒绝过某类建议后，绝不在五分钟后又换个花样弹出来烦人）。</p>
+<h2 id="原课程阅读清单与导读">原课程阅读清单与导读</h2>
+<ul><li><a href="https://arxiv.org/abs/2505.10831" target="_blank" rel="noopener noreferrer">Shaikh et al. &quot;Creating General User Models from Computer Use.&quot; UIST (2025).</a> 导读：重点阅读 GUM 如何从多模态屏幕交互流中提取、更新与检索结构化用户命题，以及如何利用 GUM 为下游助手实现零样本个性化与主动协助。</li><li><strong>拓展阅读</strong>：<a href="https://arxiv.org/abs/2603.05923" target="_blank" rel="noopener noreferrer">Shaikh et al. &quot;Learning Next Action Predictors from Human-Computer Interaction.&quot; arXiv (2026).</a> 导读：关注如何对人机交互动作序列进行建模与粒度切分，理解离线动作预测准确率与在线真实辅助体验之间的转化关系。</li><li><strong>拓展阅读</strong>：<a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener noreferrer">Steinberger. &quot;OpenClaw: Open-source proactive AI agent.&quot; (2025).</a> 导读：浏览其 Gateway、Heartbeat 轮询机制（含 <code>NO_REPLY</code> 协议）以及基于 Markdown 文件（<code>SOUL.md</code>、<code>USER.md</code>、<code>MEMORY.md</code>）管理常驻个人 Agent 的工程实现。</li></ul>
+<h2 id="动手练习">动手练习</h2>
+<ol><li><strong>设计四级混合主动权（Mixed Initiative）策略引擎</strong>：围绕个人办公场景构造 8 个事件快照（例如：① 收到一封明天的普通推广周报；② 收到封要求周五前回复报销单的同事邮件；③ 检测到 15 分钟后有线上会议但尚未生成议程摘要；④ 用户刚刚在 2 分钟前点击拒绝了“自动整理桌面文件”的建议）。为每个事件判定应采取的介入等级（Level 0 静默 / Level 1 后台草稿 / Level 2 主动弹窗建议 / Level 3 自动执行），并写出判断依据。</li><li><strong>实现心跳检查与防重复打扰状态机</strong>：编写一个模拟 <code>heartbeat_check(events, memory)</code> 的函数：当没有任何紧急新事件或某事件已在过去 24 小时内提醒过用户时，严格返回 <code>&quot;NO_REPLY&quot;</code>；当发现新的高优先级冲突时，先调用只读工具准备好上下文草稿，再生成一条不超过 100 字的精简行动建议并记录已提醒状态。</li></ol></article>
+        <nav id="chapter-footer" aria-label="章节翻页"><a href="./lecture17.html"><small>← 上一节</small>编程与软件 Agent</a><a href="./lecture19.html"><small>下一节 →</small>前沿与开放问题</a></nav>
+      </main>
+
+      <aside class="toc" aria-label="本节大纲">
+        <div class="toc-card">
+          <div class="toc-label">本讲目录</div>
+          <nav id="toc-links"><a class="depth-2" href="./lecture18.html#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87" data-anchor="学习目标">学习目标</a><a class="depth-2" href="./lecture18.html#%E7%9F%A5%E8%AF%86%E8%AE%B2%E8%A7%A3" data-anchor="知识讲解">知识讲解</a><a class="depth-3" href="./lecture18.html#1-%E4%BB%8E-reactive-%E5%88%B0-proactive" data-anchor="1-从-reactive-到-proactive">1. 从 reactive 到 proactive</a><a class="depth-3" href="./lecture18.html#2-%E9%9A%90%E7%A7%81%E4%BF%A1%E4%BB%BB%E4%B8%8E-mixed-initiative" data-anchor="2-隐私信任与-mixed-initiative">2. 隐私、信任与 mixed initiative</a><a class="depth-2" href="./lecture18.html#%E5%8E%9F%E8%AF%BE%E7%A8%8B%E9%98%85%E8%AF%BB%E6%B8%85%E5%8D%95%E4%B8%8E%E5%AF%BC%E8%AF%BB" data-anchor="原课程阅读清单与导读">原课程阅读清单与导读</a><a class="depth-2" href="./lecture18.html#%E5%8A%A8%E6%89%8B%E7%BB%83%E4%B9%A0" data-anchor="动手练习">动手练习</a></nav>
+          <a class="source-link" id="source-link" href="https://github.com/wanghao-SunSky/cs329z-chinese/blob/main/18-%E4%B8%BB%E5%8A%A8%E5%BC%8FAgent.md">查看 Markdown 源文件 ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="page-footer">
+      <span>CS329Z · AI Agent 系统工程（Engineering AI Agents）</span>
+      <a href="https://github.com/wanghao-SunSky/cs329z-chinese">GitHub · Markdown 与 HTML</a>
+    </footer>
+  </div>
+
+  <dialog id="search-dialog">
+    <form method="dialog" class="search-head">
+      <label for="search-input">搜索</label>
+      <input id="search-input" type="search" placeholder="输入概念、算法、论文或练习关键词（如 ReAct, BM25, GRPO, MCP）…" autocomplete="off">
+      <button type="submit" aria-label="关闭搜索">ESC</button>
+    </form>
+    <p class="search-hint" id="search-hint">支持跨全部 19 讲课程、4 项实践与代码架构导读实时检索</p>
+    <div id="search-results" aria-live="polite"></div>
+  </dialog>
+
+  <noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/reader.js"></script>
+</body>
+</html>

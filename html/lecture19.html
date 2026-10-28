@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>前沿与开放问题 | CS329Z 中文教程</title>
+<meta name="description" content="走过前面十八讲，我们已经完整走通了现代 AI Agent 工程的核心主干：从基础模型解码、注意力机制、RAG 检索与工具协议，到编排框架、上下文管理、记忆架构、多智能体协作与系统优化，再到数据飞轮、基准设计、LLM 裁判、安全护栏以及编程与主动式 Agent。">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture19.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CS329Z 中文教程">
+  <meta property="og:title" content="前沿与开放问题 | CS329Z 中文教程">
+  <meta property="og:description" content="走过前面十八讲，我们已经完整走通了现代 AI Agent 工程的核心主干：从基础模型解码、注意力机制、RAG 检索与工具协议，到编排框架、上下文管理、记忆架构、多智能体协作与系统优化，再到数据飞轮、基准设计、LLM 裁判、安全护栏以及编程与主动式 Agent。">
+  <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture19.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="前沿与开放问题 | CS329Z 中文教程">
+  <meta name="twitter:description" content="走过前面十八讲，我们已经完整走通了现代 AI Agent 工程的核心主干：从基础模型解码、注意力机制、RAG 检索与工具协议，到编排框架、上下文管理、记忆架构、多智能体协作与系统优化，再到数据飞轮、基准设计、LLM 裁判、安全护栏以及编程与主动式 Agent。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"前沿与开放问题 | CS329Z 中文教程","description":"走过前面十八讲，我们已经完整走通了现代 AI Agent 工程的核心主干：从基础模型解码、注意力机制、RAG 检索与工具协议，到编排框架、上下文管理、记忆架构、多智能体协作与系统优化，再到数据飞轮、基准设计、LLM 裁判、安全护栏以及编程与主动式 Agent。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture19.html","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture19.html","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","大语言模型","前沿与开放问题"]}</script>
+  <link rel="stylesheet" href="./assets/reader.css">
+</head>
+<body data-static="true" data-initial-doc="lecture19" data-doc="lecture19">
+  <a class="skip" href="#main">跳到正文</a>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-code">CS329Z<span class="brand-dot">.</span></span>
+        <span class="brand-sub">ENGINEERING AI AGENTS</span>
+      </a>
+      <p class="edition">AI Agent 系统工程教程 <span>中文学习资料</span></p>
+      <button type="button" class="search-trigger" id="open-search">
+        <span class="search-trigger-text">搜索课程、概念与算法…</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item active" data-doc="lecture19" href="./lecture19.html" aria-current="page"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item" data-doc="lab26" href="./lab26.html"><span>编写说明与待修订问题</span></a></div></nav>
+    <div class="sidebar-foot">
+      <span>CS329Z · Engineering AI Agents</span>
+      <span>System · Data · Evals</span>
+    </div>
+  </aside>
+
+  <div class="shade" id="shade"></div>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" id="menu" class="mobile-only" aria-label="打开课程目录" aria-expanded="false" aria-controls="sidebar">目录</button>
+        <div id="breadcrumb" class="breadcrumb">前沿与开放问题</div>
+      </div>
+      <div class="reading-tools">
+        <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
+        <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
+        <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
+        <button type="button" id="print" aria-label="打印或导出 PDF">打印 / PDF</button>
+      </div>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <div class="chapter-meta" id="chapter-meta"></div>
+
+        <section class="home-intro" id="home-intro" hidden>
+          <p class="eyebrow">CS329Z 中文教程 · ENGINEERING AI AGENTS</p>
+          <h1>从理解语言模型，<br>到构建可靠的 <em>AI Agent</em> 系统。</h1>
+          <p class="hero-lead">面向 Python 开发者的中文自学教程，包含 19 讲、4 项实践和配套代码导读。从 RAG、工具调用开始，逐步学习记忆、协作、评测与安全。</p>
+          <div class="hero-bottom">
+            <div class="hero-stats">
+              <span><strong>19</strong> 讲核心课程</span>
+              <span><strong>4</strong> 项工程实践</span>
+              <span><strong>2</strong> 套配套源码解析</span>
+            </div>
+            <div class="hero-actions">
+              <a class="start-link" href="./lecture01.html">开始第 01 讲 <span>→</span></a>
+              <a class="secondary-link" href="./lab20.html">进入 HW1 实战</a>
+            </div>
+          </div>
+        </section>
+
+        <article id="article"><h1 id="第-19-讲前沿与开放问题">第 19 讲｜前沿与开放问题</h1>
+<p>走过前面十八讲，我们已经完整走通了现代 AI Agent 工程的核心主干：从基础模型解码、注意力机制、RAG 检索与工具协议，到编排框架、上下文管理、记忆架构、多智能体协作与系统优化，再到数据飞轮、基准设计、LLM 裁判、安全护栏以及编程与主动式 Agent。</p>
+<p>作为全课程的收官之讲，我们将目光投向正在 rapidly 演进的<strong>技术前沿（Frontiers）</strong>与尚未被彻底攻克的<strong>开放研究与工程难题（Open Problems）</strong>。当 Agent 的感知从纯文本扩展到多模态屏幕与真实网页，当应用领域深入到自动化科学发现（Science Agents），当任务周期从几分钟拉长到跨数天连续运行，当原型系统真正走向日均百万次调用的生产环境——我们将面对哪些全新的架构挑战？本讲将系统梳理多模态与计算机操作 Agent（Web &amp; Computer Use）、科学智能体、超长周期架构、生产级可观测性与成本治理（Tracing、Monitoring、Cost Management），以及横亘在可靠性、可扩展性与可解释性（Reliability、Scalability、Interpretability）面前的核心开放问题。</p>
+<h2 id="学习目标">学习目标</h2>
+<ul><li>理解多模态智能体（Multimodal Agents）、网页交互与真实计算机操作智能体（Web Agents &amp; Computer Use，如 WebShop、OSWorld）的感知—动作空间与评测挑战。</li><li>理解科学智能体（Science Agents）与超长周期运行架构（Long-running Architectures）的设计边界与状态一致性要求。</li><li>掌握生产级 Agent 系统的三大运维支柱：<strong>全链路追踪（Tracing）</strong>、<strong>持续监控告警（Monitoring）</strong> 与 <strong>多维成本治理（Cost Management）</strong>。</li><li>深入思考并能够将 Agent 领域的三大开放挑战——<strong>长程可靠性（Reliability）</strong>、<strong>并发可扩展性（Scalability）</strong> 与 <strong>行为可解释性（Interpretability）</strong> 转化为具体的研究与工程实验。</li></ul>
+<h2 id="知识讲解">知识讲解</h2>
+<h3 id="1-能力与环境的扩展">1. 能力与环境的扩展</h3>
+<h4 id="multimodal-agents">Multimodal agents</h4>
+<p>在前几讲中，Agent 与环境交互的主要媒介是结构化文本（如 JSON 工具返回、文件内容或命令行输出）。然而，人类数字世界中还有海量软件与信息从未暴露过干净的命令行或 API 接口——比如复杂的图形设计软件、带图表的 PDF 财报、电子表格界面、视频流以及物理世界的摄像头画面。</p>
+<p><strong>多模态智能体（Multimodal Agents）</strong> 将视觉、音频等模态纳入工作记忆。在工程诊断中，多模态引入了一个全新的故障维度——<strong>感知错误与推理错误的耦合（Perception-Reasoning Entanglement）</strong>：</p>
+<ul><li>当一个多模态 Agent 点错了按钮或算错了图表数据，究竟是因为底层的视觉编码器<strong>“没看清/看错了坐标与文字（Visual Grounding Error）”</strong>，还是看对了但高层规划<strong>“理解错了业务逻辑（Reasoning Error）”</strong>？</li><li>因此，在设计多模态系统与评测时，必须将“视觉定位/OCR 提取准确率”与“下游决策准确率”拆解开来分别观测。</li></ul>
+<h4 id="web-agents-and-computer-use">Web agents and computer use</h4>
+<p>多模态与动作空间结合的最重要战场，是 <strong>网页智能体（Web Agents，如 WebShop, Yao et al., 2022）</strong> 与 <strong>通用计算机操作智能体（Computer Use Agents，如 OSWorld, Xie et al., 2024）</strong>。</p>
+<p>在这类环境中，Agent 的观测（Observation）是浏览器的 DOM 树、可访问性树（Accessibility Tree）或高分辨率桌面屏幕截图；而它的动作空间（Action Space）则是底层的鼠标点击 <code>click(x, y)</code>、拖拽、键盘输入 <code>type(text)</code> 与快捷键组合。这带来了三项严峻挑战：</p>
+<ol><li><strong>动态异步与不可靠界面</strong>：真实网页和桌面应用充满了异步加载动画、悬浮菜单、广告弹窗与隐藏状态，点击之后页面未必立即就绪；</li><li><strong>混合表征取舍</strong>：纯 DOM 树往往包含数万行充斥着混淆类名的 HTML 噪音，而纯屏幕截图又难以精确定位微小图标的像素坐标——结合精简可访问性树、标记框叠加（Set-of-Marks）与视觉截图的混合感知是目前的主流探索方向；</li><li><strong>基于真实系统状态的评测（Execution-based Outcome Evaluation）</strong>：正如 <strong>OSWorld</strong> 在 Ubuntu、Windows 和 macOS 真实虚拟机环境中所展示的那样，判断一个跨应用桌面任务（例如“把邮件附件里的音频去噪后插入演示文稿第 3 页”）是否完成，绝不能靠看最后一张屏幕截图长什么样，而必须在虚拟机内部运行后置检查脚本，直接核验生成的文件内容、应用配置数据库与系统状态。</li></ol>
+<h4 id="science-agents">Science agents</h4>
+<p>另一个令人振奋的前沿方向是 <strong>科学发现智能体（Science Agents）</strong>——将 Agent 应用于文献调研、提出科学假设、编写实验代码、调度实验室自动化设备或分子动力学模拟，并分析实验结果修正假设。</p>
+<p>在构建和评估 Science Agents 时，最核心的科学纪律是<strong>严格区分“生成了一段听起来像科研论文的假说文本”与“通过严谨的对照实验与统计检验真正证实了新发现”</strong>。Agent 极易在开放探索中犯下科研大忌：比如只挑符合自己预设假说的数据点画图（Cherry-picking）、在测试集上反复调参导致隐性过拟合、或者把代码 Bug 产生的异常数值当成重大科学突破。因此，可靠的科学 Agent 必须内置强制的基线对照、消融验证与独立复现沙箱。</p>
+<h4 id="long-running-architectures">Long-running architectures</h4>
+<p>当任务跨度从几分钟的会话延伸到持续数天甚至数周的 <strong>超长周期架构（Long-running Agent Architectures）</strong> 时，系统设计的核心从“单次提示词技巧”全面转向分布式状态工程：</p>
+<ul><li><strong>状态检查点与增量契约（Checkpointing &amp; Incremental Contracts）</strong>：必须借助像 Temporal 这样的持久化编排引擎，或像第 17 讲讨论的基于文件系统任务账本（<code>feature_list.json</code> + Git commits）的交接协议，使任何时刻的进程重启或上下文窗口刷新都能从最近一个已验证的干净检查点恢复；</li><li><strong>防范“状态腐化持久化”</strong>：持久化机制是一把双刃剑——它能保住正确进度，也能把早期一步隐蔽的错误假设永久固化下来。因此，每次将阶段性状态写入长期检查点之前，都应当设置一道确定性的验证门禁（Verification Gate）。</li></ul>
+<h3 id="2-生产与开放问题">2. 生产与开放问题</h3>
+<p>当一个 Agent 从能跑通基准测试的原型变成每天服务成千上万用户的生产系统时，工程师必须构建起支撑线上平稳运行的运维铁三角：<strong>追踪（Tracing）</strong>、<strong>监控（Monitoring）</strong>与<strong>成本治理（Cost Management）</strong>。</p>
+<h4 id="tracing">Tracing</h4>
+<p><strong>全链路追踪（Tracing）</strong>：在线上发生单点故障时，我们需要回答“昨天下午 3 点 12 分那位用户的请求到底死在了哪一步？”。生产级 Tracing 需要以分布式调用链（Trace ID <span class="math-inline">&rarr;</span> Spans）的形式，关联记录一次任务中跨多个模型、子 Agent、MCP 工具服务与数据库查询的完整输入输出、耗时分布、重试原因与版本号，同时在写入日志前自动脱敏个人隐私与密钥字段。</p>
+<h4 id="monitoring">Monitoring</h4>
+<p><strong>持续监控告警（Monitoring）</strong>：Tracing 用于微观单点排错，而 Monitoring 则用于宏观把握整个系统的健康脉搏。除了传统的系统指标（QPS、延迟分位数 P50/P99、HTTP 5xx 错误率），Agent 生产监控还必须追踪专门的<strong>智能体健康度指标</strong>：</p>
+<ul><li><strong>异常终止分布</strong>：超出最大轮数（<code>max_turns</code>）、触发连续格式错误（<code>malformed</code>）或触发拒绝规则（<code>deny_rules</code>）的请求占比是否突然飙升；</li><li><strong>工具循环异味</strong>：单个会话平均调用工具的次数、重复调用同一工具的频率是否发生漂移；</li><li><strong>在线抽样评估（Online Shadow Evals）</strong>：异步抽取一定比例的线上真实轨迹运行自动化无参考评分器（Reference-free Judges），第一时间感知上游基础模型更新或外部 API 变动引发的质量退化。</li></ul>
+<h4 id="cost-management">Cost management</h4>
+<p><strong>多维成本治理（Cost Management）</strong>：在单轮问答应用中，单次请求的成本基本是固定的；而在自主 Agent 中，<strong>成本具有高度的长尾不可预测性</strong>——一次正常请求可能只花 $0.01$ 美元，而一次陷入死循环或反复读取超大文件的异常请求可能瞬间烧掉几十美元！</p>
+<p>生产级成本治理需要在四个层面同时设防：</p>
+<ol><li><strong>单会话与单用户硬预算熔断（Hard Budget Caps）</strong>：如同 HW1 中实现的累计 Token 与美元账本检查，一旦单次运行逼近上限立即安全熔断；</li><li><strong>最大化前缀缓存命中率（Prompt Cache Optimization）</strong>：固定系统提示与工具定义顺序，使用 Observation Masking 避免每轮重排前缀，将高频长上下文的 Prefill 成本降低一个数量级；</li><li><strong>模型分级路由（Model Routing &amp; Cascading）</strong>：主控复杂规划使用高阶大模型，而高频的上下文摘要压缩（<code>aux_lm</code>）、简单分类与格式提取则分流给高性价比的轻量级模型或经在线蒸馏微调的小模型；</li><li><strong>绘制质量—成本帕累托前沿</strong>：任何架构改进都必须同时汇报准确率变化与单任务平均美元成本变化。</li></ol>
+<h4 id="reliability">Reliability</h4>
+<p>最后，放眼整个 AI Agent 领域的未来，有三座横亘在研究者与工程师面前的核心开放大山。第一座大山是 <strong>长程可靠性（Long-Horizon Reliability）</strong>：</p>
+<ul><li>为什么当前最先进的模型能够在单步推理题上超越人类博士，却依然会在连续 50 步的平凡办公操作中以不低概率犯下低级失误？</li><li>如何打破多步复合误差的指数衰减规律（<span class="math-inline">p<sup>k</sup></span>）？这不仅需要更强的底层模型，更需要探索<strong>在每一步动作边界具备形式化可验证性（Formal Verifiability）、可逆回滚事务（Transactional Rollbacks）与不确定性自知（Uncertainty Calibration）</strong>的新型系统架构。</li></ul>
+<h4 id="scalability">Scalability</h4>
+<p>第二座大山是 <strong>系统可扩展性（Scalability）</strong>：</p>
+<ul><li>当我们将单个 Agent 扩展为成百上千个并发运行的 Agent 集群时，现有的工具生态与外部环境并非为高并发智能体设计的——数据库锁竞争、API 速率限制（Rate Limits）、沙箱容器启动开销，以及多 Agent 之间的“协调诅咒（Curse of Coordination）”都会迅速成为系统吞吐量的硬瓶颈；</li><li>如何设计支持高并发乐观执行、自动冲突检测与亚线性通信开销的多智能体基础设施，是系统工程界亟待突破的课题。</li></ul>
+<h4 id="interpretability">Interpretability</h4>
+<p>第三座大山是 <strong>行为可解释性与因果归因（Interpretability &amp; Causal Attribution）</strong>：</p>
+<ul><li>当一个经历了 30 步工具调用、2 次上下文压缩和 3 次跨会话记忆检索的 Agent 做出了一个极其反常的错误决策时，请注意：<strong>模型在 <code>Thought</code> 里写出的自然语言自我解释，并不一定等于导致它生成该动作的真实因果机制（Unfaithful Chain-of-Thought）</strong>！</li><li>如何通过反事实重放（Counterfactual Replay——例如借助树形事件日志回到第 12 步，只替换其中一条检索结果或一条记忆，观察后续行为是否改变）来精确归因究竟是上下文中的哪一段证据触发了最终的失误，将是让人类敢于把关键基础设施放手交给 AI Agent 的必由之路。</li></ul>
+<hr>
+<p>回顾整门 CS329Z 课程，从第 01 讲画出的那张只有五个方框的 Agent 解剖图，到你亲手从零写出的每一步检索器、工具协议与运行底座，再到框架编排、记忆、多 Agent、优化、评测与安全——希望你带走的最核心收获不是某一个随时可能过时的 API 名称，而是这套<strong>以系统（System）、数据（Data）与评测（Evals）为支点，用严谨的实验证据拆解问题、权衡设计并掌控复杂性的工程思维</strong>。</p>
+<h2 id="原课程阅读清单与导读">原课程阅读清单与导读</h2>
+<ul><li><strong>拓展阅读</strong>：<a href="https://arxiv.org/abs/2404.07972" target="_blank" rel="noopener noreferrer">Xie et al. &quot;OSWorld: Benchmarking Multimodal Agents in Real Computer Environments.&quot; NeurIPS D&amp;B (2024).</a> 导读：重点阅读如何构建跨操作系统（Ubuntu/Windows/macOS）的真实虚拟机评测环境，观察多模态 Agent 在处理图形界面定位、跨应用工作流与长程操作时的主要失败分布。</li><li><strong>拓展阅读</strong>：<a href="https://arxiv.org/abs/2207.01206" target="_blank" rel="noopener noreferrer">Yao et al. &quot;WebShop: Towards Scalable Real-World Web Interaction with Grounded Language Agents.&quot; NeurIPS (2022).</a> 导读：理解网页交互环境中从自然语言指令理解、搜索查询改写到商品属性比对的完整决策闭环与强化学习/模仿学习基线。</li></ul>
+<h2 id="动手练习">动手练习</h2>
+<ol><li><strong>计算机操作任务（Computer Use）四元组与故障树设计</strong>：从 OSWorld 或日常桌面办公中挑选一个跨应用任务（例如：“打开本地 CSV 销售报表，找出本季度销售额下滑最严重的三个产品类别，生成一张柱状图保存为 PNG，并将其插入到周报 Markdown 文档的指定章节中”）。写出该任务的四元组定义，并画出一棵涵盖感知层（看错坐标/列名）、执行层（路径/权限错误）与逻辑层（排序/聚合方向反了）的故障诊断树。</li><li><strong>反事实重放（Counterfactual Replay）归因实验</strong>：在你的课程项目或 HW1 Agent 的一条多步失败轨迹中，利用保存的追加式事件日志定位到最早出现偏差的那一步，手动修改该步的单个上下文变量（例如删掉一条干扰文档片段、或补全一句工具报错提示）并从该节点重放后续调用，用实测证据验证该变量是否为导致最终失败的真实因果根源。</li></ol></article>
+        <nav id="chapter-footer" aria-label="章节翻页"><a href="./lecture18.html"><small>← 上一节</small>主动式 Agent</a><a href="./lab20.html"><small>下一节 →</small>HW1：从零搭建 Agent Harness</a></nav>
+      </main>
+
+      <aside class="toc" aria-label="本节大纲">
+        <div class="toc-card">
+          <div class="toc-label">本讲目录</div>
+          <nav id="toc-links"><a class="depth-2" href="./lecture19.html#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87" data-anchor="学习目标">学习目标</a><a class="depth-2" href="./lecture19.html#%E7%9F%A5%E8%AF%86%E8%AE%B2%E8%A7%A3" data-anchor="知识讲解">知识讲解</a><a class="depth-3" href="./lecture19.html#1-%E8%83%BD%E5%8A%9B%E4%B8%8E%E7%8E%AF%E5%A2%83%E7%9A%84%E6%89%A9%E5%B1%95" data-anchor="1-能力与环境的扩展">1. 能力与环境的扩展</a><a class="depth-3" href="./lecture19.html#2-%E7%94%9F%E4%BA%A7%E4%B8%8E%E5%BC%80%E6%94%BE%E9%97%AE%E9%A2%98" data-anchor="2-生产与开放问题">2. 生产与开放问题</a><a class="depth-2" href="./lecture19.html#%E5%8E%9F%E8%AF%BE%E7%A8%8B%E9%98%85%E8%AF%BB%E6%B8%85%E5%8D%95%E4%B8%8E%E5%AF%BC%E8%AF%BB" data-anchor="原课程阅读清单与导读">原课程阅读清单与导读</a><a class="depth-2" href="./lecture19.html#%E5%8A%A8%E6%89%8B%E7%BB%83%E4%B9%A0" data-anchor="动手练习">动手练习</a></nav>
+          <a class="source-link" id="source-link" href="https://github.com/wanghao-SunSky/cs329z-chinese/blob/main/19-%E5%89%8D%E6%B2%BF%E4%B8%8E%E5%BC%80%E6%94%BE%E9%97%AE%E9%A2%98.md">查看 Markdown 源文件 ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="page-footer">
+      <span>CS329Z · AI Agent 系统工程（Engineering AI Agents）</span>
+      <a href="https://github.com/wanghao-SunSky/cs329z-chinese">GitHub · Markdown 与 HTML</a>
+    </footer>
+  </div>
+
+  <dialog id="search-dialog">
+    <form method="dialog" class="search-head">
+      <label for="search-input">搜索</label>
+      <input id="search-input" type="search" placeholder="输入概念、算法、论文或练习关键词（如 ReAct, BM25, GRPO, MCP）…" autocomplete="off">
+      <button type="submit" aria-label="关闭搜索">ESC</button>
+    </form>
+    <p class="search-hint" id="search-hint">支持跨全部 19 讲课程、4 项实践与代码架构导读实时检索</p>
+    <div id="search-results" aria-live="polite"></div>
+  </dialog>
+
+  <noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/reader.js"></script>
+</body>
+</html>

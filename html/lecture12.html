@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>数据选择与质量 | CS329Z 中文教程</title>
+<meta name="description" content="在构建和优化 Agent 系统时，一个常见的误区是盲目崇拜“数据规模”：认为只要往训练集里塞进十万条自动抓取的轨迹，或者往评测集里堆砌几千道自动生成的题目，系统就能自动变强。">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture12.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CS329Z 中文教程">
+  <meta property="og:title" content="数据选择与质量 | CS329Z 中文教程">
+  <meta property="og:description" content="在构建和优化 Agent 系统时，一个常见的误区是盲目崇拜“数据规模”：认为只要往训练集里塞进十万条自动抓取的轨迹，或者往评测集里堆砌几千道自动生成的题目，系统就能自动变强。">
+  <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture12.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="数据选择与质量 | CS329Z 中文教程">
+  <meta name="twitter:description" content="在构建和优化 Agent 系统时，一个常见的误区是盲目崇拜“数据规模”：认为只要往训练集里塞进十万条自动抓取的轨迹，或者往评测集里堆砌几千道自动生成的题目，系统就能自动变强。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"数据选择与质量 | CS329Z 中文教程","description":"在构建和优化 Agent 系统时，一个常见的误区是盲目崇拜“数据规模”：认为只要往训练集里塞进十万条自动抓取的轨迹，或者往评测集里堆砌几千道自动生成的题目，系统就能自动变强。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture12.html","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture12.html","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","大语言模型","数据选择与质量"]}</script>
+  <link rel="stylesheet" href="./assets/reader.css">
+</head>
+<body data-static="true" data-initial-doc="lecture12" data-doc="lecture12">
+  <a class="skip" href="#main">跳到正文</a>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="./index.html">
+        <span class="brand-code">CS329Z<span class="brand-dot">.</span></span>
+        <span class="brand-sub">ENGINEERING AI AGENTS</span>
+      </a>
+      <p class="edition">AI Agent 系统工程教程 <span>中文学习资料</span></p>
+      <button type="button" class="search-trigger" id="open-search">
+        <span class="search-trigger-text">搜索课程、概念与算法…</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </div>
+    <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item active" data-doc="lecture12" href="./lecture12.html" aria-current="page"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item" data-doc="lab26" href="./lab26.html"><span>编写说明与待修订问题</span></a></div></nav>
+    <div class="sidebar-foot">
+      <span>CS329Z · Engineering AI Agents</span>
+      <span>System · Data · Evals</span>
+    </div>
+  </aside>
+
+  <div class="shade" id="shade"></div>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" id="menu" class="mobile-only" aria-label="打开课程目录" aria-expanded="false" aria-controls="sidebar">目录</button>
+        <div id="breadcrumb" class="breadcrumb">数据选择与质量</div>
+      </div>
+      <div class="reading-tools">
+        <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
+        <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
+        <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
+        <button type="button" id="print" aria-label="打印或导出 PDF">打印 / PDF</button>
+      </div>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
+
+    <div class="reading-layout">
+      <main id="main" tabindex="-1">
+        <div class="chapter-meta" id="chapter-meta"></div>
+
+        <section class="home-intro" id="home-intro" hidden>
+          <p class="eyebrow">CS329Z 中文教程 · ENGINEERING AI AGENTS</p>
+          <h1>从理解语言模型，<br>到构建可靠的 <em>AI Agent</em> 系统。</h1>
+          <p class="hero-lead">面向 Python 开发者的中文自学教程，包含 19 讲、4 项实践和配套代码导读。从 RAG、工具调用开始，逐步学习记忆、协作、评测与安全。</p>
+          <div class="hero-bottom">
+            <div class="hero-stats">
+              <span><strong>19</strong> 讲核心课程</span>
+              <span><strong>4</strong> 项工程实践</span>
+              <span><strong>2</strong> 套配套源码解析</span>
+            </div>
+            <div class="hero-actions">
+              <a class="start-link" href="./lecture01.html">开始第 01 讲 <span>→</span></a>
+              <a class="secondary-link" href="./lab20.html">进入 HW1 实战</a>
+            </div>
+          </div>
+        </section>
+
+        <article id="article"><h1 id="第-12-讲数据选择与质量">第 12 讲｜数据选择与质量</h1>
+<p>在构建和优化 Agent 系统时，一个常见的误区是盲目崇拜“数据规模”：认为只要往训练集里塞进十万条自动抓取的轨迹，或者往评测集里堆砌几千道自动生成的题目，系统就能自动变强。</p>
+<p>事实恰恰相反。在优化阶段，一千条充斥着冗余试探、格式瑕疵或偶然蒙对的低质量轨迹，不仅会拖慢训练与提示搜索速度，还会教会模型错误的行为习惯（正如 <strong>LIMA: Less Is More for Alignment</strong> 所揭示的：少量极高质量、覆盖广泛的精选示范，效果远胜海量粗糙数据）；而在评测阶段，如果测试集里 90% 都是毫无区分度的简单重复题，或者评分器本身与人类判断背道而驰，那么再庞大的基准也只是虚假繁荣。本讲聚焦于 <strong>数据选择与质量工程（Data Selection &amp; Quality）</strong>，探讨如何筛选出信息量最大（Maximally Informative）的高价值样本、如何构建小而精的靶向诊断基准（Tiny-but-targeted Benchmarks）、如何制定严密的标注规范并校准“验证器的验证器（Who Validates the Validators）”，以及如何像 <strong>SWE-smith</strong> 一样从真实软件环境中规模化合成并严格筛选高质量 Agent 轨迹数据集。</p>
+<h2 id="学习目标">学习目标</h2>
+<ul><li>理解什么是对系统优化与评测具有最大信息量（Maximally Informative）的数据，掌握基于可验证性、多样性、难度梯度与失败模式的筛选策略。</li><li>掌握构建“小而精”靶向基准（Tiny-but-targeted Benchmarks）的方法与适用边界，实现快速开发迭代与全量验收的配合。</li><li>掌握高质量数据标注规范（Annotation Practices）与质量评估体系，学会使用一致性指标与分歧对齐流程校准人类标注者与自动评分器。</li><li>深入理解如何从原始 Agent 运行轨迹（Traces）与代码仓库（如 SWE-smith 管线）构建大规模、经受过执行验证的训练与评测数据集。</li></ul>
+<h2 id="知识讲解">知识讲解</h2>
+<h3 id="1-信息量与筛选">1. 信息量与筛选</h3>
+<h4 id="maximally-informative-data">Maximally informative data</h4>
+<p>什么样的数据对改进或评估一个 Agent 系统“最有信息量（Maximally Informative）”？我们可以从<strong>区分度（Discriminative Power）</strong>与<strong>边界覆盖（Boundary Coverage）</strong>两个维度来界定：</p>
+<ul><li>如果一道题过于简单，无论是零样本小模型、未优化的工作流还是精调后的 Agent 全都能拿 <span class="math-inline">100%</span> 满分，这道题提供的区分信息量为零（它只能作为防退化的基础冒烟测试）；</li><li>如果一道题由于指令缺失关键信息或环境依赖损坏，导致包括人类专家在内的所有系统全部得 $0$ 分，它同样不提供有效的能力区分信息；</li><li><strong>真正高信息量的样本，位于系统当前能力边界的“最近发展区（Zone of Proximal Development）”</strong>：比如在多次采样（Repeated Sampling）中成功率在 <span class="math-inline">20% \sim 80%</span> 之间波动的任务、能够精准暴露某类典型故障模式（如新旧政策冲突、多跳中间实体消歧、工具报错后的回退恢复）的样本，或者两个候选架构方案给出截然不同结果的争议样本。</li></ul>
+<h4 id="filtering-and-selection">Filtering and selection</h4>
+<p>面对收集到的海量原始数据或合成候选集，工程上需要建立一套多级漏斗式的<strong>过滤与精选流水线（Filtering &amp; Selection Pipeline）</strong>：</p>
+<ol><li><strong>格式与完整性过滤（Syntactic &amp; Structural Filtering）</strong>：剔除截断输出、JSON 语法损坏、缺失关键环境元数据或出现死循环超时的残缺轨迹。</li><li><strong>执行结果与可验证性过滤（Execution &amp; Verifiability Filtering）</strong>：只保留那些在确定性环境或单元测试验证器下确实达成目标的轨迹作为正样本；同时进一步检查其<strong>过程合理性</strong>——剔除那些虽然最终答案蒙对了、但中间根本没有读取关键证据文档（Citation Support 缺失）或依赖了未授权捷径的“伪成功轨迹”。</li><li><strong>语义与轨迹去重（Semantic &amp; Trajectory Deduplication）</strong>：不仅对用户输入的 Prompt 做 Embedding 聚类或 MinHash 去重，还要对<strong>调用的工具组合序列（Tool Call Signatures）</strong>进行分桶均衡，防止数据集中 80% 都是单一工具的简单调用，而复杂的多工具协同样本寥寥无几。</li><li><strong>难度分层与课程采样（Difficulty Stratification）</strong>：按所需推理跳数、涉及工具数量或基准模型的通过率将样本划分为简单、中等、困难三档，按比例均衡抽样。</li></ol>
+<h4 id="tiny-but-targeted-benchmarks">Tiny-but-targeted benchmarks</h4>
+<p>在日常研发迭代中，如果每次修改一行提示词或调整一个上下文压缩参数，都要跑一遍耗时 4 小时、花费 200 美元的 2,000 道全量基准题，工程迭代速度就会被彻底拖垮。</p>
+<p>因此，高效的 Agent 团队都会维护两套互补的评测集，其中用于高频迭代的正是 <strong>小而精的靶向基准（Tiny-but-targeted Benchmarks / Micro-benchmarks）</strong>：</p>
+<ul><li><strong>靶向切片（Targeted Slices）</strong>：针对特定薄弱环节（如“相对日期换算”、“超大终端输出截断”、“跨会话记忆覆写”），每个切片精选 10–30 道极具代表性的高信息量样本。修改哪个模块，就在几分钟内快速跑对应切片（如同 HW1 中使用 <code>--only memory</code> 或 <code>--slice 3</code> 进行开发调试）。</li><li><strong>统计代表性压缩（如 tinyBenchmarks, Polo et al., 2024）</strong>：利用项目反应理论（Item Response Theory, IRT）分析历史大模型在全量基准上的得分矩阵，挑选出最具代表性的极少数核心题目（如从上千题中选出 50–100 题）并赋予加权系数，从而以低于 <span class="math-inline">5%</span> 的计算成本高精度逼近全量基准排序。</li><li><strong>使用边界</strong>：微型基准是开发阶段的“快速听诊器”，但绝不能为了刷高微型基准分数而针对那十几道题写硬编码规则；最终合入主干前，依然要在未参与日常调优的完整留出集（Hold-out Set）上做全量验收。</li></ul>
+<h3 id="2-标注与质量">2. 标注与质量</h3>
+<h4 id="annotation-practices">Annotation practices</h4>
+<p>无论是构建金标准测试集，还是为训练奖励模型/评判器准备人类偏好数据，<strong>数据标注的上限取决于标注规范（Annotation Guidelines &amp; Rubrics）的清晰度</strong>。在组织 Agent 数据标注时，应当遵循四步工程实践：</p>
+<ol><li><strong>将笼统印象拆解为原子判据（Atomic Criteria）</strong>：不要让标注者笼统地给一条长轨迹打 1–5 分，而是拆解为具体的二元核对项（例如：“回答是否包含了正确的报销上限金额？”、“是否引用了 2026 版现行文档而非 2024 版旧文档？”、“在参数缺失时是否主动询问了用户？”）。</li><li><strong>先做小规模试标与分歧复盘（Pilot Annotation &amp; Adjudication）</strong>：先让多位标注者（包括系统构建者自己）独立标注同一批 20–30 条样本，计算标注者间一致性（Inter-Annotator Agreement, IAA，如 Cohen's <span class="math-inline">&kappa;</span> 或 Krippendorff's <span class="math-inline">&alpha;</span>）。</li><li><strong>分歧往往意味着规格缺陷</strong>：当两位认真的标注者对同一条轨迹给出相反判定时，通常不是因为标注者粗心，而是因为<strong>题目要求或评分准则存在未定义的灰色地带</strong>（比如“邮件里只写了下周三，按发出时间算还是按今天算？”）。必须把消除分歧的边界判例补充写回标注指南中。</li><li><strong>保留“无法判定 / 题目有误”出口</strong>：允许标注者标记某道题目本身环境损坏或存在歧义，及时将坏题踢出数据集。</li></ol>
+<h4 id="quality-assessment">Quality assessment</h4>
+<p>当我们用大语言模型辅助数据标注或充当自动化裁判（LLM-as-Judge）时，一个核心问题是：<strong>谁来检验验证器本身是否靠谱（&quot;Who Validates the Validators?&quot;, Shankar et al., 2024）？</strong></p>
+<p>评估数据集与自动评分器的质量需要建立双向对齐机制：</p>
+<ul><li><strong>真阳性率（TPR / Sensitivity）与真阴性率（TNR / Specificity）</strong>：构建一批人工确认无误的黄金正负样本集，分别测量自动评分器在多大比例上将真实好样本判为 <code>PASS</code>（TPR）、将真实坏样本判为 <code>FAIL</code>（TNR），而不是只看一个容易被类别不平衡掩盖的总体准确率；</li><li><strong>人机动态协同对齐（Human-LLM Alignment Loop）</strong>：正如 Shankar et al.（2024）在 EvalGen 系统研究中所揭示的，人类的评判标准并非在写提示词那一刻就完全定型的，而是在看到模型各种千奇百怪的实际输出后才逐步明确起来的（Criteria Drift）。因此，必须通过交互式界面让工程师审查自动评分器的判例、发现漏判模式并迭代修正评分标准。</li></ul>
+<h4 id="从-agent-traces-建数据集">从 Agent traces 建数据集</h4>
+<p>如何将上述原则结合起来，构建能够支撑现代编程与工具 Agent 训练的工业级数据集？斯坦福团队提出的 <strong>SWE-smith（Yang et al., 2025，《Scaling Data for Software Engineering Agents》）</strong> 展示了如何突破真实人工标注瓶颈，从开源代码仓库规模化构建经过严格执行验证的 Agent 任务与轨迹数据集：</p>
+<ol><li><strong>构建统一可执行的仓库环境（Environment Construction）</strong>：收集真实的 Python 开源代码仓库，自动配置可复现的 Docker 容器環境并确保其原有的单元测试套件能够 <span class="math-inline">100%</span> 跑通；</li><li><strong>反向合成真实感 Bug（Task / Bug Synthesis）</strong>：与其苦苦搜寻历史上恰好附带完整测试的少量真实 GitHub Issues，SWE-smith 反其道而行之——在已经跑通测试的健康代码库上，利用大模型对函数或类实施受控修改（或回滚历史提交），只要该修改<strong>导致现有测试套件中至少一个单元测试由绿变红（Fail）</strong>，就成功合成出了一个百分百可验证的软件修复任务！随后再由模型根据损坏的代码与报错堆栈生成自然语言 Issue 描述；</li><li><strong>大规模轨迹采样与执行过滤（Trajectory Rollouts &amp; Verification）</strong>：让强模型 Agent 在这些合成出的数万个 Bug 任务容器中进行多步探索与修改，凡是最终生成的补丁（Patch）能够让全部单元测试重新由红变绿（Pass）的运行轨迹，即被收录为高质量的成功训练轨迹；</li><li><strong>仓库级严格隔离（Repository-level Split）</strong>：在划分训练轨迹与 SWE-bench 评测集时，严格保证训练集中的代码仓库与测试集仓库零重叠，杜绝数据泄漏。</li></ol>
+<p>通过这套“真实环境 + 反向造题 + 单元测试硬核过滤”的管线，SWE-smith 生成了数万条高质量软件工程轨迹，使开源小模型在微调后获得了大幅的真实仓库修复能力跃升。</p>
+<h2 id="原课程阅读清单与导读">原课程阅读清单与导读</h2>
+<ul><li><a href="https://arxiv.org/abs/2504.21798" target="_blank" rel="noopener noreferrer">Yang et al. &quot;SWE-smith: Scaling Data for Software Engineering Agents.&quot; NeurIPS D&amp;B (2025).</a> 导读：重点阅读如何通过反向注入破坏单元测试的修改来合成无限量的可验证编程任务，以及如何过滤 Agent 采样轨迹用于模型微调。</li><li><a href="https://arxiv.org/abs/2404.12272" target="_blank" rel="noopener noreferrer">Shankar et al. &quot;Who Validates the Validators? Aligning LLM-Assisted Evaluation with Human Preferences.&quot; UIST (2024).</a> 导读：理解“标准漂移（Criteria Drift）”概念——为什么用户在看到真实模型输出前很难一次性写全评价标准，以及如何对齐代码/LLM 断言与人类判断。</li><li><strong>拓展阅读</strong>：<a href="https://arxiv.org/abs/2305.11206" target="_blank" rel="noopener noreferrer">Zhou et al. &quot;LIMA: Less Is More for Alignment.&quot; NeurIPS (2023).</a> 导读：思考在微调与示范选择中，为什么 1,000 条精心挑选、风格一致且推理严密的样本能够击败数万条未经筛选的嘈杂数据。</li></ul>
+<h2 id="动手练习">动手练习</h2>
+<ol><li><strong>高信息量诊断切片构建</strong>：从 HW1 的邮件问答（<code>email_qa</code>）与文档检索（<code>search_docs</code>）任务出发，设计一个仅包含 6 道题的微型靶向诊断集（Micro-benchmark），分别精准测试：（a）单跳精确词匹配、（b）两跳跨邮件人员关联、（c）被新政策废止的旧政策干扰、（d）词面无重叠的同义改写查询、（e）文档中夹带提示注入指令、（f）问题本身所问信息在库中不存在。为每道题写明入选理由与期望的标准行为。</li><li><strong>标注一致性与评分器校准实验</strong>：针对上述 6 道题，编写一套包含 3 条原子判据的评分量表（Rubric），构造 10 份包含微妙缺陷的候选回答（例如数值算对但引用了旧文档 ID、或回答正确但多输出了一句无关推测）。分别用你编写的 LLM-as-Judge 提示词和人工盲评对这 10 份回答打分，计算真阳性率（TPR）与真阴性率（TNR），并针对分歧案例修改 Judge 提示词。</li></ol></article>
+        <nav id="chapter-footer" aria-label="章节翻页"><a href="./lecture11.html"><small>← 上一节</small>Agent 需要什么数据</a><a href="./lecture13.html"><small>下一节 →</small>评测基础与基准设计</a></nav>
+      </main>
+
+      <aside class="toc" aria-label="本节大纲">
+        <div class="toc-card">
+          <div class="toc-label">本讲目录</div>
+          <nav id="toc-links"><a class="depth-2" href="./lecture12.html#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87" data-anchor="学习目标">学习目标</a><a class="depth-2" href="./lecture12.html#%E7%9F%A5%E8%AF%86%E8%AE%B2%E8%A7%A3" data-anchor="知识讲解">知识讲解</a><a class="depth-3" href="./lecture12.html#1-%E4%BF%A1%E6%81%AF%E9%87%8F%E4%B8%8E%E7%AD%9B%E9%80%89" data-anchor="1-信息量与筛选">1. 信息量与筛选</a><a class="depth-3" href="./lecture12.html#2-%E6%A0%87%E6%B3%A8%E4%B8%8E%E8%B4%A8%E9%87%8F" data-anchor="2-标注与质量">2. 标注与质量</a><a class="depth-2" href="./lecture12.html#%E5%8E%9F%E8%AF%BE%E7%A8%8B%E9%98%85%E8%AF%BB%E6%B8%85%E5%8D%95%E4%B8%8E%E5%AF%BC%E8%AF%BB" data-anchor="原课程阅读清单与导读">原课程阅读清单与导读</a><a class="depth-2" href="./lecture12.html#%E5%8A%A8%E6%89%8B%E7%BB%83%E4%B9%A0" data-anchor="动手练习">动手练习</a></nav>
+          <a class="source-link" id="source-link" href="https://github.com/wanghao-SunSky/cs329z-chinese/blob/main/12-%E6%95%B0%E6%8D%AE%E9%80%89%E6%8B%A9%E4%B8%8E%E8%B4%A8%E9%87%8F.md">查看 Markdown 源文件 ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="page-footer">
+      <span>CS329Z · AI Agent 系统工程（Engineering AI Agents）</span>
+      <a href="https://github.com/wanghao-SunSky/cs329z-chinese">GitHub · Markdown 与 HTML</a>
+    </footer>
+  </div>
+
+  <dialog id="search-dialog">
+    <form method="dialog" class="search-head">
+      <label for="search-input">搜索</label>
+      <input id="search-input" type="search" placeholder="输入概念、算法、论文或练习关键词（如 ReAct, BM25, GRPO, MCP）…" autocomplete="off">
+      <button type="submit" aria-label="关闭搜索">ESC</button>
+    </form>
+    <p class="search-hint" id="search-hint">支持跨全部 19 讲课程、4 项实践与代码架构导读实时检索</p>
+    <div id="search-results" aria-live="polite"></div>
+  </dialog>
+
+  <noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>
+  <script src="./assets/course-data.js"></script>
+  <script src="./assets/reader.js"></script>
+</body>
+</html>
