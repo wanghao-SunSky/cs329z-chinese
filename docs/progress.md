@@ -31,3 +31,19 @@ flowchart TD
   A[发布内容整理 已完成] --> B[README与SEO 已完成]
   B --> C[验证与发布 正在做]
 ```
+
+## 2026-10-29 — 验证与发布完成
+
+已做：完整 Markdown、HTML 和简洁 README 已发布到公开仓库 https://github.com/wanghao-SunSky/cs329z-chinese ，默认分支为 main。About 包含课程中英文名称、内容介绍及在线入口；设置了 15 个与内容相符的 Topics。在线教程已更新至 https://cs329z-course-review-20261029.wanghao162263.chatgpt.site 。
+
+为什么：分别做好仓库和网页的检索入口，让找课程的人能发现仓库，也能直接阅读各讲。公开访问检查发现托管平台会去掉章节地址末尾的 .html，因此已让页面标准地址和网站地图采用最终网址，本地 HTML 仍可直接打开。
+
+问题与验证：GitHub 仓库搜索 cs329z、CS329Z 中文，以及描述中的精确短语 Engineering AI Agents 均返回本仓库；英文短语查询在第二页命中，不代表高排名。未登录的 GitHub API 确认仓库公开；浏览器确认 README、About、Topics 与在线阅读链接显示正确。27 个独立页面和 1,220 处本地链接与资源检查通过；线上首页、章节、robots.txt 与 sitemap.xml 返回成功，正文与发布源一致，章节标准地址与最终地址一致。托管平台会注入自身脚本；普通 Python 请求曾被平台拦截，正常浏览器与使用浏览器标识的公开请求通过，未验证搜索引擎实际抓取。Google、百度等收录及排名仍不可保证。原教程的五类质量问题继续在编写说明中列为待修订。
+
+下一步：本次发布工作已完成；后续内容修订可通过 Issues 逐项记录，修改 Markdown 后重新构建并验证 HTML。
+
+```mermaid
+flowchart TD
+  A[发布内容整理 已完成] --> B[README与SEO 已完成]
+  B --> C[验证与发布 已完成]
+```
