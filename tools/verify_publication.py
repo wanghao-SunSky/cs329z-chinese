@@ -69,7 +69,7 @@ for d in docs:
     title = re.search(r'<title>(.*?)</title>', html)[1]
     assert title not in titles, f'duplicate title: {name}'
     titles.add(title)
-    expected = ORIGIN + ('/' if name == 'index.html' else '/' + name)
+    expected = ORIGIN + ('/' if name == 'index.html' else '/' + name.removesuffix('.html'))
     assert page.canonical == expected
     canonicals.add(expected)
     assert page.meta.get('description')

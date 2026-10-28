@@ -26,7 +26,7 @@ for (const f of ['reader.css', 'reader.js']) fs.copyFileSync(path.join(root, 'to
 fs.writeFileSync(path.join(out, 'offline.html'), template.replace('</head>', `<meta name="robots" content="noindex,follow"><link rel="canonical" href="${origin}/"></head>`));
 
 for (const [i, d] of docs.entries()) {
-  const url = origin + (d.id === 'overview' ? '/' : '/' + filename(d.id));
+  const url = origin + (d.id === 'overview' ? '/' : '/' + d.id);
   const title = d.id === 'overview' ? 'Stanford CS329Z 中文教程 | Engineering AI Agents' : `${d.label} | CS329Z 中文教程`;
   const description = d.id === 'overview'
     ? '面向 Python 开发者的 AI Agent 中文自学教程：19 讲、4 项实践与代码导读，涵盖大语言模型、RAG、工具调用、记忆、多 Agent 协作、评测和安全。支持在线阅读与离线下载。'
@@ -75,7 +75,7 @@ for (const [i, d] of docs.entries()) {
   fs.writeFileSync(path.join(out, filename(d.id)), page);
 }
 
-const urls = docs.map(d => origin + (d.id === 'overview' ? '/' : '/' + filename(d.id)));
+const urls = docs.map(d => origin + (d.id === 'overview' ? '/' : '/' + d.id));
 fs.writeFileSync(path.join(out, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls.map(url => `  <url><loc>${url}</loc></url>`).join('\n') + '\n</urlset>\n');
 fs.writeFileSync(path.join(out, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`);
 console.log(JSON.stringify({ staticPages: docs.length, offline: 'html/offline.html', sitemap: urls.length }));
