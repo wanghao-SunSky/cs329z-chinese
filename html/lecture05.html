@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>框架与持久编排 | CS329Z 中文教程</title>
-<meta name="description" content="在早期深度学习时代，研究者需要用 NumPy 手动推导并编写每一层的反向传播梯度公式；直到 PyTorch 与 JAX 等框架出现，将自动微分、张量运算与硬件调度抽象为清晰的原语，才让构建复杂神经网络变得高效且不易出错。">
+<meta name="description" content="比较 DSPy、LangGraph 和 Temporal 的设计思路，理解声明式优化、状态流、持久执行与可观测性，学习选择 Agent 框架。">
   <meta name="robots" content="index,follow">
   
   <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture05">
@@ -12,12 +12,12 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CS329Z 中文教程">
   <meta property="og:title" content="框架与持久编排 | CS329Z 中文教程">
-  <meta property="og:description" content="在早期深度学习时代，研究者需要用 NumPy 手动推导并编写每一层的反向传播梯度公式；直到 PyTorch 与 JAX 等框架出现，将自动微分、张量运算与硬件调度抽象为清晰的原语，才让构建复杂神经网络变得高效且不易出错。">
+  <meta property="og:description" content="比较 DSPy、LangGraph 和 Temporal 的设计思路，理解声明式优化、状态流、持久执行与可观测性，学习选择 Agent 框架。">
   <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture05">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="框架与持久编排 | CS329Z 中文教程">
-  <meta name="twitter:description" content="在早期深度学习时代，研究者需要用 NumPy 手动推导并编写每一层的反向传播梯度公式；直到 PyTorch 与 JAX 等框架出现，将自动微分、张量运算与硬件调度抽象为清晰的原语，才让构建复杂神经网络变得高效且不易出错。">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"框架与持久编排 | CS329Z 中文教程","description":"在早期深度学习时代，研究者需要用 NumPy 手动推导并编写每一层的反向传播梯度公式；直到 PyTorch 与 JAX 等框架出现，将自动微分、张量运算与硬件调度抽象为清晰的原语，才让构建复杂神经网络变得高效且不易出错。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture05","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture05","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","框架与持久编排"]}</script>
+  <meta name="twitter:description" content="比较 DSPy、LangGraph 和 Temporal 的设计思路，理解声明式优化、状态流、持久执行与可观测性，学习选择 Agent 框架。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"框架与持久编排 | CS329Z 中文教程","description":"比较 DSPy、LangGraph 和 Temporal 的设计思路，理解声明式优化、状态流、持久执行与可观测性，学习选择 Agent 框架。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture05","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture05","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","框架与持久编排"]}</script>
   <link rel="stylesheet" href="./assets/reader.css">
 </head>
 <body data-static="true" data-initial-doc="lecture05" data-doc="lecture05">

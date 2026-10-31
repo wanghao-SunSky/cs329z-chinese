@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agent 需要什么数据 | CS329Z 中文教程</title>
-<meta name="description" content="在传统单轮自然语言处理任务中，“数据”往往意味着一张静态的二维表格：左边一列是输入文本 x，右边一列是标准答案标签 y。然而，当我们构建一个多步调用工具、读写外部状态、与用户多轮交互的 AI Agent 时，静态的 (x, y) 问答对就远远不够了。">
+<meta name="description" content="区分 Agent 运行轨迹、行为示范与评价反馈，理解优化数据与评测数据的边界，学习数据飞轮、合成数据和人机交互信号。">
   <meta name="robots" content="index,follow">
   
   <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture11">
@@ -12,12 +12,12 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CS329Z 中文教程">
   <meta property="og:title" content="Agent 需要什么数据 | CS329Z 中文教程">
-  <meta property="og:description" content="在传统单轮自然语言处理任务中，“数据”往往意味着一张静态的二维表格：左边一列是输入文本 x，右边一列是标准答案标签 y。然而，当我们构建一个多步调用工具、读写外部状态、与用户多轮交互的 AI Agent 时，静态的 (x, y) 问答对就远远不够了。">
+  <meta property="og:description" content="区分 Agent 运行轨迹、行为示范与评价反馈，理解优化数据与评测数据的边界，学习数据飞轮、合成数据和人机交互信号。">
   <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture11">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Agent 需要什么数据 | CS329Z 中文教程">
-  <meta name="twitter:description" content="在传统单轮自然语言处理任务中，“数据”往往意味着一张静态的二维表格：左边一列是输入文本 x，右边一列是标准答案标签 y。然而，当我们构建一个多步调用工具、读写外部状态、与用户多轮交互的 AI Agent 时，静态的 (x, y) 问答对就远远不够了。">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Agent 需要什么数据 | CS329Z 中文教程","description":"在传统单轮自然语言处理任务中，“数据”往往意味着一张静态的二维表格：左边一列是输入文本 x，右边一列是标准答案标签 y。然而，当我们构建一个多步调用工具、读写外部状态、与用户多轮交互的 AI Agent 时，静态的 (x, y) 问答对就远远不够了。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture11","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture11","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","Agent 需要什么数据"]}</script>
+  <meta name="twitter:description" content="区分 Agent 运行轨迹、行为示范与评价反馈，理解优化数据与评测数据的边界，学习数据飞轮、合成数据和人机交互信号。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Agent 需要什么数据 | CS329Z 中文教程","description":"区分 Agent 运行轨迹、行为示范与评价反馈，理解优化数据与评测数据的边界，学习数据飞轮、合成数据和人机交互信号。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture11","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture11","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","Agent 需要什么数据"]}</script>
   <link rel="stylesheet" href="./assets/reader.css">
 </head>
 <body data-static="true" data-initial-doc="lecture11" data-doc="lecture11">

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agent 设计模式与上下文管理 | CS329Z 中文教程</title>
-<meta name="description" content="软件工程大师 Martin Fowler 在《企业应用架构模式》中曾说：“设计模式都是半成品——这意味着你永远必须根据自己的具体环境亲手完成并调适它们。”在构建 AI Agent 系统时更是如此。">
+<meta name="description" content="学习 Agent 工作流、推理与行动、计划与执行分离等设计模式，理解长任务的上下文管理，并通过 Pi 案例分析工程取舍。">
   <meta name="robots" content="index,follow">
   
   <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture06">
@@ -12,12 +12,12 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CS329Z 中文教程">
   <meta property="og:title" content="Agent 设计模式与上下文管理 | CS329Z 中文教程">
-  <meta property="og:description" content="软件工程大师 Martin Fowler 在《企业应用架构模式》中曾说：“设计模式都是半成品——这意味着你永远必须根据自己的具体环境亲手完成并调适它们。”在构建 AI Agent 系统时更是如此。">
+  <meta property="og:description" content="学习 Agent 工作流、推理与行动、计划与执行分离等设计模式，理解长任务的上下文管理，并通过 Pi 案例分析工程取舍。">
   <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture06">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Agent 设计模式与上下文管理 | CS329Z 中文教程">
-  <meta name="twitter:description" content="软件工程大师 Martin Fowler 在《企业应用架构模式》中曾说：“设计模式都是半成品——这意味着你永远必须根据自己的具体环境亲手完成并调适它们。”在构建 AI Agent 系统时更是如此。">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Agent 设计模式与上下文管理 | CS329Z 中文教程","description":"软件工程大师 Martin Fowler 在《企业应用架构模式》中曾说：“设计模式都是半成品——这意味着你永远必须根据自己的具体环境亲手完成并调适它们。”在构建 AI Agent 系统时更是如此。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture06","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture06","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","Agent 设计模式与上下文管理"]}</script>
+  <meta name="twitter:description" content="学习 Agent 工作流、推理与行动、计划与执行分离等设计模式，理解长任务的上下文管理，并通过 Pi 案例分析工程取舍。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Agent 设计模式与上下文管理 | CS329Z 中文教程","description":"学习 Agent 工作流、推理与行动、计划与执行分离等设计模式，理解长任务的上下文管理，并通过 Pi 案例分析工程取舍。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture06","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture06","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","Agent 设计模式与上下文管理"]}</script>
   <link rel="stylesheet" href="./assets/reader.css">
 </head>
 <body data-static="true" data-initial-doc="lecture06" data-doc="lecture06">

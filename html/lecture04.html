@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>工具使用与函数调用 | CS329Z 中文教程</title>
-<meta name="description" content="在上一讲中，我们看到检索增强生成（RAG）能够为大语言模型补充外部静态或动态文档。但如果用户问的是：“17,423 892 等于多少？”或者“帮我查一下斯坦福现在的实时气温，并在我的日历上把今天下午 3 点的会议推迟半小时”，光靠检索文档就无能为力了。">
+<meta name="description" content="理解 AI Agent 如何调用外部工具，学习函数调用、工具学习、REST 与 MCP 协议，以及参数、执行和评测中的常见故障。">
   <meta name="robots" content="index,follow">
   
   <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture04">
@@ -12,12 +12,12 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CS329Z 中文教程">
   <meta property="og:title" content="工具使用与函数调用 | CS329Z 中文教程">
-  <meta property="og:description" content="在上一讲中，我们看到检索增强生成（RAG）能够为大语言模型补充外部静态或动态文档。但如果用户问的是：“17,423 892 等于多少？”或者“帮我查一下斯坦福现在的实时气温，并在我的日历上把今天下午 3 点的会议推迟半小时”，光靠检索文档就无能为力了。">
+  <meta property="og:description" content="理解 AI Agent 如何调用外部工具，学习函数调用、工具学习、REST 与 MCP 协议，以及参数、执行和评测中的常见故障。">
   <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture04">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="工具使用与函数调用 | CS329Z 中文教程">
-  <meta name="twitter:description" content="在上一讲中，我们看到检索增强生成（RAG）能够为大语言模型补充外部静态或动态文档。但如果用户问的是：“17,423 892 等于多少？”或者“帮我查一下斯坦福现在的实时气温，并在我的日历上把今天下午 3 点的会议推迟半小时”，光靠检索文档就无能为力了。">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"工具使用与函数调用 | CS329Z 中文教程","description":"在上一讲中，我们看到检索增强生成（RAG）能够为大语言模型补充外部静态或动态文档。但如果用户问的是：“17,423 892 等于多少？”或者“帮我查一下斯坦福现在的实时气温，并在我的日历上把今天下午 3 点的会议推迟半小时”，光靠检索文档就无能为力了。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture04","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture04","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","工具使用与函数调用"]}</script>
+  <meta name="twitter:description" content="理解 AI Agent 如何调用外部工具，学习函数调用、工具学习、REST 与 MCP 协议，以及参数、执行和评测中的常见故障。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"工具使用与函数调用 | CS329Z 中文教程","description":"理解 AI Agent 如何调用外部工具，学习函数调用、工具学习、REST 与 MCP 协议，以及参数、执行和评测中的常见故障。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture04","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture04","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","工具使用与函数调用"]}</script>
   <link rel="stylesheet" href="./assets/reader.css">
 </head>
 <body data-static="true" data-initial-doc="lecture04" data-doc="lecture04">

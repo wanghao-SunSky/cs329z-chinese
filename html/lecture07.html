@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agent 记忆架构 | CS329Z 中文教程</title>
-<meta name="description" content="试想你雇了一位人类助理，但他每天早上走进办公室时都会彻底失去前一天之前的所有记忆：你必须每天重新教他一遍公司报销系统的操作流程（丢失程序性技能），每天重新告诉他一遍你的座位偏好和团队成员名单（丢失语义事实），而且每当一个复杂项目进行到一半中断时，第二天他完全不记得昨天已经查到了哪一步（丢失">
+<meta name="description" content="学习 AI Agent 记忆架构：CoALA、经验复用、分层上下文、反思与后台整合，以及记忆评测、遗忘、污染和用户控制。">
   <meta name="robots" content="index,follow">
   
   <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture07">
@@ -12,12 +12,12 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CS329Z 中文教程">
   <meta property="og:title" content="Agent 记忆架构 | CS329Z 中文教程">
-  <meta property="og:description" content="试想你雇了一位人类助理，但他每天早上走进办公室时都会彻底失去前一天之前的所有记忆：你必须每天重新教他一遍公司报销系统的操作流程（丢失程序性技能），每天重新告诉他一遍你的座位偏好和团队成员名单（丢失语义事实），而且每当一个复杂项目进行到一半中断时，第二天他完全不记得昨天已经查到了哪一步（丢失">
+  <meta property="og:description" content="学习 AI Agent 记忆架构：CoALA、经验复用、分层上下文、反思与后台整合，以及记忆评测、遗忘、污染和用户控制。">
   <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture07">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Agent 记忆架构 | CS329Z 中文教程">
-  <meta name="twitter:description" content="试想你雇了一位人类助理，但他每天早上走进办公室时都会彻底失去前一天之前的所有记忆：你必须每天重新教他一遍公司报销系统的操作流程（丢失程序性技能），每天重新告诉他一遍你的座位偏好和团队成员名单（丢失语义事实），而且每当一个复杂项目进行到一半中断时，第二天他完全不记得昨天已经查到了哪一步（丢失">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Agent 记忆架构 | CS329Z 中文教程","description":"试想你雇了一位人类助理，但他每天早上走进办公室时都会彻底失去前一天之前的所有记忆：你必须每天重新教他一遍公司报销系统的操作流程（丢失程序性技能），每天重新告诉他一遍你的座位偏好和团队成员名单（丢失语义事实），而且每当一个复杂项目进行到一半中断时，第二天他完全不记得昨天已经查到了哪一步（丢失","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture07","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture07","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","Agent 记忆架构"]}</script>
+  <meta name="twitter:description" content="学习 AI Agent 记忆架构：CoALA、经验复用、分层上下文、反思与后台整合，以及记忆评测、遗忘、污染和用户控制。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Agent 记忆架构 | CS329Z 中文教程","description":"学习 AI Agent 记忆架构：CoALA、经验复用、分层上下文、反思与后台整合，以及记忆评测、遗忘、污染和用户控制。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture07","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture07","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","Agent 记忆架构"]}</script>
   <link rel="stylesheet" href="./assets/reader.css">
 </head>
 <body data-static="true" data-initial-doc="lecture07" data-doc="lecture07">

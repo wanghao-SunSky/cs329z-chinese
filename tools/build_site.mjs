@@ -11,7 +11,7 @@ const origin = 'https://cs329z-course-review-20261029.wanghao162263.chatgpt.site
 const googleVerification = 'LfNgIyptkSplD5AfQhR74TCdrJnywmXd35CHSAeCXhY';
 const github = 'https://github.com/wanghao-SunSky/cs329z-chinese';
 const esc = (s) => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
-const plain = (s) => s.replace(/<[^>]+>/g, '').replace(/&[a-z#\d]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+const descriptions = JSON.parse(fs.readFileSync(path.join(root, 'tools/page-descriptions.json'), 'utf8'));
 const filename = (id) => (id === 'overview' ? 'index' : id) + '.html';
 const route = (id, anchor = '') => './' + filename(id) + (anchor ? '#' + anchor : '');
 const links = (s) => s.replaceAll('href="../html/index.html"', 'href="./index.html"').replaceAll('href="../html/"', 'href="https://github.com/wanghao-SunSky/cs329z-chinese/tree/main/html"').replaceAll('href="../exercises/"', 'href="./lab20.html"').replace(/href="#\/([^/"\s]+)(?:\/([^"\s]*))?"/g, (_, id, anchor) => `href="${route(id, anchor)}"`);
@@ -32,7 +32,8 @@ for (const [i, d] of docs.entries()) {
   const title = d.id === 'overview' ? '斯坦福 Stanford CS329Z 中文教程 | AI 智能体工程' : `${d.label} | CS329Z 中文教程`;
   const description = d.id === 'overview'
     ? '斯坦福 Stanford CS329Z（Engineering AI Agents）中文学习教程，面向 Python 开发者讲解 AI 智能体：19 讲、4 项实践与代码导读，涵盖大语言模型、RAG、工具调用、记忆、多 Agent 协作、评测和安全。支持在线阅读与离线下载。'
-    : plain(d.html.match(/<p>(.*?)<\/p>/s)?.[1] || d.text).slice(0, 145);
+    : descriptions[d.id];
+  if (!description) throw new Error(`Missing page description: ${d.id}`);
   const schema = {
     '@context': 'https://schema.org', '@type': 'TechArticle',
     headline: title, description, inLanguage: 'zh-CN', url,

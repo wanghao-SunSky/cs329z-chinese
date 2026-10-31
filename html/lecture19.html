@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>前沿与开放问题 | CS329Z 中文教程</title>
-<meta name="description" content="走过前面十八讲，我们已经完整走通了现代 AI Agent 工程的核心主干：从基础模型解码、注意力机制、RAG 检索与工具协议，到编排框架、上下文管理、记忆架构、多智能体协作与系统优化，再到数据飞轮、基准设计、LLM 裁判、安全护栏以及编程与主动式 Agent。">
+<meta name="description" content="回顾 AI Agent 工程主干，讨论能力与环境扩展、生产落地和开放研究问题，为进一步阅读与系统实践建立方向。">
   <meta name="robots" content="index,follow">
   
   <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture19">
@@ -12,12 +12,12 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CS329Z 中文教程">
   <meta property="og:title" content="前沿与开放问题 | CS329Z 中文教程">
-  <meta property="og:description" content="走过前面十八讲，我们已经完整走通了现代 AI Agent 工程的核心主干：从基础模型解码、注意力机制、RAG 检索与工具协议，到编排框架、上下文管理、记忆架构、多智能体协作与系统优化，再到数据飞轮、基准设计、LLM 裁判、安全护栏以及编程与主动式 Agent。">
+  <meta property="og:description" content="回顾 AI Agent 工程主干，讨论能力与环境扩展、生产落地和开放研究问题，为进一步阅读与系统实践建立方向。">
   <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture19">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="前沿与开放问题 | CS329Z 中文教程">
-  <meta name="twitter:description" content="走过前面十八讲，我们已经完整走通了现代 AI Agent 工程的核心主干：从基础模型解码、注意力机制、RAG 检索与工具协议，到编排框架、上下文管理、记忆架构、多智能体协作与系统优化，再到数据飞轮、基准设计、LLM 裁判、安全护栏以及编程与主动式 Agent。">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"前沿与开放问题 | CS329Z 中文教程","description":"走过前面十八讲，我们已经完整走通了现代 AI Agent 工程的核心主干：从基础模型解码、注意力机制、RAG 检索与工具协议，到编排框架、上下文管理、记忆架构、多智能体协作与系统优化，再到数据飞轮、基准设计、LLM 裁判、安全护栏以及编程与主动式 Agent。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture19","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture19","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","前沿与开放问题"]}</script>
+  <meta name="twitter:description" content="回顾 AI Agent 工程主干，讨论能力与环境扩展、生产落地和开放研究问题，为进一步阅读与系统实践建立方向。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"前沿与开放问题 | CS329Z 中文教程","description":"回顾 AI Agent 工程主干，讨论能力与环境扩展、生产落地和开放研究问题，为进一步阅读与系统实践建立方向。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture19","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture19","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","前沿与开放问题"]}</script>
   <link rel="stylesheet" href="./assets/reader.css">
 </head>
 <body data-static="true" data-initial-doc="lecture19" data-doc="lecture19">

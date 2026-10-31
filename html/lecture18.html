@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>主动式 Agent | CS329Z 中文教程</title>
-<meta name="description" content="到目前为止，我们在课程中讨论的几乎所有 Agent——无论是问答助手、RAG 流水线还是处理工单的编程 Agent——都遵循着同一种交互模式：被动响应式（Reactive）。如果你不向它发消息，它就永远安静地停在那里；只有当你明确敲下指令、点明要做什么，它才会启动循环去执行。">
+<meta name="description" content="理解主动式 Agent 与被动响应式 Agent 的区别，学习主动协作中的隐私、信任和人机共同决策问题。">
   <meta name="robots" content="index,follow">
   
   <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture18">
@@ -12,12 +12,12 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CS329Z 中文教程">
   <meta property="og:title" content="主动式 Agent | CS329Z 中文教程">
-  <meta property="og:description" content="到目前为止，我们在课程中讨论的几乎所有 Agent——无论是问答助手、RAG 流水线还是处理工单的编程 Agent——都遵循着同一种交互模式：被动响应式（Reactive）。如果你不向它发消息，它就永远安静地停在那里；只有当你明确敲下指令、点明要做什么，它才会启动循环去执行。">
+  <meta property="og:description" content="理解主动式 Agent 与被动响应式 Agent 的区别，学习主动协作中的隐私、信任和人机共同决策问题。">
   <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture18">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="主动式 Agent | CS329Z 中文教程">
-  <meta name="twitter:description" content="到目前为止，我们在课程中讨论的几乎所有 Agent——无论是问答助手、RAG 流水线还是处理工单的编程 Agent——都遵循着同一种交互模式：被动响应式（Reactive）。如果你不向它发消息，它就永远安静地停在那里；只有当你明确敲下指令、点明要做什么，它才会启动循环去执行。">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"主动式 Agent | CS329Z 中文教程","description":"到目前为止，我们在课程中讨论的几乎所有 Agent——无论是问答助手、RAG 流水线还是处理工单的编程 Agent——都遵循着同一种交互模式：被动响应式（Reactive）。如果你不向它发消息，它就永远安静地停在那里；只有当你明确敲下指令、点明要做什么，它才会启动循环去执行。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture18","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture18","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","主动式 Agent"]}</script>
+  <meta name="twitter:description" content="理解主动式 Agent 与被动响应式 Agent 的区别，学习主动协作中的隐私、信任和人机共同决策问题。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"主动式 Agent | CS329Z 中文教程","description":"理解主动式 Agent 与被动响应式 Agent 的区别，学习主动协作中的隐私、信任和人机共同决策问题。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture18","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture18","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","主动式 Agent"]}</script>
   <link rel="stylesheet" href="./assets/reader.css">
 </head>
 <body data-static="true" data-initial-doc="lecture18" data-doc="lecture18">

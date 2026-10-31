@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>评测基础与基准设计 | CS329Z 中文教程</title>
-<meta name="description" content="在单轮分类或抽取任务中，评测往往只需要一行代码：accuracy = mean(y_pred == y_true)。然而，当我们评测一个在开放环境中多步运行的 AI Agent 时，情况变得空前复杂：同一个请求，Agent A 可能用 3 步 grep 就干净利落地找到了答案，Agent ">
+<meta name="description" content="理解 Agent 评测为何困难，学习请求、环境、停止条件和评分器四元组，设计具有可靠性和明确边界的评测基准。">
   <meta name="robots" content="index,follow">
   
   <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture13">
@@ -12,12 +12,12 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CS329Z 中文教程">
   <meta property="og:title" content="评测基础与基准设计 | CS329Z 中文教程">
-  <meta property="og:description" content="在单轮分类或抽取任务中，评测往往只需要一行代码：accuracy = mean(y_pred == y_true)。然而，当我们评测一个在开放环境中多步运行的 AI Agent 时，情况变得空前复杂：同一个请求，Agent A 可能用 3 步 grep 就干净利落地找到了答案，Agent ">
+  <meta property="og:description" content="理解 Agent 评测为何困难，学习请求、环境、停止条件和评分器四元组，设计具有可靠性和明确边界的评测基准。">
   <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture13">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="评测基础与基准设计 | CS329Z 中文教程">
-  <meta name="twitter:description" content="在单轮分类或抽取任务中，评测往往只需要一行代码：accuracy = mean(y_pred == y_true)。然而，当我们评测一个在开放环境中多步运行的 AI Agent 时，情况变得空前复杂：同一个请求，Agent A 可能用 3 步 grep 就干净利落地找到了答案，Agent ">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"评测基础与基准设计 | CS329Z 中文教程","description":"在单轮分类或抽取任务中，评测往往只需要一行代码：accuracy = mean(y_pred == y_true)。然而，当我们评测一个在开放环境中多步运行的 AI Agent 时，情况变得空前复杂：同一个请求，Agent A 可能用 3 步 grep 就干净利落地找到了答案，Agent ","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture13","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture13","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","评测基础与基准设计"]}</script>
+  <meta name="twitter:description" content="理解 Agent 评测为何困难，学习请求、环境、停止条件和评分器四元组，设计具有可靠性和明确边界的评测基准。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"评测基础与基准设计 | CS329Z 中文教程","description":"理解 Agent 评测为何困难，学习请求、环境、停止条件和评分器四元组，设计具有可靠性和明确边界的评测基准。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture13","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture13","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","评测基础与基准设计"]}</script>
   <link rel="stylesheet" href="./assets/reader.css">
 </head>
 <body data-static="true" data-initial-doc="lecture13" data-doc="lecture13">

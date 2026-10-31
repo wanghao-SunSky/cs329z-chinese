@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LLM 裁判与评测基础设施 | CS329Z 中文教程</title>
-<meta name="description" content="在上一讲的四元组框架中，我们强调了评分器（Scorer / Grader）是整个评测体系的裁决中枢。对于“输出的 JSON 能否解析”、“算出的金额是否等于 450.00”或者“单元测试是否返回退出码 0”，确定性的代码脚本（Code-based Grader）可以做到毫秒级精准裁决。然而">
+<meta name="description" content="学习 LLM 裁判与组合评分器设计，理解非确定性评测指标、评测运行底座和裁判可靠性，搭建可复查的 Agent 评测流程。">
   <meta name="robots" content="index,follow">
   
   <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture14">
@@ -12,12 +12,12 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CS329Z 中文教程">
   <meta property="og:title" content="LLM 裁判与评测基础设施 | CS329Z 中文教程">
-  <meta property="og:description" content="在上一讲的四元组框架中，我们强调了评分器（Scorer / Grader）是整个评测体系的裁决中枢。对于“输出的 JSON 能否解析”、“算出的金额是否等于 450.00”或者“单元测试是否返回退出码 0”，确定性的代码脚本（Code-based Grader）可以做到毫秒级精准裁决。然而">
+  <meta property="og:description" content="学习 LLM 裁判与组合评分器设计，理解非确定性评测指标、评测运行底座和裁判可靠性，搭建可复查的 Agent 评测流程。">
   <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture14">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="LLM 裁判与评测基础设施 | CS329Z 中文教程">
-  <meta name="twitter:description" content="在上一讲的四元组框架中，我们强调了评分器（Scorer / Grader）是整个评测体系的裁决中枢。对于“输出的 JSON 能否解析”、“算出的金额是否等于 450.00”或者“单元测试是否返回退出码 0”，确定性的代码脚本（Code-based Grader）可以做到毫秒级精准裁决。然而">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"LLM 裁判与评测基础设施 | CS329Z 中文教程","description":"在上一讲的四元组框架中，我们强调了评分器（Scorer / Grader）是整个评测体系的裁决中枢。对于“输出的 JSON 能否解析”、“算出的金额是否等于 450.00”或者“单元测试是否返回退出码 0”，确定性的代码脚本（Code-based Grader）可以做到毫秒级精准裁决。然而","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture14","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture14","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","LLM 裁判与评测基础设施"]}</script>
+  <meta name="twitter:description" content="学习 LLM 裁判与组合评分器设计，理解非确定性评测指标、评测运行底座和裁判可靠性，搭建可复查的 Agent 评测流程。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"LLM 裁判与评测基础设施 | CS329Z 中文教程","description":"学习 LLM 裁判与组合评分器设计，理解非确定性评测指标、评测运行底座和裁判可靠性，搭建可复查的 Agent 评测流程。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture14","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture14","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","LLM 裁判与评测基础设施"]}</script>
   <link rel="stylesheet" href="./assets/reader.css">
 </head>
 <body data-static="true" data-initial-doc="lecture14" data-doc="lecture14">

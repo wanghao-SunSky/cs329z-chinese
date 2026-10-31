@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agent 系统优化 | CS329Z 中文教程</title>
-<meta name="description" content="来看看在同一个数学推理基准上，仅仅改变提示词里的一句引导语，PaLM 2-L-IT 模型的准确率会发生怎样的变化：">
+<meta name="description" content="学习 Agent 系统优化方法：示范选择、MIPRO、TextGrad、GEPA、监督微调与强化学习，并理解何时优化提示、权重或运行底座。">
   <meta name="robots" content="index,follow">
   
   <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture09">
@@ -12,12 +12,12 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CS329Z 中文教程">
   <meta property="og:title" content="Agent 系统优化 | CS329Z 中文教程">
-  <meta property="og:description" content="来看看在同一个数学推理基准上，仅仅改变提示词里的一句引导语，PaLM 2-L-IT 模型的准确率会发生怎样的变化：">
+  <meta property="og:description" content="学习 Agent 系统优化方法：示范选择、MIPRO、TextGrad、GEPA、监督微调与强化学习，并理解何时优化提示、权重或运行底座。">
   <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture09">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Agent 系统优化 | CS329Z 中文教程">
-  <meta name="twitter:description" content="来看看在同一个数学推理基准上，仅仅改变提示词里的一句引导语，PaLM 2-L-IT 模型的准确率会发生怎样的变化：">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Agent 系统优化 | CS329Z 中文教程","description":"来看看在同一个数学推理基准上，仅仅改变提示词里的一句引导语，PaLM 2-L-IT 模型的准确率会发生怎样的变化：","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture09","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture09","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","Agent 系统优化"]}</script>
+  <meta name="twitter:description" content="学习 Agent 系统优化方法：示范选择、MIPRO、TextGrad、GEPA、监督微调与强化学习，并理解何时优化提示、权重或运行底座。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Agent 系统优化 | CS329Z 中文教程","description":"学习 Agent 系统优化方法：示范选择、MIPRO、TextGrad、GEPA、监督微调与强化学习，并理解何时优化提示、权重或运行底座。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture09","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture09","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","Agent 系统优化"]}</script>
   <link rel="stylesheet" href="./assets/reader.css">
 </head>
 <body data-static="true" data-initial-doc="lecture09" data-doc="lecture09">

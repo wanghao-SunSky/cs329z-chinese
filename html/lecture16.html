@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>专题研讨：复合 Agent 系统架构复盘 | CS329Z 中文教程</title>
-<meta name="description" content="在原课程安排中，本讲为面向业界前沿实践的机动客座讲座（Guest Lecture）。借此承上启下的节点，我们将前十五讲所建立的系统架构（System）、数据飞轮（Data）与评测与安全（Evals Safety）三大支柱串联起来，进行一次全局性的工程复盘，梳理在从零设计、调试与交付一个复合">
+<meta name="description" content="原课程客座主题为 TBA，本页提供补充性的 Agent 架构复盘，串联系统、数据、评测与安全，并整理选型矩阵和故障诊断方法。">
   <meta name="robots" content="index,follow">
   
   <link rel="canonical" href="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture16">
@@ -12,12 +12,12 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CS329Z 中文教程">
   <meta property="og:title" content="专题研讨：复合 Agent 系统架构复盘 | CS329Z 中文教程">
-  <meta property="og:description" content="在原课程安排中，本讲为面向业界前沿实践的机动客座讲座（Guest Lecture）。借此承上启下的节点，我们将前十五讲所建立的系统架构（System）、数据飞轮（Data）与评测与安全（Evals Safety）三大支柱串联起来，进行一次全局性的工程复盘，梳理在从零设计、调试与交付一个复合">
+  <meta property="og:description" content="原课程客座主题为 TBA，本页提供补充性的 Agent 架构复盘，串联系统、数据、评测与安全，并整理选型矩阵和故障诊断方法。">
   <meta property="og:url" content="https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture16">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="专题研讨：复合 Agent 系统架构复盘 | CS329Z 中文教程">
-  <meta name="twitter:description" content="在原课程安排中，本讲为面向业界前沿实践的机动客座讲座（Guest Lecture）。借此承上启下的节点，我们将前十五讲所建立的系统架构（System）、数据飞轮（Data）与评测与安全（Evals Safety）三大支柱串联起来，进行一次全局性的工程复盘，梳理在从零设计、调试与交付一个复合">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"专题研讨：复合 Agent 系统架构复盘 | CS329Z 中文教程","description":"在原课程安排中，本讲为面向业界前沿实践的机动客座讲座（Guest Lecture）。借此承上启下的节点，我们将前十五讲所建立的系统架构（System）、数据飞轮（Data）与评测与安全（Evals Safety）三大支柱串联起来，进行一次全局性的工程复盘，梳理在从零设计、调试与交付一个复合","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture16","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture16","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","专题研讨：复合 Agent 系统架构复盘"]}</script>
+  <meta name="twitter:description" content="原课程客座主题为 TBA，本页提供补充性的 Agent 架构复盘，串联系统、数据、评测与安全，并整理选型矩阵和故障诊断方法。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"专题研讨：复合 Agent 系统架构复盘 | CS329Z 中文教程","description":"原课程客座主题为 TBA，本页提供补充性的 Agent 架构复盘，串联系统、数据、评测与安全，并整理选型矩阵和故障诊断方法。","inLanguage":"zh-CN","url":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture16","mainEntityOfPage":"https://cs329z-course-review-20261029.wanghao162263.chatgpt.site/lecture16","isAccessibleForFree":true,"isBasedOn":"https://cs329z.stanford.edu/","about":["AI Agent","人工智能体","Stanford CS329Z","大语言模型","专题研讨：复合 Agent 系统架构复盘"]}</script>
   <link rel="stylesheet" href="./assets/reader.css">
 </head>
 <body data-static="true" data-initial-doc="lecture16" data-doc="lecture16">
