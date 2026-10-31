@@ -7,6 +7,8 @@ import { execFileSync } from 'node:child_process';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, 'html');
 const origin = 'https://cs329z-course-review-20261029.wanghao162263.chatgpt.site';
+// Public ownership tag from the owner's Google Search Console property; keep across rebuilds.
+const googleVerification = 'LfNgIyptkSplD5AfQhR74TCdrJnywmXd35CHSAeCXhY';
 const github = 'https://github.com/wanghao-SunSky/cs329z-chinese';
 const esc = (s) => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const plain = (s) => s.replace(/<[^>]+>/g, '').replace(/&[a-z#\d]+;/gi, ' ').replace(/\s+/g, ' ').trim();
@@ -27,19 +29,20 @@ fs.writeFileSync(path.join(out, 'offline.html'), template.replace('</head>', `<m
 
 for (const [i, d] of docs.entries()) {
   const url = origin + (d.id === 'overview' ? '/' : '/' + d.id);
-  const title = d.id === 'overview' ? 'Stanford CS329Z 中文教程 | Engineering AI Agents' : `${d.label} | CS329Z 中文教程`;
+  const title = d.id === 'overview' ? '斯坦福 Stanford CS329Z 中文教程 | AI 智能体工程' : `${d.label} | CS329Z 中文教程`;
   const description = d.id === 'overview'
-    ? '面向 Python 开发者的 AI Agent 中文自学教程：19 讲、4 项实践与代码导读，涵盖大语言模型、RAG、工具调用、记忆、多 Agent 协作、评测和安全。支持在线阅读与离线下载。'
+    ? '斯坦福 Stanford CS329Z（Engineering AI Agents）中文学习教程，面向 Python 开发者讲解 AI 智能体：19 讲、4 项实践与代码导读，涵盖大语言模型、RAG、工具调用、记忆、多 Agent 协作、评测和安全。支持在线阅读与离线下载。'
     : plain(d.html.match(/<p>(.*?)<\/p>/s)?.[1] || d.text).slice(0, 145);
   const schema = {
     '@context': 'https://schema.org', '@type': 'TechArticle',
     headline: title, description, inLanguage: 'zh-CN', url,
     mainEntityOfPage: url, isAccessibleForFree: true,
     isBasedOn: 'https://cs329z.stanford.edu/',
-    about: ['AI Agent', '大语言模型', d.label],
+    about: ['AI Agent', '人工智能体', 'Stanford CS329Z', '大语言模型', d.label],
   };
   const metadata = `<meta name="description" content="${esc(description)}">
   <meta name="robots" content="index,follow">
+  ${d.id === 'overview' ? `<meta name="google-site-verification" content="${googleVerification}">` : ''}
   <link rel="canonical" href="${url}">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="zh_CN">

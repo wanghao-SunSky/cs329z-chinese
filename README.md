@@ -1,6 +1,6 @@
-# Stanford CS329Z 中文教程｜Engineering AI Agents
+# 斯坦福 Stanford CS329Z 中文教程｜Engineering AI Agents
 
-一套面向 Python 开发者的 AI Agent 自学教程。围绕 Stanford CS329Z 的公开材料，用中文讲解如何构建、评测和改进 Agent：从大语言模型、RAG、工具调用，到记忆、多 Agent 协作和安全防护。
+一套面向 Python 开发者的 AI 智能体（Agent）自学教程。围绕斯坦福大学 Stanford CS329Z 的公开材料，用中文讲解如何构建、评测和改进 Agent：从大语言模型、RAG、工具调用，到记忆、多 Agent 协作和安全防护。
 
 Chinese study guide for Stanford CS329Z: Engineering AI Agents. Includes 19 lessons, 4 hands-on exercises, Markdown sources and an offline HTML reader.
 
