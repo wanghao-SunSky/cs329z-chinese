@@ -75,6 +75,7 @@ for (const [i, d] of docs.entries()) {
     .replace(/<script>\/\* Interactive Course Reader Runtime \*\/.*?<\/script>/s, '<script src="./assets/reader.js"></script>')
     .replace('<noscript><p>请启用 JavaScript 以使用交互式章节导航与全文检索。</p></noscript>', '<noscript><p>正文和目录可直接阅读。启用 JavaScript 后可使用全文搜索和阅读设置。</p></noscript>');
   if (d.id !== 'overview') page = page.replace('class="home-intro" id="home-intro"', 'class="home-intro" id="home-intro" hidden');
+  if (['lecture01', 'lecture04', 'lecture07'].includes(d.id)) page = page.replace('class="marginroom-referral" hidden', 'class="marginroom-referral"');
   page = links(page);
   fs.writeFileSync(path.join(out, filename(d.id)), page);
 }

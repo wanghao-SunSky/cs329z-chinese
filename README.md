@@ -6,6 +6,10 @@ Chinese study guide for Stanford CS329Z: Engineering AI Agents. Includes 19 less
 
 **[在线阅读完整教程](https://cs329z-course-review-20261029.wanghao162263.chatgpt.site)** · **[课程目录与学习路径](course-guide.md)** · **[下载完整仓库](https://github.com/wanghao-SunSky/cs329z-chinese/archive/refs/heads/main.zip)**
 
+> 我做了一个 AI 阅读伙伴「阅间 MarginRoom」，已内置本教程。读不懂的地方可以结合原文直接提问；本教程照常免费阅读。
+>
+> **[在阅间边读边问 →](https://marginroom.app/?utm_source=cs329z&utm_medium=github&utm_campaign=marginroom_v1&utm_content=readme)** · 注册后，每天可免费提问 50 次。
+
 ## 包含什么
 
 | 内容 | 入口 |

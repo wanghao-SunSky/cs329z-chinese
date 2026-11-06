@@ -71,6 +71,8 @@ function render() {
   if (changed) {
     activeId = d.id;
     document.body.dataset.doc = d.id;
+    $('marginroom-referral').hidden = !['lecture01', 'lecture04', 'lecture07'].includes(d.id);
+    $('marginroom-referral-link').href = 'https://marginroom.app/?utm_source=cs329z&utm_medium=tutorial&utm_campaign=marginroom_v1&utm_content=' + encodeURIComponent(d.id + '_end');
     $('article').innerHTML = pageLinks(d.html);
     bindCopyButtons();
 

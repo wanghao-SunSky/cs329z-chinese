@@ -532,6 +532,7 @@ const html = `<!DOCTYPE html>
     </div>
     <nav id="course-nav" aria-label="课程章节导航"></nav>
     <div class="sidebar-foot">
+      <a class="marginroom-mobile" href="https://marginroom.app/?utm_source=cs329z&amp;utm_medium=tutorial&amp;utm_campaign=marginroom_v1&amp;utm_content=sidebar" target="_blank" rel="noopener">在阅间边读边问 ↗</a>
       <span>CS329Z · Engineering AI Agents</span>
       <span>System · Data · Evals</span>
     </div>
@@ -546,6 +547,7 @@ const html = `<!DOCTYPE html>
         <div id="breadcrumb" class="breadcrumb">课程总览</div>
       </div>
       <div class="reading-tools">
+        <a class="marginroom-top" href="https://marginroom.app/?utm_source=cs329z&amp;utm_medium=tutorial&amp;utm_campaign=marginroom_v1&amp;utm_content=topbar" target="_blank" rel="noopener">在阅间边读边问 ↗</a>
         <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
         <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
         <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
@@ -579,6 +581,12 @@ const html = `<!DOCTYPE html>
         </section>
 
         <article id="article">${docs[0].html}</article>
+        <section id="marginroom-referral" class="marginroom-referral" hidden aria-label="阅间阅读伙伴">
+          <h2>这一讲有读不懂的地方？</h2>
+          <p>我做了一个 AI 阅读伙伴「阅间」，已内置这套课，读不懂的地方可以结合原文直接提问。</p>
+          <a id="marginroom-referral-link" href="https://marginroom.app/" target="_blank" rel="noopener">在阅间边读边问 →</a>
+          <p class="marginroom-allowance">注册后，每天可免费提问 50 次。</p>
+        </section>
         <nav id="chapter-footer" aria-label="章节翻页"></nav>
       </main>
 
