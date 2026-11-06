@@ -1,3 +1,13 @@
+.marginroom-top, .marginroom-mobile { color: var(--accent); font-size: 13px; text-decoration: none; }
+.marginroom-mobile { display: none; }
+.marginroom-referral { margin: 40px 0 24px; padding: 24px 0; border-top: 1px solid var(--line); }
+.marginroom-referral[hidden] { display: none; }
+.marginroom-referral h2 { font-size: 20px; margin: 0 0 12px; }
+.marginroom-referral p { color: var(--ink-secondary); line-height: 1.75; }
+.marginroom-referral > a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 16px; background: var(--accent); color: var(--paper); text-decoration: none; }
+.marginroom-referral .marginroom-allowance { font-size: 13px; }
+@media (max-width: 1100px) { .marginroom-top { display: none; } .marginroom-mobile { display: block; padding: 8px 0; min-height: 44px; } }
+@media print { .marginroom-top, .marginroom-mobile, .marginroom-referral { display: none !important; } }
 /* CS329Z Publication-Grade Technical Documentation Stylesheet */
 :root {
   --paper: #fbfaf6;

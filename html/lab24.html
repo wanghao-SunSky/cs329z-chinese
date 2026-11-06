@@ -37,6 +37,7 @@
     </div>
     <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item active" data-doc="lab24" href="./lab24.html" aria-current="page"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item" data-doc="lab26" href="./lab26.html"><span>编写说明与待修订问题</span></a></div></nav>
     <div class="sidebar-foot">
+      <a class="marginroom-mobile" href="https://marginroom.app/?utm_source=cs329z&amp;utm_medium=tutorial&amp;utm_campaign=marginroom_v1&amp;utm_content=sidebar" target="_blank" rel="noopener">在阅间边读边问 ↗</a>
       <span>CS329Z · Engineering AI Agents</span>
       <span>System · Data · Evals</span>
     </div>
@@ -51,6 +52,7 @@
         <div id="breadcrumb" class="breadcrumb">配套代码架构导读</div>
       </div>
       <div class="reading-tools">
+        <a class="marginroom-top" href="https://marginroom.app/?utm_source=cs329z&amp;utm_medium=tutorial&amp;utm_campaign=marginroom_v1&amp;utm_content=topbar" target="_blank" rel="noopener">在阅间边读边问 ↗</a>
         <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
         <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
         <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
@@ -109,6 +111,12 @@
 <h3 id="延伸思考与工程对照">延伸思考与工程对照</h3>
 <p>对比这两套代码时，可以重点思考以下三个工程问题：</p>
 <ol><li><strong>控制权与可调试性</strong>：对比你在 HW1 中手写的 <code>while</code> 循环、LangGraph 的显式状态边，以及 DSPy 的声明式模块，哪一种方式最容易排查“模型漏传参数”或“死循环调用同一工具”？</li><li><strong>评测指标对优化方向的牵引</strong>：在 Notebook 第 27 单元格中，GEPA 的评测函数校验了 <code>date</code>、<code>start</code> 和 <code>duration</code>，但并未校验 <code>event_name</code>。如果直接将该评测函数用于生产优化，可能会带来什么隐患？</li><li><strong>重放确定性与外部副作用</strong>：Temporal 能够在进程崩溃后恢复状态，前提是工作流代码本身是确定性的，且已成功执行的 Activity 结果会被直接复用。但如果某个 Activity 在写入外部日历后、向 Temporal 返回确认前发生了网络断开，重试机制会导致什么后果？如何在业务层实现真正的幂等（Idempotency）？</li></ol></article>
+        <section id="marginroom-referral" class="marginroom-referral" hidden aria-label="阅间阅读伙伴">
+          <h2>这一讲有读不懂的地方？</h2>
+          <p>我做了一个 AI 阅读伙伴「阅间」，已内置这套课，读不懂的地方可以结合原文直接提问。</p>
+          <a id="marginroom-referral-link" href="https://marginroom.app/" target="_blank" rel="noopener">在阅间边读边问 →</a>
+          <p class="marginroom-allowance">注册后，每天可免费提问 50 次。</p>
+        </section>
         <nav id="chapter-footer" aria-label="章节翻页"><a href="./lab23.html"><small>← 上一节</small>论文精读与复现扩展</a><a href="./lab25.html"><small>下一节 →</small>课程目录与学习路径</a></nav>
       </main>
 

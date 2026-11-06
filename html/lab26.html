@@ -37,6 +37,7 @@
     </div>
     <nav id="course-nav" aria-label="课程章节导航"><div class="nav-group"><p class="nav-label">课程导览</p><a class="nav-item" data-doc="overview" href="./index.html"><span>课程总览与学习路径</span></a></div><div class="nav-group"><p class="nav-label">一 · 基础与核心组件</p><a class="nav-item" data-doc="lecture01" href="./lecture01.html"><span class="num">01</span><span>Agent 基础与全景</span></a><a class="nav-item" data-doc="lecture02" href="./lecture02.html"><span class="num">02</span><span>面向构建者的大语言模型</span></a><a class="nav-item" data-doc="lecture03" href="./lecture03.html"><span class="num">03</span><span>检索增强生成（RAG）</span></a><a class="nav-item" data-doc="lecture04" href="./lecture04.html"><span class="num">04</span><span>工具使用与函数调用</span></a></div><div class="nav-group"><p class="nav-label">二 · 架构、记忆与优化</p><a class="nav-item" data-doc="lecture05" href="./lecture05.html"><span class="num">05</span><span>框架与持久编排</span></a><a class="nav-item" data-doc="lecture06" href="./lecture06.html"><span class="num">06</span><span>Agent 设计模式与上下文管理</span></a><a class="nav-item" data-doc="lecture07" href="./lecture07.html"><span class="num">07</span><span>Agent 记忆架构</span></a><a class="nav-item" data-doc="lecture08" href="./lecture08.html"><span class="num">08</span><span>多 Agent 系统</span></a><a class="nav-item" data-doc="lecture09" href="./lecture09.html"><span class="num">09</span><span>Agent 系统优化</span></a></div><div class="nav-group"><p class="nav-label">三 · 数据飞轮与评测工程</p><a class="nav-item" data-doc="lecture10" href="./lecture10.html"><span class="num">10</span><span>Terminal-Bench 与评测工程</span></a><a class="nav-item" data-doc="lecture11" href="./lecture11.html"><span class="num">11</span><span>Agent 需要什么数据</span></a><a class="nav-item" data-doc="lecture12" href="./lecture12.html"><span class="num">12</span><span>数据选择与质量</span></a><a class="nav-item" data-doc="lecture13" href="./lecture13.html"><span class="num">13</span><span>评测基础与基准设计</span></a><a class="nav-item" data-doc="lecture14" href="./lecture14.html"><span class="num">14</span><span>LLM 裁判与评测基础设施</span></a></div><div class="nav-group"><p class="nav-label">四 · 安全防护与前沿应用</p><a class="nav-item" data-doc="lecture15" href="./lecture15.html"><span class="num">15</span><span>Agent 安全与防护</span></a><a class="nav-item" data-doc="lecture16" href="./lecture16.html"><span class="num">16</span><span>专题研讨：复合 Agent 系统架构复盘</span></a><a class="nav-item" data-doc="lecture17" href="./lecture17.html"><span class="num">17</span><span>编程与软件 Agent</span></a><a class="nav-item" data-doc="lecture18" href="./lecture18.html"><span class="num">18</span><span>主动式 Agent</span></a><a class="nav-item" data-doc="lecture19" href="./lecture19.html"><span class="num">19</span><span>前沿与开放问题</span></a></div><div class="nav-group"><p class="nav-label">工程实践与代码指南</p><a class="nav-item" data-doc="lab20" href="./lab20.html"><span>HW1：从零搭建 Agent Harness</span></a><a class="nav-item" data-doc="lab21" href="./lab21.html"><span>HW2：构建 Agent 评测体系</span></a><a class="nav-item" data-doc="lab22" href="./lab22.html"><span>学期项目：设计、构建与评测</span></a><a class="nav-item" data-doc="lab23" href="./lab23.html"><span>论文精读与复现扩展</span></a><a class="nav-item" data-doc="lab24" href="./lab24.html"><span>配套代码架构导读</span></a></div><div class="nav-group"><p class="nav-label">阅读说明</p><a class="nav-item" data-doc="lab25" href="./lab25.html"><span>课程目录与学习路径</span></a><a class="nav-item active" data-doc="lab26" href="./lab26.html" aria-current="page"><span>编写说明与待修订问题</span></a></div></nav>
     <div class="sidebar-foot">
+      <a class="marginroom-mobile" href="https://marginroom.app/?utm_source=cs329z&amp;utm_medium=tutorial&amp;utm_campaign=marginroom_v1&amp;utm_content=sidebar" target="_blank" rel="noopener">在阅间边读边问 ↗</a>
       <span>CS329Z · Engineering AI Agents</span>
       <span>System · Data · Evals</span>
     </div>
@@ -51,6 +52,7 @@
         <div id="breadcrumb" class="breadcrumb">编写说明与待修订问题</div>
       </div>
       <div class="reading-tools">
+        <a class="marginroom-top" href="https://marginroom.app/?utm_source=cs329z&amp;utm_medium=tutorial&amp;utm_campaign=marginroom_v1&amp;utm_content=topbar" target="_blank" rel="noopener">在阅间边读边问 ↗</a>
         <button type="button" id="mobile-search" class="mobile-only" aria-label="打开搜索">搜索</button>
         <button type="button" id="theme-toggle" aria-label="切换深浅色主题">深色模式</button>
         <button type="button" id="font-size" aria-label="切换阅读字号">字号 A+</button>
@@ -94,6 +96,12 @@
 <p>本次发布保留现有教程正文，以下问题已反馈给原编写任务，尚未作为已修复项验收：</p>
 <ul><li>部分数学公式的 HTML 转换不完整，例如第 2 讲温度公式。</li><li>第 2 讲将 DPO 与训练独立奖励模型混写。标准 DPO 无需单独训练奖励模型，见 <a href="https://arxiv.org/abs/2305.18290" target="_blank" rel="noopener noreferrer">原论文</a>。</li><li>个别章节的原课内容与扩展内容需要更清楚地区分。</li><li>部分段落的术语过密、表达夸张，需要精简。</li><li>HW2 和第 14 讲的长度偏差练习同时改变回答长度与事实正确性，应拆成分别控制变量的实验。</li></ul>
 <p>结构与链接检查不能代替内容审校；配套作业和 Notebook 未在本次发布中实际运行。</p></article>
+        <section id="marginroom-referral" class="marginroom-referral" hidden aria-label="阅间阅读伙伴">
+          <h2>这一讲有读不懂的地方？</h2>
+          <p>我做了一个 AI 阅读伙伴「阅间」，已内置这套课，读不懂的地方可以结合原文直接提问。</p>
+          <a id="marginroom-referral-link" href="https://marginroom.app/" target="_blank" rel="noopener">在阅间边读边问 →</a>
+          <p class="marginroom-allowance">注册后，每天可免费提问 50 次。</p>
+        </section>
         <nav id="chapter-footer" aria-label="章节翻页"><a href="./lab25.html"><small>← 上一节</small>课程目录与学习路径</a><span></span></nav>
       </main>
 
